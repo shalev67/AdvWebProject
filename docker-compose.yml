@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: mongodb
+    image: mongo
     hostname: mongo
     container_name: mongo
     ports:
@@ -12,7 +12,6 @@ services:
     hostname: web
     container_name: web
     ports:
-      - "8000:8000"
+      - "3000:3000"
     depends_on:
       - db
-    command: python3 manage.py runserver 0.0.0.0:8000
