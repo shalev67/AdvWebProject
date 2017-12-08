@@ -1,6 +1,10 @@
 {
   "name": "AdvWebProject",
   "version": "0.0.1",
+  "description": "Final project for advanced web application developing",
+  "license": "MIT",
+  "type": "git",
+  "repository": "https://github.com/shalev67/AdvWebProject",
   "dependencies": {
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
@@ -8,6 +12,7 @@
     "express": "~4.15.5",
     "jade": "~1.11.0",
     "morgan": "~1.9.0",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "mongoose": "^4.13.6"
   }
 }
