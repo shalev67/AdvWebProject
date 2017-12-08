@@ -1,23 +1,17 @@
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test', { useMongoClient: true });
-mongoose.Promise = global.Promise;
-
-var User = mongoose.model(
-    'User',
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
+var userSchema = new Schema(
     {
-        name: String,
         firstName: String,
         lastName: String,
-        email: String
-    }
-);
+        email: String,
+        password: String,
+        role: {
+            type: String,
+            enum: ['admin','user']
+        }
 
-var human = new User({ name: 'Zildjian' });
-human.save(function (err) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('meow');
-    }
-});
-User.findById("5a27d8521208f7354047c679", function (err, user) { console.log(user)} );
+    });
+var User = mongoose.model('User', userSchema);
+exports.userSchema = userSchema;
+exports.User = User;

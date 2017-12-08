@@ -3,18 +3,19 @@
 /**
  * Module dependencies.
  */
-
 var app = require('./app'),
     debug = require('debug')('AdvWebProject:server'),
     http = require('http');
 
+var port = normalizePort(process.env.PORT || '5000');
+app.set('port', port);
 /**
  * Get port from environment and store in Express.
  */
+var mongoose = require('mongoose');
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
+mongoose.connect('mongodb://localhost/test', { useMongoClient: true });
+mongoose.Promise = global.Promise;
 /**
  * Create HTTP server.
  */
@@ -86,5 +87,5 @@ function onListening() {
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    console.log('Listening on ' + bind);
 }
