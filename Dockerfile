@@ -4,6 +4,6 @@ EXPOSE 3000
 RUN mkdir /src
 WORKDIR /src
 COPY ./app /src
-RUN npm app/packages.json
+RUN npm install
 
-CMD node app/bin/www
+CMD node runner.js
