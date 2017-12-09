@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 var app = require('./app'),
-    debug = require('debug')('AdvWebProject:server'),
     http = require('http');
 
 var port = normalizePort(process.env.PORT || '5000');
@@ -16,6 +15,8 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/test', { useMongoClient: true });
 mongoose.Promise = global.Promise;
+populateDb();
+
 /**
  * Create HTTP server.
  */
@@ -26,7 +27,7 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, '0.0.0.0');
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -88,4 +89,22 @@ function onListening() {
         ? 'pipe ' + addr
         : 'port ' + addr.port;
     console.log('Listening on ' + bind);
+}
+
+function populateDb() {
+    mongoose.connection.on('open', function (err) {
+        mongoose.connection.db.dropDatabase();
+    });
+    var fs = require('fs');
+    var userManager = require('./managers/userManager');
+    var currentFolder = require('path').dirname(require.main.filename);
+    var contents = fs.readFileSync(currentFolder + '/startup.json');
+    var jsonContent = JSON.parse(contents);
+    var users = jsonContent.users;
+    users.forEach(function (user, index) { 
+        userManager.createUser(function (err, id) {
+                console.debug('Created user:' + user.email);
+            },
+            user)
+    });
 }

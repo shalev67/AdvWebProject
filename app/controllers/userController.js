@@ -20,8 +20,8 @@ router.get('/:userId', function(req, res, next) {
 
 /* POST add new user */
 router.post('/', function(req, res, next) {
-    userManager.createUser(function (err, user){
-            res.json({'id': user})
+    userManager.createUser(function (err, id){
+            res.json({'id': id})
         },
         req.body)
 });
