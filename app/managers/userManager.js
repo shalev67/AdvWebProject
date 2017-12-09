@@ -17,7 +17,9 @@ module.exports = {
         })
     },
     createUser: function (callback, newUser) {
+        var passwordHash = require('password-hash');
         newUser = new User(newUser);
+        newUser.password = passwordHash.generate(newUser.password);
         newUser.save(function (err, user) {
             if (err){
                 console.error(err);

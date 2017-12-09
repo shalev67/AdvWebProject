@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <title>Register</title>
+</head>
+<body>
+<script>
+    function register() {
+        var url = '/register';
+        $("")
+    }
+</script>
+<div class="register-page">
+    <div class="form">
+        <form  ng-app="myApp"  ng-controller="validateCtrl"
+               name="myForm" novalidate>
+
+            <p>Username:<br>
+                <input type="text" name="user" ng-model="user" required>
+                <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+  <span ng-show="myForm.user.$error.required">Username is required.</span>
+  </span>
+            </p>
+
+            <p>Email:<br>
+                <input type="email" name="email" ng-model="email" required>
+                <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+  <span ng-show="myForm.email.$error.required">Email is required.</span>
+  <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+  </span>
+            </p>
+
+            <p>
+                <input type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||
+                myForm.email.$dirty && myForm.email.$invalid">
+            </p>
+
+        </form>
+    </div>
+</div>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('validateCtrl', function($scope) {
+    });
+</script>
+</body>
+</html>
