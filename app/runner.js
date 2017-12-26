@@ -97,14 +97,20 @@ function populateDb() {
     });
     var fs = require('fs');
     var userManager = require('./managers/userManager');
+    var branchManager = require('./managers/branchManager');
     var currentFolder = require('path').dirname(require.main.filename);
     var contents = fs.readFileSync(currentFolder + '/startup.json');
     var jsonContent = JSON.parse(contents);
     var users = jsonContent.users;
-    users.forEach(function (user, index) { 
+    var branches = jsonContent.branches;
+    users.forEach(function (user, index) {
         userManager.createUser(function (err, id) {
-                console.debug('Created user:' + user.email);
+                console.log('Created user: ' + user.email);
             },
             user)
+    });
+    branches.forEach(function (branch, index) {
+        branchManager.createBranch(function (err, id) {},
+            branch)
     });
 }

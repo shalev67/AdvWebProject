@@ -14,5 +14,78 @@
       "password": "user",
       "role": "user"
     }
-  ]
+  ],
+
+  "branches":[
+  {
+    "City":"baia do sancho",
+    "Description":"baia do sancho",
+    "Zoom":3,
+    "Lattitude":-3.854584,
+    "Longtidute":-32.4439829
+  },
+  {
+    "City":"grace bay",
+    "Description":"grace bay",
+    "Zoom":3,
+    "Lattitude":21.7980019,
+    "Longtidute":-72.1760505
+  },
+  {
+    "City":"Eagle Beach",
+    "Description":"Eagle Beach",
+    "Zoom":3,
+    "Lattitude":12.5517096,
+    "Longtidute":-70.0621131
+  },
+  {
+    "City":"Playa Paraiso",
+    "Description":"Playa Paraiso",
+    "Zoom":3,
+    "Lattitude":21.5947526,
+    "Longtidute":-81.5565778
+  },
+  {
+    "City":"siesta beach",
+    "Description":"siesta beach",
+    "Zoom":3,
+    "Lattitude":27.2654231,
+    "Longtidute":-82.552834
+  },
+  {
+    "City":"la concha beach",
+    "Description":"la concha beach",
+    "Zoom":3,
+    "Lattitude":43.317415,
+    "Longtidute":-2.0001452
+  },
+  {
+    "City":"playa norte",
+    "Description":"playa norte",
+    "Zoom":3,
+    "Lattitude":21.2598369,
+    "Longtidute":-86.7514243
+  },
+  {
+    "City":"Radhanagar Beach",
+    "Description":"Radhanagar Beach",
+    "Zoom":3,
+    "Lattitude":11.9830673,
+    "Longtidute":92.9309396
+  },
+  {
+    "City":"elafonisi beach",
+    "Description":"elafonisi beach",
+    "Zoom":3,
+    "Lattitude":35.271048,
+    "Longtidute":23.5160443
+  },
+  {
+    "City":"Puerto Ayora",
+    "Description":"Puerto Ayora",
+    "Zoom":3,
+    "Lattitude":-0.7386384,
+    "Longtidute":-90.3308346
+  }
+]
 }
