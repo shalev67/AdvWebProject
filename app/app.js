@@ -1,21 +1,21 @@
 var express = require('express'),
     path = require('path'),
-    favicon = require('serve-favicon'),
+   // favicon = require('serve-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     index = require('./routes/index'),
+    myView = require('./routes/myView'),
     users = require('./routes/users'),
-    appUser = require('./controllers/userController'),
-    serveStatic = require('serve-static'),
-    jwt = require('express-jwt');
-
+    router = express.Router();
+    //appUser = require('./controllers/userController'),
     app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+//app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,21 +23,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require('./controllers/userController.js')(app);
+require('./controllers/branchController.js')(app);
 
 var myLogger = function (req, res, next) {
-    /*
-    if(req.get('token') == null && (req.url !== '/login.html' && req.url !== '/register.html' )){
-        return res.redirect('/login.html');
-    }
-    */
+    
+   // if(req.get('token') == null && (req.url !== '/login.html' && req.url !== '/register.html' )){
+   //     return res.redirect('/login.html');
+   // }
+    
     next();
 };
 
 app.use(myLogger);
-//app.use(serveStatic('public', {'index': ['index.html']}));
-// app.use('/', express.static(__dirname + '/views/index.html'));
 
-app.use('/index.html', express.static(__dirname + '/views/index.html'));
 
 app.post('/token', function (req, res) {
     var email = req.body.email;
@@ -48,10 +46,8 @@ app.post('/token', function (req, res) {
     res.send('POST request to the homepage')
 });
 
-app.use('/login.html', express.static(__dirname + '/views/login.html'));
-app.use('/register.html', express.static(__dirname + '/views/register.html'));
-//app.use('/users', users);
-app.use('/users', appUser);
+app.use('/', index);
+app.use('/:name', myView);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
