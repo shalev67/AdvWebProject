@@ -7,7 +7,7 @@ var userManager = require('../managers/userManager');
 module.exports = function (app) {
 
     // Get all users
-    app.get('/User/GetAll', function (req, res, next) {
+    app.get('/Users/GetAll', function (req, res, next) {
         userManager.listUsers(function (err, users) {
             if (err) {
                 console.log('GetAllUsers Err: ' + err);

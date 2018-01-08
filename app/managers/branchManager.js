@@ -17,6 +17,11 @@ module.exports = {
                 callback(null, branch.id);
             }
         });
+    },
+    listBranches: function (callback) {
+        Branch.find({}, function (err, branches) {
+            callback(null, branches);
+        });
     }
 
 };

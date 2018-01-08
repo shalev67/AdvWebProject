@@ -1,0 +1,5 @@
+---in app cmd
+node runner.js
+
+---in another cmd with admin privilege
+"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --dbpath d:\test\mongodb\data
