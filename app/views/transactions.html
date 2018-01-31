@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div id="usr-tbl-div">
+    <table class="table table-hover">
+        <thead class="thead-default">
+        <tr>
+            <th>
+                Date
+            </th>
+            <th>
+                Catagory
+            </th>
+
+            <th>
+                Buissness Name
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="transaction in appTransaction.data | orderBy : 'date'" id="transactions">
+            <td>{{transaction.date  | date:"dd/MM/yy"}}</td>
+            <td>{{ transaction.catagory }}</td>
+            <td>{{ transaction.buissness }}</td>
+            <td>{{ transaction.price }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

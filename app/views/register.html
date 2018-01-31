@@ -1,55 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <title>Register</title>
-</head>
-<body>
-<script>
-    function register() {
-        var url = '/register';
-        $("")
-    }
-</script>
-<div class="register-page">
-    <div class="form">
-        <form  ng-app="myApp"  ng-controller="validateCtrl"
-               name="myForm" novalidate>
-
-            <p>Username:<br>
-                <input type="text" name="user" ng-model="user" required>
-                <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
-  <span ng-show="myForm.user.$error.required">Username is required.</span>
-  </span>
-            </p>
-
-            <p>Email:<br>
-                <input type="email" name="email" ng-model="email" required>
-                <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
-  <span ng-show="myForm.email.$error.required">Email is required.</span>
-  <span ng-show="myForm.email.$error.email">Invalid email address.</span>
-  </span>
-            </p>
-
-            <p>
-                <input type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||
-                myForm.email.$dirty && myForm.email.$invalid">
-            </p>
-
-        </form>
-    </div>
+<div class="col-md-6 col-md-offset-3" id="center-div">
+    <h2>Register</h2>
+    <form name="form" ng-submit="userCtrl.createNewUser()"  role="form" method="POST">
+        <div class="form-group">
+            <label >First name</label>
+            <input type="text" name="firstName" id="firstName" class="form-control" ng-model="userCtrl.user.firstName" required />
+            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
+        </div>
+        <div class="form-group">
+            <label >Last name</label>
+            <input type="text" name="lastName" id="Text1" class="form-control" ng-model="userCtrl.user.lastName" required />
+            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
+        </div>
+        <div class="form-group">
+            <label >Email</label>
+            <input type="email" name="email" id="email" class="form-control" ng-model="userCtrl.user.email" required />
+            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="userCtrl.user.password" required />
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" onclick='angular.element(this).scope().createNewUser()' ng-disabled="form.$invalid" class="btn btn-primary">Create</button>
+            <a href="#!/branches" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
 </div>
-<script>
-    var app = angular.module('myApp', []);
-    app.controller('validateCtrl', function($scope) {
-    });
-</script>
-</body>
-</html>
+

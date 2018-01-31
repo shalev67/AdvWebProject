@@ -1,10 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+
+<label ng-if="connected">Hello {{currentUser.firstName}}</label>
+
+<label ng-if="!connected">Not connected</label>
+
+
+<table class="table-home-option">
+    <tr>
+        <td>
+            <a href='#!/graph'>
+                <dd class="div-option-dd">
+                    <div class="div-option-text">
+                        <br>
+                        <p>Your statistics</p>
+                    </div>
+                </dd>
+            </a>
+        </td>
+        <td>
+            <a href='#!/transactions'>
+                <dd class="div-option-dd">
+                    <div class="div-option-text">
+                        <br>
+                        <p>View your Transactions </p>
+                    </div>
+                </dd>
+            </a>
+        </td>
+        <td>
+            <a href=#!/home>
+                <dd class="div-option-dd">
+                    <div class="div-option-text">
+                        <br>
+                        <p>Upload pdf</p>
+                    </div>
+                </dd>
+            </a>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href=#!/home>
+                <dd class="div-option-dd">
+                    <div class="div-option-text">
+                        <br>
+                        <p>Something</p>
+                    </div>
+                </dd>
+            </a>
+        </td>
+        <td>
+            <a href=#!/home>
+                <dd class="div-option-dd">
+                    <div class="div-option-text">
+                        <br>
+                        <p>Something</p>
+                    </div>
+                </dd>
+            </a>
+        </td>
+        <td>
+            <a href=#!/branches>
+                <dd class="div-option-dd">
+                    <div class="div-option-text">
+                        <br>
+                        <p>Contact us</p>
+                    </div>
+                </dd>
+            </a>
+        </td>
+    </tr>
+
+</table>
+

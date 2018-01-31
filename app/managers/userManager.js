@@ -21,15 +21,30 @@ module.exports = {
             callback(null, user);
         })
     },
+    checkUser: function (callback, userEmail,userPassword) {
+        var passwordHash = require('password-hash');
+        User.findOne({'email': userEmail}, function (err, user) {
+            IsAutorized = false;
+            if(!(user === null)) {
+                IsAutorized = passwordHash.verify(userPassword, user.password);
+                if (IsAutorized) {
+                    console.log("User " + user.email + " Connected");
+                }
+            }
+            callback(null, IsAutorized);
+        })
+    },
     createUser: function (callback, newUser) {
         var passwordHash = require('password-hash');
         newUser = new User(newUser);
         newUser.password = passwordHash.generate(newUser.password);
+
         newUser.save(function (err, user) {
             if (err) {
                 console.error(err);
             }
             else {
+
                 callback(null, user.id);
             }
         });

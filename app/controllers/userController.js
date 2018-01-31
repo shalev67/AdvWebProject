@@ -7,7 +7,7 @@ var userManager = require('../managers/userManager');
 module.exports = function (app) {
 
     // Get all users
-    app.get('/Users/GetAll', function (req, res, next) {
+    app.get('/User/GetAll', function (req, res, next) {
         userManager.listUsers(function (err, users) {
             if (err) {
                 console.log('GetAllUsers Err: ' + err);
@@ -43,6 +43,19 @@ module.exports = function (app) {
                 }
             },
             req.params.userEmail)
+    });
+
+    // Check user
+    app.get('/User/CheckUser/:userEmail/:userPassword', function (req, res, next) {
+        userManager.checkUser(function (err, isAuthorized) {
+                if (err) {
+                    console.log('checkUser Err: ' + err);
+                    res.next();
+                } else {
+                    res.json(isAuthorized);
+                }
+            },
+            req.params.userEmail,req.params.userPassword)
     });
 
     // Create new user

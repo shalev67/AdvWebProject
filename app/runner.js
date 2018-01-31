@@ -98,11 +98,13 @@ function populateDb() {
     var fs = require('fs');
     var userManager = require('./managers/userManager');
     var branchManager = require('./managers/branchManager');
+    var transactionManager = require('./managers/transactionManager');
     var currentFolder = require('path').dirname(require.main.filename);
     var contents = fs.readFileSync(currentFolder + '/startup.json');
     var jsonContent = JSON.parse(contents);
     var users = jsonContent.users;
     var branches = jsonContent.branches;
+    var transactions = jsonContent.transactions;
     users.forEach(function (user, index) {
         userManager.createUser(function (err, id) {
                 console.log('Created user: ' + user.email);
@@ -112,5 +114,9 @@ function populateDb() {
     branches.forEach(function (branch, index) {
         branchManager.createBranch(function (err, id) {},
             branch)
+    });
+    transactions.forEach(function (transaction, index) {
+        transactionManager.createTransaction(function (err, id) {},
+            transaction)
     });
 }

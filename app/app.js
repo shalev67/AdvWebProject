@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 require('./controllers/userController.js')(app);
 require('./controllers/branchController.js')(app);
+require('./controllers/transactiosController.js')(app);
 
 var myLogger = function (req, res, next) {
     
