@@ -1,6 +1,6 @@
 <div class="col-md-6 col-md-offset-3" id="center-div">
     <h2>Register</h2>
-    <form name="form" ng-submit="userCtrl.createNewUser()"  role="form" method="POST">
+    <form name="form" ng-submit="createNewUser()"  role="form" method="POST">
         <div class="form-group">
             <label >First name</label>
             <input type="text" name="firstName" id="firstName" class="form-control" ng-model="userCtrl.user.firstName" required />
@@ -22,7 +22,8 @@
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
         </div>
         <div class="form-actions">
-            <button type="submit" onclick='angular.element(this).scope().createNewUser()' ng-disabled="form.$invalid" class="btn btn-primary">Create</button>
+            <!-- <button type="submit" onclick='angular.element(this).scope().createNewUser()' ng-disabled="form.$invalid" class="btn btn-primary">Create</button> -->
+            <button type="submit" ng-click="createNewUser()" ng-disabled="form.$invalid" class="btn btn-primary">Create</button>
             <a href="#!/branches" class="btn btn-link">Cancel</a>
         </div>
     </form>

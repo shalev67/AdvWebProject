@@ -9,45 +9,42 @@ Users Manager
     <table cellpadding="0" cellspacing="0" border="0" class="search-tbl">
         <thead>
         <tr>
-            <th class="search-tbl-th"><input type="text" placeholder="Article title" id="ArticleTitle" name="ArticleTitle" class="search-box"></th>
-            <th class="search-tbl-th"><input type="text" placeholder="Auther name" id="AutherName" name="AutherName" class="search-box"></th>
-            <th class="search-tbl-th"><input type="text" placeholder="words from text" id="ArticleText" name="ArticleText" class="search-box"></th>
-            <th class="search-tbl-th"><button id="SearchArticles" class="btn search-btn">Search</button></th>
+            <th class="search-tbl-th"><input ng-model="search.firstName" placeholder="First Name" class="search-box"></th>
+            <th class="search-tbl-th"><input ng-model="search.lastName" placeholder="Last Name" class="search-box"></th>
+            <th class="search-tbl-th"><input ng-model="search.email" placeholder="Email" class="search-box"></th>
+            <th class="search-tbl-th"><input ng-model="search.role" placeholder="Role" class="search-box"></th>
         </tr>
         </thead>
     </table>
 </div>
 
-<div id="resultsView" />
-
-
-</br></br>
+</br>
 
 <div id="usr-tbl-div">
     <table class="table table-hover">
         <thead class="thead-default">
-            <tr>
-                <th>
-                    First Name
-                </th>
-                <th>
-                    Last Name
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Role
-                </th>
-            </tr>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Role
+            </th>
+        </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="user in appUsers.data | orderBy : 'firstName'" id="users">
-                <td>{{ user.firstName }}</td>
-                <td>{{ user.lastName }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.role }}</td>
-            </tr>
+        <tr ng-repeat="user in appUsers.data |  orderBy : 'firstName' | filter:search:strict" id="users">
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+        </tr>
         </tbody>
     </table>
 

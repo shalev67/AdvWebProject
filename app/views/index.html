@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./stylesheets/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.js"></script>
     <script src="./javascript/appRoute.js"></script>
     <script src="./javascript/controllers.js"></script>
     <script src="./javascript/services.js"></script>
     <title>Best website ever</title>
-
 
     <script src="./lib/angular-route.js"></script>
     <script src="./lib/angular-animate.js"></script>
@@ -19,17 +19,14 @@
     <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
 
-
-
     <!--Graph-->
     <script src="https://d3js.org/d3.v4.min.js"></script>
+
     </head>
-
-
     <!--<body ng-controller="userCtrl" ng-view>-->
     <body ng-app="myeApp" ng-controller="userCtrl">
 
@@ -46,23 +43,23 @@
                         <a class="nav-link" href="#!/users">Users<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#!/branches">Branches</a>
+                        <a class="nav-link" href="#!/contact">Contact us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#!/transactions">Transactions</a>
+                        <a class="nav-link" href="#!/currency">Currency calculator</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#!/map">Map</a>
+                        <a class="nav-link" href="#!/statistics">Statistics</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#!/graph">Statistics</a>
+                        <a class="nav-link" href="#!/statistics">Statistics</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Transactions</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item" href="#!/transactions">Transactions Data</a>
+                            <a class="dropdown-item" href="#!/barchart">Bar Chart</a>
+                            <a class="dropdown-item" href="#!/piechart">Pie Chart</a>
                         </div>
                     </li>
                 </ul>
@@ -79,16 +76,9 @@
             </div>
         </nav>
 
-        </br></br>
-        <!-- inject our views using ng-view -->
-        <!-- each angular controller applies a different class here -->
-
-
+        </br>
 
         <div ng-view></div>
-
-
-
 
         </br></br>
 
@@ -113,6 +103,7 @@
             </div>
         </footer>
 
+
         <!--Controllers-->
         <script src="./javascript/controllers.js"></script>
 
@@ -120,4 +111,6 @@
         <script src="./javascript/services.js"></script>
 
     </body>
+
+
 </html>

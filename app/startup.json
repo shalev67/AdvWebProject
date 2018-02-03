@@ -18,74 +18,74 @@
 
   "branches":[
   {
-    "City":"baia do sancho",
-    "Description":"baia do sancho",
-    "Zoom":3,
-    "Lattitude":-3.854584,
-    "Longtidute":-32.4439829
+    "City":"Tel Aviv-Yafo",
+    "Description":"Allenby St 43",
+    "Zoom":50,
+    "Lattitude":32.070502,
+    "Longtidute":34.770441
   },
   {
-    "City":"grace bay",
-    "Description":"grace bay",
-    "Zoom":3,
-    "Lattitude":21.7980019,
-    "Longtidute":-72.1760505
+    "City":"Ramat Gan",
+    "Description":"Raziel St 9-13",
+    "Zoom":50,
+    "Lattitude":32.058136,
+    "Longtidute":34.821682
   },
   {
-    "City":"Eagle Beach",
-    "Description":"Eagle Beach",
-    "Zoom":3,
-    "Lattitude":12.5517096,
-    "Longtidute":-70.0621131
+    "City":"Jerusalem",
+    "Description":"HaRav Hen St 1-15",
+    "Zoom":50,
+    "Lattitude":31.768456,
+    "Longtidute":35.208778
   },
   {
-    "City":"Playa Paraiso",
-    "Description":"Playa Paraiso",
-    "Zoom":3,
-    "Lattitude":21.5947526,
-    "Longtidute":-81.5565778
+    "City":"Eilat",
+    "Description":"Derekh Yotam 5",
+    "Zoom":50,
+    "Lattitude":29.551657,
+    "Longtidute":34.951458
   },
   {
-    "City":"siesta beach",
-    "Description":"siesta beach",
-    "Zoom":3,
-    "Lattitude":27.2654231,
-    "Longtidute":-82.552834
+    "City":"Be'er Sheva",
+    "Description":"Ha-Kotser St 35",
+    "Zoom":50,
+    "Lattitude":31.212801,
+    "Longtidute":34.81842
   },
   {
-    "City":"la concha beach",
-    "Description":"la concha beach",
-    "Zoom":3,
-    "Lattitude":43.317415,
-    "Longtidute":-2.0001452
+    "City":"Netanya",
+    "Description":"Heftsiba St 5",
+    "Zoom":50,
+    "Lattitude":32.309188,
+    "Longtidute":34.885025
   },
   {
-    "City":"playa norte",
-    "Description":"playa norte",
-    "Zoom":3,
-    "Lattitude":21.2598369,
-    "Longtidute":-86.7514243
+    "City":"Haifa",
+    "Description":"Sderot Hatsvi 19",
+    "Zoom":50,
+    "Lattitude":32.804013,
+    "Longtidute":34.980125
   },
   {
-    "City":"Radhanagar Beach",
-    "Description":"Radhanagar Beach",
-    "Zoom":3,
-    "Lattitude":11.9830673,
-    "Longtidute":92.9309396
+    "City":"Hadera",
+    "Description":"Gafnovitch St 5",
+    "Zoom":50,
+    "Lattitude":32.419385,
+    "Longtidute":34.946136
   },
   {
-    "City":"elafonisi beach",
-    "Description":"elafonisi beach",
-    "Zoom":3,
-    "Lattitude":35.271048,
-    "Longtidute":23.5160443
+    "City":"Ashdod",
+    "Description":"Sderot Herzl",
+    "Zoom":50,
+    "Lattitude":31.788886,
+    "Longtidute":34.639206
   },
   {
-    "City":"Puerto Ayora",
-    "Description":"Puerto Ayora",
-    "Zoom":3,
-    "Lattitude":-0.7386384,
-    "Longtidute":-90.3308346
+    "City":"Bet Shemesh",
+    "Description":"Ha-Ta'asiya St",
+    "Zoom":50,
+    "Lattitude":31.737511,
+    "Longtidute":34.94545
   }
 ],
   "transactions":[

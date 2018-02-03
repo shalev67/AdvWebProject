@@ -14,13 +14,12 @@ myApp.config(function($routeProvider) {
      templateUrl: 'views/register.html',
      controller : 'userCtrl'
   }).
-  when('/branches', {
-    templateUrl: "views/branches.html",
-    controller : 'branchCtrl'
- }).
-  when('/map', {
+  when('/contact', {
       templateUrl: "views/map.html",
       controller : 'branchCtrl'
+  }).
+  when('/currency', {
+      templateUrl: "views/currency.html",
   }).
   when('/users', {
      templateUrl: "views/users.html",
@@ -30,8 +29,12 @@ myApp.config(function($routeProvider) {
       templateUrl: "views/transactions.html",
       controller : 'transactionCtrl'
   }).
-  when('/graph', {
-      templateUrl: "views/graph.html",
+  when('/piechart', {
+        templateUrl: "views/piechart.html",
+        controller : 'transactionCtrl'
+  }).
+  when('/statistics', {
+      templateUrl: "views/statistics.html",
       controller : 'transactionCtrl'
   }).
    otherwise({

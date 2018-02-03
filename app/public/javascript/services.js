@@ -13,6 +13,10 @@
             return $http.get('/User/GetByEmail/' + userEmail);
         };
 
+        this.getUserByID= function(userEmail){
+            return $http.get('/User/GetById/' + userEmail);
+        };
+
         this.createUser = function(user){
             return $http.post('/User/Create',user);
         };
