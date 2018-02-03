@@ -26,91 +26,88 @@
     <!--Graph-->
     <script src="https://d3js.org/d3.v4.min.js"></script>
 
-    </head>
-    <!--<body ng-controller="userCtrl" ng-view>-->
-    <body ng-app="myeApp" ng-controller="userCtrl">
+</head>
+<!--<body ng-controller="userCtrl" ng-view>-->
+<body ng-app="myeApp" ng-controller="userCtrl">
 
-        <h1 id="fh5co-logo"><a href="http://localhost:5000/#!/home"><img src="./images/logo.png" class="logo"></a></h1>
+<h1 id="fh5co-logo"><a href="http://localhost:5000/#!/home"><img src="./images/logo.png" class="logo"></a></h1>
 
-        <nav class="navbar navbar-toggleable navbar-inverse bg-inverse">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<nav class="navbar navbar-toggleable navbar-inverse bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#!/users">Users<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#!/contact">Contact us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#!/currency">Currency calculator</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#!/statistics">Statistics</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#!/statistics">Statistics</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Transactions</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="#!/transactions">Transactions Data</a>
-                            <a class="dropdown-item" href="#!/barchart">Bar Chart</a>
-                            <a class="dropdown-item" href="#!/piechart">Pie Chart</a>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item active">
-                        <a ng-if="!connected" class="nav-link" href="#!/login">Login<span class="sr-only">(current)</span></a>
-                        <a ng-if="connected" class="nav-link"  href="#!/logout">Hello {{currentUser.firstName}}<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a ng-if="!connected" class="nav-link" href="#!/register">Register<span class="sr-only">(current)</span></a>
-                        <a ng-if="connected" class="nav-link" ng-click="logout()" href="#!/logout">Logout<span class="sr-only">(current)</span></a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#!/users">Users<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!/contact">Contact us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!/currency">Currency calculator</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!/statistics">Statistics</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Transactions</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#!/transactions">Transactions Data</a>
+                    <a class="dropdown-item" href="#!/barchart">Bar Chart</a>
+                    <a class="dropdown-item" href="#!/piechart">Pie Chart</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item active">
+                <a ng-if="!connected" class="nav-link" href="#!/login">Login<span class="sr-only">(current)</span></a>
+                <a ng-if="connected" class="nav-link"  href="#!/logout">Hello {{currentUser.firstName}}<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a ng-if="!connected" class="nav-link" href="#!/register">Register<span class="sr-only">(current)</span></a>
+                <a ng-if="connected" class="nav-link" ng-click="logout()" href="#!/logout">Logout<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-        </br>
+</br>
 
-        <div ng-view></div>
+<div ng-view></div>
 
-        </br></br>
+</br></br>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <section id="about">
-                    <h3>About</h3>
-                    <p>
-                        In this website you can find articles about surfing and surfers.
-                        Also Information of the top surfers beaches
-                    </p>
-                </section>
-                <section id="Creators">
-                    <h3>Creators</h3>
-                    <ul>
-                        <li>Ravid Nagar</li>
-                        <li>Yuval Shalev</li>
-                        <li>Shany Natan</li>
-                    </ul>
-                </section>
-            </div>
-        </footer>
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <section id="about">
+            <h3>About</h3>
+            <p>
+                In this website you can find articles about surfing and surfers.
+                Also Information of the top surfers beaches
+            </p>
+        </section>
+        <section id="Creators">
+            <h3>Creators</h3>
+            <ul>
+                <li>Ravid Nagar</li>
+                <li>Yuval Shalev</li>
+                <li>Shany Natan</li>
+            </ul>
+        </section>
+    </div>
+</footer>
 
 
-        <!--Controllers-->
-        <script src="./javascript/controllers.js"></script>
+<!--Controllers-->
+<script src="./javascript/controllers.js"></script>
 
-        <!--Services-->
-        <script src="./javascript/services.js"></script>
+<!--Services-->
+<script src="./javascript/services.js"></script>
 
-    </body>
+</body>
 
 
 </html>
