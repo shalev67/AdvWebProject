@@ -13,8 +13,13 @@
             return $http.get('/User/GetByEmail/' + userEmail);
         };
 
-        this.getUserByID= function(userEmail){
-            return $http.get('/User/GetById/' + userEmail);
+        this.getUserByID= function(userId){
+            return $http.get('/User/GetById/' + userId);
+        };
+
+        this.getGroupTransaction= function(userId){
+            console.log('Service');
+            return $http.get('/User/GetGroupById/' + userId);
         };
 
         this.createUser = function(user){

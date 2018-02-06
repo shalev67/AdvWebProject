@@ -31,6 +31,24 @@ Users Manager
                 Last Name
             </th>
             <th>
+                Birth Date
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                Income
+            </th>
+            <th>
+                Marital Status
+            </th>
+            <th>
+                Kids
+            </th>
+            <th>
+                Zone
+            </th>
+            <th>
                 Email
             </th>
             <th>
@@ -42,6 +60,12 @@ Users Manager
         <tr ng-repeat="user in appUsers.data |  orderBy : 'firstName' | filter:search:strict" id="users">
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
+            <td>{{ user.birthDate | date:"dd/MM/y" }}</td>
+            <td>{{ user.gender }}</td>
+            <td>{{ user.income }}</td>
+            <td>{{ user.maritalStatus }}</td>
+            <td>{{ user.kids }}</td>
+            <td>{{ user.zone }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.role }}</td>
         </tr>

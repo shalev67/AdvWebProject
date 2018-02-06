@@ -54,20 +54,21 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Transactions</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#!/transactions">Transactions Data</a>
+                    <a class="dropdown-item" href="#!/myTransactions">Transactions Data</a>
                     <a class="dropdown-item" href="#!/barchart">Bar Chart</a>
                     <a class="dropdown-item" href="#!/piechart">Pie Chart</a>
+                    <a class="dropdown-item" href="#!/home">Add New</a>
                 </div>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item active">
-                <a ng-if="!connected" class="nav-link" href="#!/login">Login<span class="sr-only">(current)</span></a>
-                <a ng-if="connected" class="nav-link"  href="#!/logout">Hello {{currentUser.firstName}}<span class="sr-only">(current)</span></a>
+                <a ng-show="!connected" class="nav-link" href="#!/login">Login<span class="sr-only">(current)</span></a>
+                <a ng-show="connected" class="nav-link"  href="#!/home">Hello {{currentUserName}}<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a ng-if="!connected" class="nav-link" href="#!/register">Register<span class="sr-only">(current)</span></a>
-                <a ng-if="connected" class="nav-link" ng-click="logout()" href="#!/logout">Logout<span class="sr-only">(current)</span></a>
+                <a ng-show="!connected" class="nav-link" href="#!/register">Register<span class="sr-only">(current)</span></a>
+                <a ng-show="connected" class="nav-link" ng-click="logout()" href="#!/logout">Logout<span class="sr-only">(current)</span></a>
             </li>
         </ul>
     </div>

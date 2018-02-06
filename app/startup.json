@@ -3,6 +3,12 @@
     {
       "firstName": "admin",
       "lastName": "admin",
+      "birthDate": "05/27/1989",
+      "gender": "male",
+      "income": 10000,
+      "maritalStatus": "single",
+      "kids": 0,
+      "zone": "center",
       "email": "admin@admin.com",
       "password": "admin",
       "role": "admin"
@@ -10,6 +16,12 @@
     {
       "firstName": "user",
       "lastName": "user",
+      "birthDate": "02/15/1990",
+      "gender": "female",
+      "income": 10000,
+      "maritalStatus": "single",
+      "kids": 0,
+      "zone": "north",
       "email": "user@user.com",
       "password": "123",
       "role": "user"

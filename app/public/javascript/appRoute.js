@@ -31,15 +31,19 @@ myApp.config(function($routeProvider) {
     }).
     when('/piechart', {
         templateUrl: "views/piechart.html",
-        controller : 'transactionCtrl'
+        controller : 'userCtrl'
     }).
     when('/barchart', {
         templateUrl: "views/barchart.html",
-        controller : 'transactionCtrl'
+        controller : 'userCtrl'
     }).
     when('/statistics', {
         templateUrl: "views/statistics.html",
         controller : 'transactionCtrl'
+    }).
+    when('/myTransactions', {
+        templateUrl: "views/userTransactions.html",
+        controller : 'userCtrl'
     }).
     otherwise({
         redirectTo: '/home'

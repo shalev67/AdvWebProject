@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var userManager = require('../managers/userManager');
-
+// var transactionManager = require('../managers/transactionManager');
+// var Transaction = require("../models/Transaction");
 
 /* GET list users */
 module.exports = function (app) {
@@ -31,6 +32,31 @@ module.exports = function (app) {
             },
             req.params.userId)
     });
+
+    app.get('/User/GetGroupById/:userId', function (req, res, next) {
+        userManager.getGroupTransaction(function (err, transactions) {
+                if (err) {
+                    console.log('getUserByID Err: ' + err);
+                    res.next();
+                } else {
+                    res.json(transactions)
+                }
+
+            },
+            req.params.userId)
+    });
+
+    // app.get('/User/GetGroupById/:userId', function (req, res, next) {
+    //     userManager.getGroupTransaction(function (err, transactions) {
+    //         if (err) {
+    //             console.log('GetGroupTransactions Err: ' + err);
+    //             res.next();
+    //         } else {
+    //             console.log(transactions);
+    //             res.json(transactions);
+    //         }
+    //     });
+    // });
 
     // Get user by mail
     app.get('/User/GetByEmail/:userEmail', function (req, res, next) {
@@ -67,6 +93,19 @@ module.exports = function (app) {
                 } else {
                     res.json({'id': id})
                 }
+
+            },
+            req.body)
+    });
+
+    app.post('/User/AddTransaction', function (req, res, next) {
+        userManager.addTransaction(function (err, id) {
+            if (err) {
+                console.log('createUser Err: ' + err);
+                res.next();
+            } else {
+                res.json({'id': id})
+            }
 
             },
             req.body)

@@ -98,7 +98,7 @@ function populateDb() {
     var fs = require('fs');
     var userManager = require('./managers/userManager');
     var branchManager = require('./managers/branchManager');
-    var transactionManager = require('./managers/transactionManager');
+    //var transactionManager = require('./managers/transactionManager');
     var currentFolder = require('path').dirname(require.main.filename);
     var contents = fs.readFileSync(currentFolder + '/startup.json');
     var jsonContent = JSON.parse(contents);
@@ -106,17 +106,20 @@ function populateDb() {
     var branches = jsonContent.branches;
     var transactions = jsonContent.transactions;
     users.forEach(function (user, index) {
-        userManager.createUser(function (err, id) {
+        userManager.createUser(function (err, newUser) {
                 console.log('Created user: ' + user.email);
+                if(user.email == 'user@user.com' ){
+                    transactions.forEach(function (transaction, tindex) {
+                        userManager.addTransaction(function (err, user){
+                        }, newUser, transaction)
+                    });
+                }
             },
-            user)
+            user);
     });
     branches.forEach(function (branch, index) {
         branchManager.createBranch(function (err, id) {},
             branch)
     });
-    transactions.forEach(function (transaction, index) {
-        transactionManager.createTransaction(function (err, id) {},
-            transaction)
-    });
+
 }
