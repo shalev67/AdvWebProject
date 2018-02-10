@@ -25,10 +25,14 @@ myApp.config(function($routeProvider) {
         templateUrl: "views/users.html",
         controller : 'userCtrl'
     }).
-    when('/transactions', {
-        templateUrl: "views/transactions.html",
-        controller : 'transactionCtrl'
+    when('/userDetail', {
+        templateUrl: "views/userDetail.html",
+        controller : 'userCtrl'
     }).
+    // when('/transactions', {
+    //     templateUrl: "views/transactions.html",
+    //     controller : 'transactionCtrl'
+    // }).
     when('/piechart', {
         templateUrl: "views/piechart.html",
         controller : 'userCtrl'
@@ -39,10 +43,14 @@ myApp.config(function($routeProvider) {
     }).
     when('/statistics', {
         templateUrl: "views/statistics.html",
-        controller : 'transactionCtrl'
+        controller : 'userCtrl'
     }).
     when('/myTransactions', {
         templateUrl: "views/userTransactions.html",
+        controller : 'userCtrl'
+    }).
+    when('/addTransactions', {
+        templateUrl: "views/addTransactions.html",
         controller : 'userCtrl'
     }).
     otherwise({

@@ -21,15 +21,18 @@ module.exports = function (app) {
 
     // Get user by id
     app.get('/User/GetById/:userId', function (req, res, next) {
+        //console.log(req.params.userId);
         userManager.getUserByID(function (err, user) {
                 if (err) {
                     console.log('getUserByID Err: ' + err);
                     res.next();
                 } else {
+                    //console.log(user);
                     res.json(user)
                 }
 
             },
+
             req.params.userId)
     });
 
@@ -45,18 +48,6 @@ module.exports = function (app) {
             },
             req.params.userId)
     });
-
-    // app.get('/User/GetGroupById/:userId', function (req, res, next) {
-    //     userManager.getGroupTransaction(function (err, transactions) {
-    //         if (err) {
-    //             console.log('GetGroupTransactions Err: ' + err);
-    //             res.next();
-    //         } else {
-    //             console.log(transactions);
-    //             res.json(transactions);
-    //         }
-    //     });
-    // });
 
     // Get user by mail
     app.get('/User/GetByEmail/:userEmail', function (req, res, next) {
@@ -86,12 +77,12 @@ module.exports = function (app) {
 
     // Create new user
     app.post('/User/Create', function (req, res, next) {
-        userManager.createUser(function (err, id) {
+        userManager.createUser(function (err, user) {
                 if (err) {
                     console.log('createUser Err: ' + err);
                     res.next();
                 } else {
-                    res.json({'id': id})
+                    res.json({'user': user})
                 }
 
             },
@@ -112,37 +103,31 @@ module.exports = function (app) {
     });
 
     // Delete User By ID
-    app.delete('/User/DeleteByID', function (req, res, next) {
-        userManager.deleteUserByID(function (err, user) {
+    app.delete('/User/DeleteByID/:id', function (req, res, next) {
+        userManager.deleteUserByID(function (err, id) {
                 if (err) {
                     console.log('deleteUserByID Err: ' + err);
                     res.next();
                 } else {
-                    res.json({'id': user});
+
+                    res.json({'id': id});
                 }
 
             },
-            req.body.id);
+
+            req.params.id);
     });
 
-    // Update new user
-    app.post('/User/UpdateByID/:id', function (req, res, next) {
-        userManager.updateUserByID(function (err, id) {
+    // Update user
+    app.put('/User/UpdateUser', function (req, res, next) {
+        userManager.updateUser(function (err, id) {
                 if (err) {
                     console.log('updateUser Err: ' + err);
                     res.next();
                 } else {
                     res.json({'id': id})
                 }
-
             },
             req.body)
     });
 }
-
-
-// /* PUT update user*/
-// router.put('/users', function(req, res, next) {
-//     res.send('respond with a resource');
-// });
-// module.exports = router;

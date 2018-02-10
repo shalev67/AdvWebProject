@@ -1,35 +1,76 @@
 (function(){
     "use strict";
     //var myApp = angular.module("myApp");
-    myApp.controller("userCtrl",['$scope','userService','$location', '$cookieStore','$window' , function($scope,userService,$location, $cookieStore, $window) {
+    myApp.controller("userCtrl",['$scope','$http', 'userService','$location', '$cookieStore','$window' , function($scope,$http,userService,$location, $cookieStore, $window) {
         var self = this;
-        var currentUser = null;
+        //var currentUser = null;
 
+        //this.userCtrl.userToUpdate = {};
         $scope.connected = false;
         $scope.currentUser = {};
         $scope.loginError = false;
-        $scope.currentUserId = undefined;
+        //$scope.haveTransactionData = false;
+        $scope.isAdmin = false;
         $scope.currentUserName = undefined;
-        $scope.currentUserRole = undefined;
+        $scope.currentUserId = undefined;
 
-        if ($cookieStore.get('currentUserId') != undefined){
+
+        if ($cookieStore.get('currentUserId') !== undefined){
+
             $scope.connected = true;
+            //$scope.currentUser = $cookieStore.get('currentUser');
+            //$scope.currentUserId = $scope.currentUser._id;
+            //$scope.haveTransactionData = $cookieStore.get('haveTransactionData');
             $scope.currentUserId = $cookieStore.get('currentUserId');
-            $scope.currentUserName = $cookieStore.get('currentUserName');
-            $scope.currentUserRole = $cookieStore.get('currentUserRole');
+
+
+
         }
 
 
-        //  isConncted()
-        // {
-        //     return $scope.connected;
-        // }
+        $scope.isConncted =  function(){
+            return $scope.connected;
+        };
 
-        userService.getUserByID($scope.currentUserId).then(function(data) {
-            $scope.currentUser = data;});
 
-        userService.getAllUsers().then(function(data) {
-            $scope.appUsers = data;});
+
+        if ($scope.connected) {
+            // Get the user data
+            userService.getUserByID($scope.currentUserId).then(function (data) {
+
+                $scope.currentUser = data.data;
+                $scope.currentUserName = $scope.currentUser.firstName;
+
+                if (data.data.role === 'admin'){
+                    $scope.isAdmin = true;
+                }
+
+                // var expireDate = new Date();
+                // expireDate.setDate(expireDate.getDate() + 1);
+                //
+                // console.log(data.data.transactions.length);
+                //
+                // $cookieStore.remove('haveTransactionData');
+                //
+                // if (data.data.transactions.length !== '0') {
+                //     console.log('yes');
+                //     $cookieStore.put('haveTransactionData','true',{
+                //         expires: expireDate
+                //     });
+                // }
+            });
+
+        }
+
+
+        //alert($scope.currentUser.firstName );
+        //alert($scope.currentUserId);
+        // Get all users
+        if($scope.isAdmin) {
+            userService.getAllUsers().then(function (data) {
+                $scope.appUsers = data;
+            });
+        }
 
         // Register
          $scope.createNewUser = function() {
@@ -40,38 +81,25 @@
                 }else{
                     $scope.connected = true;
                     // Get the user data
-                    userService.getUserByID(data.data.id).then(function(user,err) {
+                    userService.getUserByID(data.data.user._id).then(function(user,err) {
                         //$scope.currentUser = user.data;
-                        $scope.currentUserId = user.data._id;
-                        $scope.currentUserName = user.data.firstName;
-                        $scope.currentUserRole = user.data.role;
 
                         var expireDate = new Date();
                         expireDate.setDate(expireDate.getDate() + 1);
 
-                        // // Save the user
-                        // $cookieStore.put('currentUser',user.data,{
-                        //     expires: expireDate
-                        // });
                         // Save the user
                         $cookieStore.put('currentUserId',user.data._id,{
                             expires: expireDate
                         });
-                        // Save the user
-                        $cookieStore.put('currentUserName',user.data.firstName,{
-                            expires: expireDate
-                        });
-                        // Save the user
-                        $cookieStore.put('currentUserRole',user.data.role,{
-                            expires: expireDate
-                        });
+                        // $cookieStore.put('currentUserId',user.data._id,{
+                        //     expires: expireDate
+                        // });
 
                         $location.path('/home');
-
                     });
                 }
             });
-        }
+        };
 
         // Login
         $scope.checkLoginUser = function() {
@@ -86,30 +114,15 @@
                         $scope.connected = true;
                         // Get the user data
                         userService.getUserByEmail(userEmail).then(function(user,err) {
-                            //$scope.currentUser = user.data;
-                            $scope.currentUserId = user.data._id;
-                            $scope.currentUserName = user.data.firstName;
-                            $scope.currentUserRole = user.data.role;
 
                             var expireDate = new Date();
                             expireDate.setDate(expireDate.getDate() + 1);
 
-                            // // Save the user
-                            // $cookieStore.put('currentUser',user.data,{
-                            //     expires: expireDate
-                            // });
                             // Save the user
                             $cookieStore.put('currentUserId',user.data._id,{
                                 expires: expireDate
                             });
-                            // Save the user
-                            $cookieStore.put('currentUserName',user.data.firstName,{
-                                expires: expireDate
-                            });
-                            // Save the user
-                            $cookieStore.put('currentUserRole',user.data.role,{
-                                expires: expireDate
-                            });
+
 
                         });
 
@@ -120,23 +133,76 @@
                     }
                 }
             });
-        }
+        };
 
         // Logout
         $scope.logout = function () {
-            //$cookieStore.remove('currentUser');
             $cookieStore.remove('currentUserId');
-            $cookieStore.remove('currentUserName');
-            $cookieStore.remove('currentUserRole');
+            //$cookieStore.remove('haveTransactionData');
             $scope.currentUser = {};
             $scope.connected = false;
+            //$scope.haveTransactionData = false;
+            $scope.isAdmin = false;
+            $scope.currentUserName = undefined;
+            $scope.currentUserId = undefined;
 
-        }
+        };
+
+        // Delete user
+        $scope.deleteUser = function (id) {
+            // Check if the is admin and not deleting himself
+            if($scope.isAdmin && ( $scope.currentUserId !== id )){
+                if (confirm('Are you sure you want delete?')) {
+                    userService.deleteUser(id).then(function () {
+                        userService.getAllUsers().then(function(data) {
+                            $scope.appUsers = data;});
+                    });
+                }
+            }
+        };
+
+        // Update user
+        $scope.updateUser = function () {
+
+            if ($scope.connected) {
+                //alert($scope.currentUser._id );
+                //alert(this.userCtrl.userToUpdate.firstName );
+                // this.userCtrl.userToUpdate={};
+                this.userCtrl.userToUpdate._id=$scope.currentUserId;
+                console.log(this.userCtrl.userToUpdate._id);
+                //this.userCtrl.user.id=$scope.currentUser._id;
+                //alert(this.userCtrl.userToUpdate._id);
+                // alert(this.userCtrl.user.firstName);
+                userService.updateUser(this.userCtrl.userToUpdate).then(function(data,err){
+                    alert(2);
+                    if(err){
+                        console.log(err);
+                    }else{
+                        alert(3);
+                        // Get the user data
+                        // userService.getUserByID(data.data.user._id).then(function(user,err) {
+                        //
+                        //     var expireDate = new Date();
+                        //     expireDate.setDate(expireDate.getDate() + 1);
+                        //
+                        //     // // Save the user
+                        //     // $cookieStore.put('currentUser',user.data,{
+                        //     //     expires: expireDate
+                        //     // });
+                        //
+                        //     //$location.path('/userDetail');
+                        // });
+                    }
+                })
+            }
+        };
+
 
         /*********************
          * Bar Chart
          * ******************/
 
+        //alert($scope.haveTransactionData);
         if($scope.connected) {
 
             // set the dimensions and margins of the graph
@@ -159,13 +225,15 @@
                 .attr("transform",
                     "translate(" + margin.left + "," + margin.top + ")");
 
-
             var url = "/User/GetGroupById/" + $scope.currentUserId;
 
             // Get the data
             d3.json(url, function (error, data) {
 
-                if (data != undefined) {
+                //alert($scope.currentUserId);
+                // alert(data);
+
+                if (data !== undefined) {
                     data = data.filter(function (i) {
                         return i.totalPrice;
                     });
@@ -253,9 +321,9 @@
 
             d3.json(url, function (error, data) {
 
-                if (data != undefined) {
+                if (data !== undefined) {
                     data = data.filter(function (i) {
-                        if (i._id.month == 12) {
+                        if (i._id.month === 12) {
                             return i.totalPrice;
                         }
                     });
@@ -305,82 +373,6 @@
             $scope.appBranches = data;});
 
     })
-    myApp.controller("transactionCtrl", function($scope,transactionService) {
-        var self = this;
-        transactionService.GetAllTransactions().then(function(data) {
-            $scope.appTransaction = data;});
-
-        transactionService.GetGroupTransactions().then(function(data) {
-            $scope.appGroupTransaction = data;});
-
-        // /*********************
-        //  * Bar Chart
-        //  * ******************/
-        // // set the dimensions and margins of the graph
-        // var margin = {top: 20, right: 20, bottom: 30, left: 40},
-        //     width = 960 - margin.left - margin.right,
-        //     height = 500 - margin.top - margin.bottom;
-        //
-        // // set the ranges
-        // var x = d3.scaleBand()
-        //     .range([0, width])
-        //     .padding(0.1);
-        // var y = d3.scaleLinear()
-        //     .range([height, 0]);
-        //
-        // // append the svg object
-        // var svg = d3.select("#userTransactionBarChart").append("svg")
-        //     .attr("width", width + margin.left + margin.right)
-        //     .attr("height", height + margin.top + margin.bottom)
-        //     .append("g")
-        //     .attr("transform",
-        //         "translate(" + margin.left + "," + margin.top + ")");
-        //
-        // // Get the data
-        // d3.json("/Transactions/GetGroup", function(error, data) {
-        //
-        //     if (data != undefined){
-        //         data = data.filter(function(i) {
-        //             return i.totalPrice ;
-        //         });
-        //         data.sort(function(a, b){
-        //             return b.totalPrice-a.totalPrice;
-        //         });
-        //
-        //         // Scale the range of the data in the domains
-        //         x.domain(data.map(function(d) { return d._id.month +"/" + d._id.year + " "+  d._id.catagory; }));
-        //         y.domain([0, d3.max(data, function(d) { return d.totalPrice; })]);
-        //
-        //         if (error) throw error;
-        //         // append the rectangles for the bar chart
-        //         svg.selectAll(".bar")
-        //             .data(data)
-        //             .enter().append("rect")
-        //             .attr("class", "bar")
-        //             .attr("x", function(d) { return x(d._id.month +"/" + d._id.year + " "+  d._id.catagory); })
-        //             .attr("width", x.bandwidth())
-        //             .attr("y", function(d) { return y(d.totalPrice); })
-        //             .attr("height", function(d) { return height - y(d.totalPrice); });
-        //
-        //         // add the x Axis
-        //         svg.append("g")
-        //             .attr("transform", "translate(0," + height + ")")
-        //             .call(d3.axisBottom(x));
-        //
-        //         // add the y Axis
-        //         svg.append("g")
-        //             .call(d3.axisLeft(y));
-        //
-        //
-        //     }
-        //
-        // });
-        //
-        // /*********************
-        //  * End Bar Chart
-        //  * ******************/
-    })
-
     // myApp.controller("transactionCtrl", function($scope,transactionService) {
     //     var self = this;
     //     transactionService.GetAllTransactions().then(function(data) {
@@ -389,73 +381,9 @@
     //     transactionService.GetGroupTransactions().then(function(data) {
     //         $scope.appGroupTransaction = data;});
     //
-    //     // /*********************
-    //     //  * Bar Chart
-    //     //  * ******************/
-    //     // // set the dimensions and margins of the graph
-    //     // var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    //     //     width = 960 - margin.left - margin.right,
-    //     //     height = 500 - margin.top - margin.bottom;
-    //     //
-    //     // // set the ranges
-    //     // var x = d3.scaleBand()
-    //     //     .range([0, width])
-    //     //     .padding(0.1);
-    //     // var y = d3.scaleLinear()
-    //     //     .range([height, 0]);
-    //     //
-    //     // // append the svg object
-    //     // var svg = d3.select("#userTransactionBarChart").append("svg")
-    //     //     .attr("width", width + margin.left + margin.right)
-    //     //     .attr("height", height + margin.top + margin.bottom)
-    //     //     .append("g")
-    //     //     .attr("transform",
-    //     //         "translate(" + margin.left + "," + margin.top + ")");
-    //     //
-    //     // // Get the data
-    //     // d3.json("/Transactions/GetGroup", function(error, data) {
-    //     //
-    //     //     if (data != undefined){
-    //     //         data = data.filter(function(i) {
-    //     //             return i.totalPrice ;
-    //     //         });
-    //     //         data.sort(function(a, b){
-    //     //             return b.totalPrice-a.totalPrice;
-    //     //         });
-    //     //
-    //     //         // Scale the range of the data in the domains
-    //     //         x.domain(data.map(function(d) { return d._id.month +"/" + d._id.year + " "+  d._id.catagory; }));
-    //     //         y.domain([0, d3.max(data, function(d) { return d.totalPrice; })]);
-    //     //
-    //     //         if (error) throw error;
-    //     //         // append the rectangles for the bar chart
-    //     //         svg.selectAll(".bar")
-    //     //             .data(data)
-    //     //             .enter().append("rect")
-    //     //             .attr("class", "bar")
-    //     //             .attr("x", function(d) { return x(d._id.month +"/" + d._id.year + " "+  d._id.catagory); })
-    //     //             .attr("width", x.bandwidth())
-    //     //             .attr("y", function(d) { return y(d.totalPrice); })
-    //     //             .attr("height", function(d) { return height - y(d.totalPrice); });
-    //     //
-    //     //         // add the x Axis
-    //     //         svg.append("g")
-    //     //             .attr("transform", "translate(0," + height + ")")
-    //     //             .call(d3.axisBottom(x));
-    //     //
-    //     //         // add the y Axis
-    //     //         svg.append("g")
-    //     //             .call(d3.axisLeft(y));
-    //     //
-    //     //
-    //     //     }
-    //     //
-    //     // });
-    //     //
-    //     // /*********************
-    //     //  * End Bar Chart
-    //     //  * ******************/
     // })
+
+
 
     //angular.module('app').controller('userCtrl', ['$scope', 'userService', userCtrl])
     //angular.module('myApp').controller('userCtrl', ['$scope', 'userService', userCtrl])

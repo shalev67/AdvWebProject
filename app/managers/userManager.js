@@ -96,11 +96,6 @@ module.exports = {
             }
         });
     },
-    // getUserTransaction: function (callback, _id) {
-    //     User.findOne({'_id': _id}, function (err, transaction) {
-    //         callback(null, transaction);
-    //     })
-    // },
     deleteUserByID: function (callback, _id) {
         User.remove({'_id': _id}, function (err) {
             if (err) {
@@ -109,18 +104,31 @@ module.exports = {
             callback(null, _id);
         })
     },
-    updateUserByID: function (callback, newUser) {
-        var changedUser = newUser;
-        var passwordHash = require('password-hash');
-        changedUser.password = passwordHash.generate(changedUser.password);
-        changedUser.save(function (err, user) {
-            if (err) {
-                console.error(err);
-            }
-            else {
-                callback(null, user.id);
-            }
+
+    updateUser: function (callback, user) {
+        //console.log(user._id);
+
+        User.findOne({'_id': user._id}, function (err, dbUser) {
+            dbUser.firstName = user.firstName || dbUser.firstName;
+            dbUser.lastName = user.lastName || dbUser.lastName;
+            dbUser.gender = user.gender || dbUser.gender;
+            dbUser.income = user.income || dbUser.income;
+            dbUser.maritalStatus = user.maritalStatus || dbUser.maritalStatus;
+            dbUser.kids = user.kids || dbUser.kids;
+            dbUser.zone = user.zone || dbUser.zone;
+            dbUser.save(function (err) {
+                if (err) {
+                    console.error(err);
+                }
+                else {
+
+                    callback(null);
+                }
+            });
         });
+        //var changedUser = newUser;
+        //changedUser.password = passwordHash.generate(newUser.password);
+
     }
 
 };

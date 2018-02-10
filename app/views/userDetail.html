@@ -1,27 +1,24 @@
 <div class="col-md-6 col-md-offset-3" id="center-div">
-    <h2>Register</h2>
-    <form name="form" ng-submit="createNewUser()"  role="form" method="POST">
+    <h2>Update Detail</h2>
+
+
+    {{currentUser.firstName}}
+    <form name="form" ng-submit="updateUser()"  role="form" method="PUT">
         <div class="form-group">
             <label >First name</label>
-            <input type="text" name="firstName" id="firstName" class="form-control" ng-model="userCtrl.user.firstName" required />
+            <input type="text" name="firstName" id="firstName" ng-init="userCtrl.userToUpdate.firstName=currentUser.firstName" class="form-control" ng-model="userCtrl.userToUpdate.firstName" required />
             <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
         </div>
 
         <div class="form-group">
             <label >Last name</label>
-            <input type="text" name="lastName" id="lastName" class="form-control" ng-model="userCtrl.user.lastName" required />
+            <input type="text" name="lastName" id="lastName" ng-init="userCtrl.userToUpdate.lastName=currentUser.lastName"  class="form-control" ng-model="userCtrl.userToUpdate.lastName" required />
             <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
         </div>
 
         <div class="form-group">
-            <label>Birth Date</label>
-            <input type="date"  name="birthDate" id="birthDate" class="form-control" ng-model="userCtrl.user.birthDate" required />
-            <span ng-show="form.birthDate.$dirty && form.birthDate.$error.required" class="help-block">Birth Date is required</span>
-        </div>
-
-        <div class="form-group">
             <label >Gender</label>
-            <select  class="form-control" ng-model="userCtrl.user.gender" required>
+            <select  class="form-control" ng-init="userCtrl.userToUpdate.gender=currentUser.gender" ng-model="userCtrl.userToUpdate.gender" required>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
             </select>
@@ -30,14 +27,14 @@
 
         <div class="form-group">
             <label >Monthly income</label>
-            <input type="number" name="income" id="income" class="form-control" ng-model="userCtrl.user.income" required />
+            <input type="number" name="income" id="income" ng-init="userCtrl.userToUpdate.income=currentUser.income" class="form-control" ng-model="userCtrl.userToUpdate.income" required />
             <span ng-show="form.income.$dirty && form.income.$error.required" class="help-block">Monthly income is required</span>
         </div>
 
         <div class="form-group">
             <label>Marital Status</label>
             <div>
-                <select  class="form-control" ng-model="userCtrl.user.maritalStatus" required>
+                <select  class="form-control" ng-init="userCtrl.userToUpdate.maritalStatus=currentUser.maritalStatus" ng-model="userCtrl.userToUpdate.maritalStatus" required>
                     <option value="married">Married</option>
                     <option value="single">Single</option>
                     <option value="divorced">Divorced</option>
@@ -49,7 +46,7 @@
 
         <div class="form-group">
             <label>Kids</label>
-            <input type="number" name="kids" id="number" ng-init="userCtrl.user.kids=0" class="form-control" min="0" ng-model="userCtrl.user.kids" required />
+            <input type="number" name="kids" id="number" ng-init="0" class="form-control" min="0" ng-model="userCtrl.userToUpdate.kids" required />
             <span ng-show="form.kids.$dirty && form.kids.$error.required" class="help-block">Number if kids is required</span>
         </div>
 
@@ -57,7 +54,7 @@
         <div class="form-group">
             <label>Living zone</label>
             <div>
-                <select  class="form-control" ng-model="userCtrl.user.zone" required>
+                <select  class="form-control" ng-init="userCtrl.userToUpdate.zone=currentUser.zone" ng-model="userCtrl.userToUpdate.zone" required>
                     <option value="north">North</option>
                     <option value="center">Center</option>
                     <option value="south">South</option>
@@ -66,23 +63,9 @@
             <span ng-show="form.zone.$dirty && form.zone.$error.required" class="help-block">Living zone is required</span>
         </div>
 
-        <div class="form-group">
-            <label >Email</label>
-            <input type="email" name="email" id="email" class="form-control" ng-model="userCtrl.user.email" required />
-            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" class="form-control" ng-model="userCtrl.user.password" required />
-            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
-        </div>
-
         <div class="form-actions">
-            <!-- <button type="submit" onclick='angular.element(this).scope().createNewUser()' ng-disabled="form.$invalid" class="btn btn-primary">Create</button> -->
-            <button type="submit" ng-click="createNewUser()" ng-disabled="form.$invalid" class="btn btn-primary">Create</button>
+            <button type="submit" ng-click="updateUser()" ng-disabled="form.$invalid" class="btn btn-primary">Save</button>
             <a href="#!/home" class="btn btn-link">Cancel</a>
         </div>
     </form>
 </div>
-
