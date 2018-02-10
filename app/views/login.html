@@ -1,7 +1,7 @@
 
 <div class="col-md-6 col-md-offset-3">
     <h2>Login</h2>
-    <form name="form" ng-submit="userCtrl.checkLoginUser()" role="form">
+    <form name="form" ng-submit="checkLoginUser()" role="form">
         <div ng-show="loginError" class="alert alert-danger" style="text-align: center;" >
             User mail or Password are invalid
         </div>
@@ -16,7 +16,8 @@
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
         </div>
         <div class="form-actions">
-            <button type="submit" onclick='angular.element(this).scope().checkLoginUser()' ng-disabled="form.$invalid" class="btn btn-primary">Login</button>
+            <button type="submit"  ng-disabled="form.$invalid" class="btn btn-primary">Login</button>
+            <!--<button type="submit" onclick='angular.element(this).scope().checkLoginUser()' ng-disabled="form.$invalid" class="btn btn-primary">Login</button>-->
             <a href="#!/register" class="btn btn-link">Register</a>
         </div>
     </form>

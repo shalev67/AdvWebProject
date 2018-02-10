@@ -30,13 +30,15 @@
         };
 
         this.updateUser = function(user){
-            //alert(user.firstName);
             return $http.put('/User/UpdateUser' , user);
         };
 
-
         this.checkUser = function(userEmail,userPassword){
             return $http.get('/User/CheckUser/' + userEmail + "/" + userPassword);
+        };
+
+        this.searchUsers = function(searchUserDetail){
+            return $http.post('/User/SearchUsers' , searchUserDetail);
         };
 
     })
@@ -45,6 +47,9 @@
     myApp.service('branchService', function($http){
         this.getAllBranches = function(){
             return $http.get('/Branches/GetAll');
+        };
+        this.searchBranches = function(searchBranches){
+            return $http.post('/Branches/SearchBrunches' , searchBranches);
         };
     })
 

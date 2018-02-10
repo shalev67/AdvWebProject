@@ -22,6 +22,23 @@ module.exports = {
         Branch.find({}, function (err, branches) {
             callback(null, branches);
         });
-    }
+    },
+    searchBrunches: function (callback, searchBranches) {
+        var city = (searchBranches.city)? ".*" + searchBranches.city + ".*" :".*.*";
+        var description = (searchBranches.description)? ".*" + searchBranches.description + ".*" :".*.*";
+        var phone = (searchBranches.phone)? searchBranches.phone :".*.*";
+
+        Branch.find({$and: [{"City": {$regex : city} , "Description": {$regex :description},
+                "Phone": {$regex :phone}}]}, function(err, branches){
+            if (err) {
+                console.error(err);
+            }
+            else {
+
+                callback(null, branches);
+            }
+        });
+    },
+
 
 };

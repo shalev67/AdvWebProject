@@ -32,70 +32,80 @@
   {
     "City":"Tel Aviv-Yafo",
     "Description":"Allenby St 43",
-    "Zoom":50,
+    "Phone": "03-8568458",
+    "Zoom":15,
     "Lattitude":32.070502,
     "Longtidute":34.770441
   },
   {
     "City":"Ramat Gan",
     "Description":"Raziel St 9-13",
-    "Zoom":50,
+    "Phone": "03-7865144",
+    "Zoom":15,
     "Lattitude":32.058136,
     "Longtidute":34.821682
   },
   {
     "City":"Jerusalem",
     "Description":"HaRav Hen St 1-15",
-    "Zoom":50,
+    "Phone": "02-7966123",
+    "Zoom":15,
     "Lattitude":31.768456,
     "Longtidute":35.208778
   },
   {
     "City":"Eilat",
     "Description":"Derekh Yotam 5",
-    "Zoom":50,
+    "Phone": "08-2456548",
+    "Zoom":15,
     "Lattitude":29.551657,
     "Longtidute":34.951458
   },
   {
     "City":"Be'er Sheva",
     "Description":"Ha-Kotser St 35",
-    "Zoom":50,
+    "Phone": "08-5965556",
+    "Zoom":15,
     "Lattitude":31.212801,
     "Longtidute":34.81842
   },
   {
     "City":"Netanya",
     "Description":"Heftsiba St 5",
-    "Zoom":50,
+    "Phone": "03-1455447",
+    "Zoom":15,
     "Lattitude":32.309188,
     "Longtidute":34.885025
   },
   {
     "City":"Haifa",
     "Description":"Sderot Hatsvi 19",
-    "Zoom":50,
+    "Phone": "04-3454848",
+    "Zoom":15,
     "Lattitude":32.804013,
     "Longtidute":34.980125
   },
   {
     "City":"Hadera",
     "Description":"Gafnovitch St 5",
-    "Zoom":50,
+    "Phone": "08-7545215",
+    "Zoom":15,
     "Lattitude":32.419385,
     "Longtidute":34.946136
   },
   {
     "City":"Ashdod",
     "Description":"Sderot Herzl",
-    "Zoom":50,
+    "Phone": "03-4174858",
+    "Zoom":15,
     "Lattitude":31.788886,
     "Longtidute":34.639206
   },
   {
     "City":"Bet Shemesh",
     "Description":"Ha-Ta'asiya St",
-    "Zoom":50,
+    "Phone": "02-3565484",
+    "Zoom":15,
     "Lattitude":31.737511,
     "Longtidute":34.94545
   }

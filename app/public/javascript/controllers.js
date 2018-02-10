@@ -7,13 +7,13 @@
 
         //this.userCtrl.userToUpdate = {};
         $scope.connected = false;
-        $scope.currentUser = {};
+        //$scope.currentUser = {};
         $scope.loginError = false;
+        //$scope.userTransactions = {};
         //$scope.haveTransactionData = false;
         $scope.isAdmin = false;
-        $scope.currentUserName = undefined;
-        $scope.currentUserId = undefined;
 
+        $scope.currentUserId = undefined;
 
         if ($cookieStore.get('currentUserId') !== undefined){
 
@@ -23,28 +23,14 @@
             //$scope.haveTransactionData = $cookieStore.get('haveTransactionData');
             $scope.currentUserId = $cookieStore.get('currentUserId');
 
-
-
-        }
-
-
-        $scope.isConncted =  function(){
-            return $scope.connected;
-        };
-
-
-
-        if ($scope.connected) {
-            // Get the user data
             userService.getUserByID($scope.currentUserId).then(function (data) {
 
                 $scope.currentUser = data.data;
-                $scope.currentUserName = $scope.currentUser.firstName;
 
-                if (data.data.role === 'admin'){
-                    $scope.isAdmin = true;
-                }
 
+                //console.log(data);
+
+                //console.log($scope.currentUser);
                 // var expireDate = new Date();
                 // expireDate.setDate(expireDate.getDate() + 1);
                 //
@@ -58,24 +44,28 @@
                 //         expires: expireDate
                 //     });
                 // }
-            });
 
+            });
         }
 
+        $scope.isConncted =  function(){
+            return $scope.connected;
+        };
 
-        //alert($scope.currentUser.firstName );
-        //alert($scope.currentUserId);
-        // Get all users
-        if($scope.isAdmin) {
+
+        // if($scope.currentUser.role === 'admin') {
+            $scope.isAdmin = true;
+
+            // Get all users
             userService.getAllUsers().then(function (data) {
                 $scope.appUsers = data;
             });
-        }
+        // }
 
         // Register
-         $scope.createNewUser = function() {
-             this.userCtrl.user.role = "user";
-             userService.createUser(this.userCtrl.user).then(function(data,err) {
+        $scope.createNewUser = function() {
+            this.userCtrl.user.role = "user";
+            userService.createUser(this.userCtrl.user).then(function(data,err) {
                 if(err){
                     console.log(err);
                 }else{
@@ -103,7 +93,7 @@
 
         // Login
         $scope.checkLoginUser = function() {
-             var userEmail= this.userCtrl.userEmail;
+            var userEmail= this.userCtrl.userEmail;
             userService.checkUser(this.userCtrl.userEmail,this.userCtrl.userPassword).then(function(data,err) {
 
                 if(err){
@@ -126,7 +116,7 @@
 
                         });
 
-                       $location.path('/home');
+                        $location.path('/home');
                     }
                     else{
                         $scope.loginError = true;
@@ -143,8 +133,8 @@
             $scope.connected = false;
             //$scope.haveTransactionData = false;
             $scope.isAdmin = false;
-            $scope.currentUserName = undefined;
             $scope.currentUserId = undefined;
+            //$scope.userTransactions = {};
 
         };
 
@@ -162,50 +152,35 @@
         };
 
         // Update user
-        $scope.updateUser = function () {
-
+        $scope.updateThisUser = function () {
             if ($scope.connected) {
-                //alert($scope.currentUser._id );
-                //alert(this.userCtrl.userToUpdate.firstName );
-                // this.userCtrl.userToUpdate={};
                 this.userCtrl.userToUpdate._id=$scope.currentUserId;
-                console.log(this.userCtrl.userToUpdate._id);
-                //this.userCtrl.user.id=$scope.currentUser._id;
-                //alert(this.userCtrl.userToUpdate._id);
-                // alert(this.userCtrl.user.firstName);
                 userService.updateUser(this.userCtrl.userToUpdate).then(function(data,err){
-                    alert(2);
                     if(err){
                         console.log(err);
-                    }else{
-                        alert(3);
-                        // Get the user data
-                        // userService.getUserByID(data.data.user._id).then(function(user,err) {
-                        //
-                        //     var expireDate = new Date();
-                        //     expireDate.setDate(expireDate.getDate() + 1);
-                        //
-                        //     // // Save the user
-                        //     // $cookieStore.put('currentUser',user.data,{
-                        //     //     expires: expireDate
-                        //     // });
-                        //
-                        //     //$location.path('/userDetail');
-                        // });
                     }
                 })
             }
         };
 
+        // Search Users
+        $scope.searchUsers = function () {
+            userService.searchUsers(this.userCtrl.searchUsers).then(function (data) {
+                $scope.appUsers = data;
+            });
+        };
 
-        /*********************
-         * Bar Chart
-         * ******************/
-
-        //alert($scope.haveTransactionData);
+        //  Charts
         if($scope.connected) {
 
-            // set the dimensions and margins of the graph
+            /*********************
+             * Bar Chart
+             * ******************/
+
+                //alert($scope.haveTransactionData);
+
+
+                // set the dimensions and margins of the graph
             var margin = {top: 20, right: 20, bottom: 30, left: 40},
                 width = 960 - margin.left - margin.right,
                 height = 500 - margin.top - margin.bottom;
@@ -279,18 +254,17 @@
                 }
 
             });
-        }
-
-        /*********************
-         * End Bar Chart
-         * ******************/
-
-        /*********************
-         * Pie Chart
-         * ******************/
 
 
-        if($scope.connected) {
+            /*********************
+             * End Bar Chart
+             * ******************/
+
+            /*********************
+             * Pie Chart
+             * ******************/
+
+
             var widthPie = 960,
                 heightPie = 350,
                 radiusPie = Math.min(width, height) / 2;
@@ -355,15 +329,13 @@
                             return d.data._id.catagory;
                         });
                 }
-
-
             });
+
+
+            /*********************
+             * End Pie Chart
+             * ******************/
         }
-
-        /*********************
-         * End Pie Chart
-         * ******************/
-
 
     }])
 
@@ -372,16 +344,15 @@
         branchService.getAllBranches().then(function(data) {
             $scope.appBranches = data;});
 
+        $scope.searchBranches = function () {
+            branchService.searchBranches(this.branchCtrl.searchBranches).then(function (data) {
+                console.log(data);
+                $scope.appBranches = data;
+            });
+        };
+
     })
-    // myApp.controller("transactionCtrl", function($scope,transactionService) {
-    //     var self = this;
-    //     transactionService.GetAllTransactions().then(function(data) {
-    //         $scope.appTransaction = data;});
-    //
-    //     transactionService.GetGroupTransactions().then(function(data) {
-    //         $scope.appGroupTransaction = data;});
-    //
-    // })
+
 
 
 

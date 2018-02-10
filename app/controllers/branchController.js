@@ -16,5 +16,18 @@ module.exports = function (app) {
             }
         });
     });
+
+    //Search brunches
+    app.post('/Branches/SearchBrunches', function (req, res, next) {
+        branchManager.searchBrunches(function (err, brunches) {
+                if (err) {
+                    console.log('searchBrunches Err: ' + err);
+                    res.next();
+                } else {
+                    res.json(brunches)
+                }
+            },
+            req.body)
+    });
 }
 

@@ -104,10 +104,7 @@ module.exports = {
             callback(null, _id);
         })
     },
-
     updateUser: function (callback, user) {
-        //console.log(user._id);
-
         User.findOne({'_id': user._id}, function (err, dbUser) {
             dbUser.firstName = user.firstName || dbUser.firstName;
             dbUser.lastName = user.lastName || dbUser.lastName;
@@ -126,9 +123,23 @@ module.exports = {
                 }
             });
         });
-        //var changedUser = newUser;
-        //changedUser.password = passwordHash.generate(newUser.password);
+    },
+    searchUsers: function (callback, searchUser) {
 
+        var firstName = (searchUser.firstName)? ".*" + searchUser.firstName + ".*" :".*.*";
+        var lastName = (searchUser.lastName)? ".*" + searchUser.lastName + ".*" :".*.*";
+        var zone = (searchUser.zone)? searchUser.zone :".*.*";
+        var role = (searchUser.role)? ".*" + searchUser.role + ".*" :".*.*";
+
+        User.find({$and: [{"firstName": {$regex : firstName} , "lastName": {$regex :lastName},
+                    "zone": {$regex :zone}, "role": {$regex :role}}]}, function(err, users){
+            if (err) {
+            console.error(err);
+        }
+        else {
+
+            callback(null, users);
+        }
+        });
     }
-
 };

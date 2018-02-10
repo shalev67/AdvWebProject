@@ -4,21 +4,42 @@ Users Manager
 
 <hr/>
 
-</br>
 <div class="search-tbl-header">
-    <table cellpadding="0" cellspacing="0" border="0" class="search-tbl">
-        <thead>
-        <tr>
-            <th class="search-tbl-th"><input ng-model="search.firstName" placeholder="First Name" class="search-box"></th>
-            <th class="search-tbl-th"><input ng-model="search.lastName" placeholder="Last Name" class="search-box"></th>
-            <th class="search-tbl-th"><input ng-model="search.email" placeholder="Email" class="search-box"></th>
-            <th class="search-tbl-th"><input ng-model="search.role" placeholder="Role" class="search-box"></th>
-        </tr>
-        </thead>
-    </table>
+    <form name="form" ng-submit="searchUsers()"  role="form" method="POST">
+        <table cellpadding="0" cellspacing="0" border="0" class="search-tbl">
+            <thead>
+            <tr>
+
+                <th class="search-tbl-th">
+                    <input type="text" name="firstName" id="firstName" placeholder="First Name" class="form-control" ng-model="userCtrl.searchUsers.firstName" />
+                </th>
+
+                <th class="search-tbl-th">
+                    <input type="text" name="lastName" id="lastName" placeholder="Last Name" class="form-control" ng-model="userCtrl.searchUsers.lastName" />
+                </th>
+
+                <th class="search-tbl-th">
+                    <select  class="form-control"  ng-model="userCtrl.searchUsers.zone" >
+                        <option value="">Living zone</option>
+                        <option value="north">North</option>
+                        <option value="center">Center</option>
+                        <option value="south">South</option>
+                    </select>
+                </th>
+
+                <th class="search-tbl-th">
+                    <input type="text" name="role" id="role" placeholder="Role" class="form-control" ng-model="userCtrl.searchUsers.role" />
+                </th>
+
+                <th class="search-tbl-th">
+                    <button type="submit"   class="btn btn-primary">Search</button>
+                </th>
+            </tr>
+            </thead>
+        </table>
+    </form>
 </div>
 
-</br>
 
 <div id="usr-tbl-div">
     <table class="table table-hover">

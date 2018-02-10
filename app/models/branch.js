@@ -13,6 +13,11 @@ var branchSchema = new Schema(
             minlength: 2,
             maxlength: 20
         },
+        Phone: {
+            type: String,
+            minlength: 2,
+            maxlength: 20
+        },
         Zoom: {
             type: Number,
             required: [true, 'Zoom is required']

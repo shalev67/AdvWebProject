@@ -130,4 +130,18 @@ module.exports = function (app) {
             },
             req.body)
     });
+
+    // Search Users
+    app.post('/User/SearchUsers', function (req, res, next) {
+        userManager.searchUsers(function (err, users) {
+                if (err) {
+                    console.log('SearchUsers Err: ' + err);
+                    res.next();
+                } else {
+                    res.json(users)
+                }
+            },
+            req.body)
+    });
+
 }
