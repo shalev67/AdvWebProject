@@ -51,6 +51,13 @@
         this.searchBranches = function(searchBranches){
             return $http.post('/Branches/SearchBrunches' , searchBranches);
         };
+    });
+
+    // todo: send request
+    myApp.service('uploadService', function ($http) {
+        this.uploadFile = function (file) {
+            return $http.post()
+        }
     })
 
     // myApp.service('transactionService', function($http){

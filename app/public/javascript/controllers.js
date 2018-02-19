@@ -353,6 +353,32 @@
 
     })
 
+    myApp.controller("uploadCtrl", function ($scope, $http) {
+        var uploadUrl = "";
+
+            $scope.uploadFile = function () {
+                var file = $scope.myFile;
+                // var uploadUrl = "../server/service.php", //Url of webservice/api/server
+
+
+
+             //Take the first selected file
+             $http.post(uploadUrl, file, {
+                 withCredentials: true,
+                 headers: {'Content-Type': undefined }
+                 // ,transformRequest: angular.identity
+             }).then(function (sucess) {
+
+             }).error(function (error) {
+                console.log('eerrrrrrroooor')
+                 console.log(error)
+
+             })
+
+
+            }
+    })
+
 
 
 
