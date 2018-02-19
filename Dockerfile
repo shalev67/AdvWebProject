@@ -1,5 +1,5 @@
 FROM node:carbon
-EXPOSE 3000
+EXPOSE 5000
 
 RUN mkdir /src
 WORKDIR /src
