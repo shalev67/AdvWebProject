@@ -354,7 +354,7 @@
     })
 
     myApp.controller("uploadCtrl", function ($scope, $http) {
-        var uploadUrl = "";
+        var uploadUrl = "http://localhost:3000";
 
             $scope.uploadFile = function () {
                 var file = $scope.myFile;
