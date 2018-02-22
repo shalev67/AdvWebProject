@@ -53,6 +53,10 @@ myApp.config(function($routeProvider) {
         templateUrl: "views/addTransactions.html",
         controller : 'userCtrl'
     }).
+    when('/upload', {
+        templateUrl: "views/upload.html",
+        controller : 'uploadCtrl'
+    }).
     otherwise({
         redirectTo: '/home'
     });
