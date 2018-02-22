@@ -1,0 +1,10 @@
+FROM python:3.5
+EXPOSE 3000
+
+RUN mkdir /extractor
+WORKDIR /extractor
+COPY ./extractor /extractor
+RUN apt update && apt install swig libpulse-dev -y
+RUN pip install -r requirements.txt
+
+CMD python credit.py

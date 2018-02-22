@@ -8,10 +8,23 @@ services:
     ports:
       - "27017:27017"
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-web
     hostname: web
     container_name: web
     ports:
       - "5000:5000"
     depends_on:
       - db
+  extractor:
+    build:
+      context: .
+      dockerfile: Dockerfile-extractor
+    hostname: extractor
+    container_name: extractor
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - web
