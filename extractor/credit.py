@@ -1,15 +1,21 @@
 import textract
 from itertools import tee
-
+import base64
+import bson
 import os
 from flask import Flask, request, make_response
 from werkzeug.utils import secure_filename
+import datetime
+from pymongo import MongoClient
 
 UPLOAD_FOLDER = '/tmp/'
 ALLOWED_EXTENSIONS = {'pdf'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+client = MongoClient('mongodb://localhost:27017/')
+
+users_collection = client.test.users
 
 
 def allowed_file(filename):
@@ -19,16 +25,13 @@ def allowed_file(filename):
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # check if the post request has the file part
-        if 'data' not in request.files:
-            # bad request
-            return make_response('Bad request', 400)
-        file = request.files['data']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            extract_transaction_from_pdf(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return "OK!"
+        file_stream = request.form['file']
+        filename = 'data.pdf'
+        with open(os.path.join(app.config['UPLOAD_FOLDER'], 'data.pdf'), 'wb') as file:
+            file.write(base64.b64decode(file_stream[28:]))
+
+        extract_transaction_from_pdf(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return 'OK!'
     else:
         return 'Hello World!'
 
@@ -122,7 +125,18 @@ def extract_transaction_from_pdf(file_path):
             'price': price,
             'category': category
         })
-    print(transactions)
+    for transaction in transactions['transactions']:
+        transaction['_id'] = bson.objectid.ObjectId()
+        date = transaction['date']
+        date = date.split('/')
+        date[2] = '20' + date[2]
+        date = '/'.join(date)
+        transaction['date'] = datetime.datetime.strptime(date, '%d/%m/%Y')
+    for transaction in transactions['transactions']:
+        users_collection.update_one(
+            {'firstName': 'user'},
+            {'$push': {'transactions': transaction}}
+        )
 
 
 if __name__ == '__main__':
