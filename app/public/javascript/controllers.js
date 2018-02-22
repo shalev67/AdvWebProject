@@ -337,7 +337,7 @@
              * ******************/
         }
 
-    }])
+    }]);
 
     myApp.controller("branchCtrl", function($scope,branchService) {
         var self = this;
@@ -351,28 +351,31 @@
             });
         };
 
-    })
+    });
 
     myApp.controller("uploadCtrl", function ($scope, $http) {
         var uploadUrl = "http://localhost:3000";
 
-            $scope.uploadFile = function () {
-                var file = $scope.myFile;
-                // var uploadUrl = "../server/service.php", //Url of webservice/api/server
-
-
-
+        $scope.uploadFile = function () {
+            var file = $scope.myFile;
+            var payload = new FormData();
+            payload.append("title", 'data');
+            payload.append('file', file);
+             // var uploadUrl = "../server/service.php", //Url of webservice/api/server
              //Take the first selected file
-             $http.post(uploadUrl, file, {
-                 withCredentials: true,
-                 headers: {'Content-Type': undefined }
-                 // ,transformRequest: angular.identity
-             }).then(function (sucess) {
+             $http.post(
+                 uploadUrl,
+                 payload,
+                 {
+                     withCredentials: true,
+                     headers: {'Content-Type': undefined }
+                     // ,transformRequest: angular.identity
+                 }
+             ).then(function (sucess) {
 
              }).error(function (error) {
-                console.log('eerrrrrrroooor')
+                 console.log('eerrrrrrroooor');
                  console.log(error)
-
              })
 
 
