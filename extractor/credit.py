@@ -131,6 +131,7 @@ def extract_transaction_from_pdf(file_path):
         date = date.split('/')
         date[2] = '20' + date[2]
         date = '/'.join(date)
+        transaction['price'] = int(float(transaction['price']))
         transaction['date'] = datetime.datetime.strptime(date, '%d/%m/%Y')
     for transaction in transactions['transactions']:
         users_collection.update_one(

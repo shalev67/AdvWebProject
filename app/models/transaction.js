@@ -6,7 +6,7 @@ var transactionSchema = new Schema(
             type: Number,
             required: [true, 'Zoom is required']
         },
-        catagory: {
+        category: {
             type: String,
             required: [true, 'Zoom is required']
         },

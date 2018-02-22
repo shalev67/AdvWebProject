@@ -31,7 +31,7 @@ module.exports = {
                                     //email: "$email",
                                     month: {"$month": "$transactions.date"},
                                     year: {"$year": "$transactions.date"},
-                                    catagory: "$transactions.catagory"
+                                    category: "$transactions.category"
                                 },
                                 totalPrice: {"$sum": {"$multiply": ["$transactions.price"]}},
                                 "count": {"$sum": 1}

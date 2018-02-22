@@ -31,7 +31,7 @@ module.exports = {
     groupTransaction: function (callback) {
         Transaction.aggregate([{ "$group": {
                 "_id": {"month": { "$month": "$date" }, "year": { "$year": "$date" },
-                    "catagory": "$catagory"},
+                    "category": "$category"},
                 "totalPrice": { "$sum": { "$multiply": [ "$price"] } },
                 "count": { "$sum": 1 }
             }}], function (err, docs) {

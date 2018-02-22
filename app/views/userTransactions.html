@@ -18,7 +18,7 @@
             <table cellpadding="0" cellspacing="0" border="0" class="search-tbl" >
                 <thead>
                 <tr>
-                    <th class="search-tbl-th"><input ng-model="search.catagory" placeholder="catagory" class="search-box"></th>
+                    <th class="search-tbl-th"><input ng-model="search.category" placeholder="category" class="search-box"></th>
                     <th class="search-tbl-th"><input ng-model="search.buissness" placeholder="buissness" class="search-box"></th>
                     <th class="search-tbl-th"><input ng-model="search.price" placeholder="price" class="search-box"></th>
                 </tr>
@@ -36,7 +36,7 @@
                         Date
                     </th>
                     <th>
-                        Catagory
+                        Category
                     </th>
 
                     <th>
@@ -50,7 +50,7 @@
                 <tbody>
                 <tr ng-repeat="transaction in currentUser.transactions | orderBy : 'date' | filter:search:strict" id="transactions">
                     <td>{{ transaction.date | date:"dd/MM/yy"}}</td>
-                    <td>{{ transaction.catagory }}</td>
+                    <td>{{ transaction.category }}</td>
                     <td>{{ transaction.buissness }}</td>
                     <td>{{ transaction.price }}</td>
                 </tr>
@@ -70,7 +70,7 @@
             <!--<tr>-->
 
                 <!--<th class="search-tbl-th">-->
-                    <!--<input type="text" name="catagory" id="catagory" placeholder="Catagory" class="form-control" ng-model="userCtrl.searchTransactions.catagory" />-->
+                    <!--<input type="text" name="category" id="category" placeholder="Category" class="form-control" ng-model="userCtrl.searchTransactions.category" />-->
                 <!--</th>-->
 
                 <!--<th class="search-tbl-th">-->

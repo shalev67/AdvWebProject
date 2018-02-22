@@ -218,7 +218,7 @@
 
                     // Scale the range of the data in the domains
                     x.domain(data.map(function (d) {
-                        return d._id.month + "/" + d._id.year + " " + d._id.catagory;
+                        return d._id.month + "/" + d._id.year + " " + d._id.category;
                     }));
                     y.domain([0, d3.max(data, function (d) {
                         return d.totalPrice;
@@ -231,7 +231,7 @@
                         .enter().append("rect")
                         .attr("class", "bar")
                         .attr("x", function (d) {
-                            return x(d._id.month + "/" + d._id.year + " " + d._id.catagory);
+                            return x(d._id.month + "/" + d._id.year + " " + d._id.category);
                         })
                         .attr("width", x.bandwidth())
                         .attr("y", function (d) {
@@ -326,7 +326,7 @@
                             return "translate(" + _d + ")";
                         })
                         .text(function (d) {
-                            return d.data._id.catagory;
+                            return d.data._id.category;
                         });
                 }
             });
