@@ -1,0 +1,8 @@
+FROM python:3.5
+EXPOSE 666
+
+WORKDIR /extractor
+RUN apt update
+RUN pip install -r requirements.txt
+
+CMD expenses manipulation.py
