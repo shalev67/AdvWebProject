@@ -1,7 +1,7 @@
 (function(){
     "use strict";
     //var myApp = angular.module("myApp");
-    myApp.controller("userCtrl",['$scope','$http', 'userService','$location', '$cookieStore','$window' , function($scope,$http,userService,$location, $cookieStore, $window) {
+    function userCtrl ($scope ,$rootScope,$http,userService,$location, $cookieStore, $window) {
         var self = this;
         //var currentUser = null;
 
@@ -337,9 +337,10 @@
              * ******************/
         }
 
-    }]);
+    }
+    angular.module('userModule').controller('userCtrl', ['$scope', '$rootScope','$http', 'userService','$location', '$cookieStore','$window' , userCtrl])
 
-    myApp.controller("branchCtrl", function($scope,branchService) {
+    function branchCtrl ($scope,branchService) {
         var self = this;
         branchService.getAllBranches().then(function(data) {
             $scope.appBranches = data;});
@@ -351,9 +352,11 @@
             });
         };
 
-    });
+    }
+    angular.module('branchModule').controller('branchCtrl', ['$scope', 'branchService', branchCtrl])
 
-    myApp.controller("uploadCtrl", function ($scope, $http) {
+    //myApp.controller("uploadCtrl", function ($scope, $http) {
+    function uploadCtrl ($scope, $http, $rootScope) {
         var uploadUrl = "http://localhost:3000";
 
         $scope.uploadFile = function () {
@@ -361,45 +364,45 @@
             var payload = new FormData();
             payload.append("title", 'data');
             payload.append('file', file);
-             // var uploadUrl = "../server/service.php", //Url of webservice/api/server
-             //Take the first selected file
-             $http.post(
-                 uploadUrl,
-                 payload,
-                 {
-                     withCredentials: true,
-                     headers: {'Content-Type': undefined }
-                     // ,transformRequest: angular.identity
-                 }
-             ).then(function (sucess) {
+            // var uploadUrl = "../server/service.php", //Url of webservice/api/server
+            //Take the first selected file
+            $http.post(
+                uploadUrl,
+                payload,
+                {
+                    withCredentials: true,
+                    headers: {'Content-Type': undefined}
+                    // ,transformRequest: angular.identity
+                }
+            ).then(function (sucess) {
 
-             }).error(function (error) {
-                 console.log('eerrrrrrroooor');
-                 console.log(error)
-             })
+            }).error(function (error) {
+                console.log('eerrrrrrroooor');
+                console.log(error)
+            })
 
 
-            }
-    })
-    
-    myApp.controller("expensesCtrl", function ($scope, $http) {
+        }
+    }
+    angular.module('userModule').controller('uploadCtrl', ['$scope', '$http', '$rootScope', uploadCtrl])
+    //})
+
+    function expensesCtrl ($scope,$rootScope, $http) {
+        //myApp.controller("expensesCtrl", function ($scope, $http) {
 
         var expensesUrl = "http://localhost:666/user/" + $scope.currentUserId;
 
         $scope.getExpectedExpenses = function () {
             $http.get(expensesUrl
-            ).then(function(response){
+            ).then(function (response) {
                 $scope.expectedExpense = response.data;
             }).catch(function (error) {
                 console.log('error on expected expenses:');
                 console.log(error)
             });
         }
-    })
+    }
+    angular.module('userModule').controller('expensesCtrl', ['$scope','$rootScope', '$http', expensesCtrl])
+    //})
 
-
-
-
-    //angular.module('app').controller('userCtrl', ['$scope', 'userService', userCtrl])
-    //angular.module('myApp').controller('userCtrl', ['$scope', 'userService', userCtrl])
 })();
