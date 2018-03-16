@@ -88,7 +88,7 @@ module.exports = {
 
         user.save(function (err, user) {
             if (err) {
-                console.error(err);
+                //console.error(err);
             }
             else {
 

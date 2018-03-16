@@ -8,11 +8,6 @@
         $scope.loginError = false;
         $scope.haveTransactionData = false;
 
-        // $scope.connected = false;
-        // $scope.loginError = false;
-        // $scope.isAdmin = false;
-        // $scope.currentUserId = undefined;
-
         // Limit the age
         var today = new Date();
         var minAge = 18;
@@ -46,6 +41,16 @@
                 swal('Error', 'Living zone is required', 'error');
             }
 
+            userService.getUserByEmail(this.userCtrl.user.email).then(function (user, err) {
+                // console.log(user.data);
+
+                // Check email
+                if (user.data) {
+                    emptyFieldAlert = true;
+                    swal('Error', 'This email is exist', 'error');
+                }
+
+            });
 
             // Create User if all field are ok
             if (!emptyFieldAlert) {
