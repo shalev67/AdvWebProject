@@ -12,7 +12,6 @@
     <script src="./javascript/controllers.js"></script>
     <script src="./javascript/services.js"></script>
 
-
     <script src="./lib/angular-route.js"></script>
     <script src="./lib/angular-animate.js"></script>
     <script src="./lib/angular-touch.js"></script>
@@ -23,101 +22,83 @@
     <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDzEyJ0k3REy7R0YD5x6ag3o1epGPn8UK4"></script>
 
     <!--Graph-->
     <script src="https://d3js.org/d3.v4.min.js"></script>
 
+    <!--Style the nav-->
+    <link rel="stylesheet" href="./stylesheets/styleNav.css">
+
+    <!--Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 <!--<body ng-controller="userCtrl" ng-view>-->
 <body ng-app="myeApp" ng-controller="userCtrl">
 
-<header>
-
-    <!--Logo-->
-    <h1 class="logo">
-        <a href="#!/home">
-            <img src="./images/logo.png" class="logo">
-        </a>
-    </h1>
 
     <!--nav bar-->
-    <nav class="navbar navbar-toggleable navbar-inverse bg-inverse">
+    <nav class="navbar navbar-toggleable navbar-default navbar-light">
+        <!--Logo-->
+        <h1 class="logo">
+            <a href="#!/home">
+                <img src="./images/logo6.png" class="logo">
+            </a>
+        </h1>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
+
+            <ul class="navbar-nav mr-auto main-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#!/home">Home</a>
+                    <a class="nav-link" href="#!/home"> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!/contact">Contact us</a>
+                    <a class="nav-link" href="#!/myTransactions">Transactions</a>
                 </li>
                 <li class="nav-item" >
-                    <a class="nav-link" href="#!/currency">Currency calculator</a>
+                    <a class="nav-link" href="#!/Venus&Mars">Venus & Mars</a>
                 </li>
-                <li class="nav-item dropdown" ng-show="connected">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Transactions</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#!/upload">Add Transactions</a>
-                        <a class="dropdown-item" href="#!/myTransactions">Transactions Data</a>
-                        <a class="dropdown-item" href="#!/barchart">Bar Chart</a>
-                        <a class="dropdown-item" href="#!/piechart">Pie Chart</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/barchart">Graph</a>
                 </li>
-                <li class="nav-item dropdown" ng-show="currentUser.role === 'admin'">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown02">
-                        <a class="dropdown-item" href="#!/users">Users</a>
-                        <a class="dropdown-item" href="#!/facebook">Facebook</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!/about">About</a>
                 </li>
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item active">
-                    <a ng-show="!connected" class="nav-link" href="#!/login">Login<span class="sr-only">(current)</span></a>
-                    <a ng-show="connected" class="nav-link"  href="#!/userDetail" >Hello {{ currentUser.firstName }}<span class="sr-only">(current)</span></a>
+                    <a ng-show="!connected" class="nav-link" href="#!/register">Register</a>
                 </li>
                 <li class="nav-item active">
-                    <a ng-show="!connected" class="nav-link" href="#!/register">Register<span class="sr-only">(current)</span></a>
-                    <a ng-show="connected" class="nav-link" ng-click="logout()" href="#!/logout">Logout<span class="sr-only">(current)</span></a>
+                    <a ng-show="!connected" class="nav-link" href="#!/login">Login</a>
+                </li>
+
+                <li class="nav-item active dropdown" ng-show="connected">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ currentUser.firstName }} {{ currentUser.lastName }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#!/userDetail">Profile</a>
+                        <a class="dropdown-item" href="#!/upload">Add Transactions</a>
+                        <a class="dropdown-item" ng-show="currentUser.role === 'admin'" href="#!/users">Manage Users</a>
+                        <a class="dropdown-item" ng-click="logout()" href="#!/logout">Logout</a>
+                    </div>
                 </li>
             </ul>
+
         </div>
     </nav>
-
 </header>
 
 <div class="page-wrapper">
     <div ng-view></div>
 </div>
-
-<!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <section id="about">
-            <h3>About</h3>
-            <p>
-                In this website you can find articles about saving money.
-                Also statistics about your transactions.
-            </p>
-        </section>
-        <section id="Creators">
-            <h3>Creators</h3>
-            <ul>
-                <li>Ravid Nagar</li>
-                <li>Yuval Shalev</li>
-                <li>Shany Natan</li>
-            </ul>
-        </section>
-    </div>
-</footer>
 
 
 <!--Controllers-->

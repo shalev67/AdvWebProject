@@ -1,7 +1,6 @@
 (function() {
     var userModule = angular.module('userModule', []);
-    var branchModule = angular.module('branchModule', []);
-    var myApp = angular.module('myApp', ['ngRoute', 'ngCookies', 'branchModule', 'userModule']);
+    var myApp = angular.module('myApp', ['ngRoute', 'ngCookies', 'userModule']);
 
     myApp.config(function($routeProvider) {
         $routeProvider.
@@ -17,12 +16,12 @@
             templateUrl: 'views/register.html',
             controller : 'userCtrl'
         }).
-        when('/contact', {
-            templateUrl: "views/map.html",
-            controller : 'branchCtrl'
+        when('/Venus&Mars', {
+            templateUrl: "views/venusAndMars.html",
+            controller : 'userCtrl'
         }).
-        when('/currency', {
-            templateUrl: "views/currency.html",
+        when('/about', {
+            templateUrl: "views/about.html",
         }).
         when('/users', {
             templateUrl: "views/users.html",

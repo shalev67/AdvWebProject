@@ -1,24 +1,63 @@
-/*html {*/
-/*position: relative;*/
-/*min-height: 100%;*/
-/*}*/
 
-/*.content {*/
-/*!*margin: auto;*!*/
-/*!*width: 70%;*!*/
-/*!*padding: 10px;*!*/
-/*max-width: 1170px;*/
-/*}*/
+.web-title {
+    font-family: "Perpetua Titling MT", serif;
+    font-size: 100px;
+    text-shadow: 0 -3px 0 #ffffff8c,
+    0 6px 8px rgba(82, 179, 130, 0),
+    0 9px 10px rgba(0, 0, 0, .15),
+    0 30px 10px rgba(0, 0, 0, 0),
+    0 15px 10px rgba(0, 0, 0, 0.23);
+}
 
+.web-about{
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 20px;
+    color: #7f7f7f;
+}
+
+.web-btn{
+    text-transform: uppercase;
+    /*text-decoration: none;*/
+    letter-spacing: .075em;
+    line-height: 1em;
+    padding: 10px 30px;
+    display: inline-block;
+    border-radius: 15px;
+    width: 175px;
+    transition: all .2s ease-in-out;
+    margin: 5px 5px 5px 5px;
+    border-style: solid;
+    border-color: #378bc7;
+}
+
+.learn-btn{
+    background-color: #e84f7000;
+    color: #378bc7;
+}
+
+.learn-btn:hover{
+    color: #378bc7;
+}
+
+.start-btn{
+     background-color: #378bc7;
+     color: #fff;
+}
+.start-btn:hover{
+      color: #fff;
+}
 
 .page-wrapper{
     position:relative;
     /*margin: auto;*/
     width: 70%;
     margin: 3% auto 5% auto;
+
     /*padding: 10px;*/
     /*max-width: 1170px;*/
 }
+
+
 
 #usr-tbl-div {
     overflow: auto;
@@ -63,10 +102,11 @@
     margin-bottom: 0;
     text-align: center;
 }
-.fa-2x {
+
+.fa-5x{
     float: none;
     display: table;
-    color: #66e2a4;
+    color: #7f7f7f;
 }
 
 .hdr-tbl{
@@ -74,14 +114,13 @@
 
 }
 
-
-
 /*-----------------
  Logo
  -------------------*/
 
 .logo{
-    width: 60%;
+    /*width: 500px;*/
+    height: 40px;
 }
 
 /*---------------------
@@ -122,7 +161,7 @@
   Search
 -----------------*/
 .search-tbl-header{
-    background: linear-gradient(to right, rgb(100, 224, 162), rgba(255, 255, 255, 0));
+    background: linear-gradient(to right, rgb(59, 142, 201), rgba(255, 255, 255, 0));
     -webkit-border-radius: 20px;
     max-width: 1070px;
     margin-top: 3%;
@@ -153,7 +192,7 @@
 
 .search-btn{
     color: #fff;
-    background-color: #4ad38b;
+    background-color: #378bc7;
     border-color: #214e37;
 }
 
@@ -227,28 +266,58 @@ footer ul li a {
 }
 
 /****************
-  Articles
+  Home Page
 **************/
-.each-top-five{
-    width: 500px;
-    float: right;
-    margin-right: 70px;
+.home-div{
+    margin-top: 80px;
+    margin-bottom: 100px;
+    text-align: center;
 }
 
-.five-article-text{
-    float: right;
-    width: 280px;
-    margin-right: 10px;
-    height: 168px;
-    overflow: hidden;
-    color: darkslateblue;
+.home-tbl{
+    margin-top: 100px;
+    width: 100%;
+    text-align: center;
+}
+
+.each-top-one{
+    width: 400px;
+    height: 250px;
+    text-align: center;
+}
+
+.top-one-dd{
+    font-size: 20px;
+    color: #7f7f7f;
+    background: linear-gradient(rgb(55, 139, 199),rgba(57, 140, 199, 0.36), rgb(255, 255, 255));
+    padding-top: 12%;
+}
+
+.top-one-dd:hover {
+    background: linear-gradient(rgba(61, 142, 201, 0.3), rgb(255, 255, 255));
+    color: #000000;
+}
+
+.each-top-five{
+    width: 220px;
+    height: 200px;
+    text-align: center;
 }
 
 .top-five-dd{
-    text-align: right;
-    height: 185px;
-    background: linear-gradient(rgba(212, 212, 212, 0.73), rgb(255, 255, 255));
-    -webkit-border-radius: 11px;
+    font-size: 20px;
+    color: #7f7f7f;
+    background: linear-gradient(rgba(212, 212, 212, 0.41),rgba(212, 212, 212, 0.41), rgb(255, 255, 255));
+    padding-top: 10%;
+}
+
+.top-five-dd:hover {
+    background: linear-gradient(rgba(61, 142, 201, 0.3), rgb(255, 255, 255));
+    color: #000000;
+}
+
+.a-top-five:link{
+    text-decoration: none;
 }
 
 .Details-content{
@@ -259,3 +328,7 @@ footer ul li a {
     display:table-cell;
 }
 
+.fa-lg{
+    color: #7f7f7f;
+    height: 100px;
+}
