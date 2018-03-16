@@ -1,13 +1,12 @@
 (function() {
     var userModule = angular.module('userModule', []);
     var branchModule = angular.module('branchModule', []);
-    var articlesModule = angular.module('articlesModule', []);
-    var myApp = angular.module("myApp", ['ngRoute', 'ngCookies', 'articlesModule', 'branchModule', 'userModule']);
+    var myApp = angular.module('myApp', ['ngRoute', 'ngCookies', 'branchModule', 'userModule']);
 
     myApp.config(function($routeProvider) {
         $routeProvider.
         when('/home', {
-            templateUrl: "views/home.html",
+            templateUrl: 'views/home.html',
             controller : 'userCtrl'
         }).
         when('/login', {
@@ -33,10 +32,6 @@
             templateUrl: "views/userDetail.html",
             controller : 'userCtrl'
         }).
-        // when('/transactions', {
-        //     templateUrl: "views/transactions.html",
-        //     controller : 'transactionCtrl'
-        // }).
         when('/piechart', {
             templateUrl: "views/piechart.html",
             controller : 'userCtrl'
@@ -45,16 +40,8 @@
             templateUrl: "views/barchart.html",
             controller : 'userCtrl'
         }).
-        when('/statistics', {
-            templateUrl: "views/statistics.html",
-            controller : 'userCtrl'
-        }).
         when('/myTransactions', {
             templateUrl: "views/userTransactions.html",
-            controller : 'userCtrl'
-        }).
-        when('/addTransactions', {
-            templateUrl: "views/addTransactions.html",
             controller : 'userCtrl'
         }).
         when('/upload', {

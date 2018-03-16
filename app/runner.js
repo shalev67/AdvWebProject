@@ -98,7 +98,6 @@ function populateDb() {
     var fs = require('fs');
     var userManager = require('./managers/userManager');
     var branchManager = require('./managers/branchManager');
-    //var transactionManager = require('./managers/transactionManager');
     var currentFolder = require('path').dirname(require.main.filename);
     var contents = fs.readFileSync(currentFolder + '/startup.json');
     var jsonContent = JSON.parse(contents);

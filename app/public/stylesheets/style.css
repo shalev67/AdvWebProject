@@ -1,11 +1,27 @@
-html {
-    position: relative;
-    min-height: 100%;
+/*html {*/
+/*position: relative;*/
+/*min-height: 100%;*/
+/*}*/
+
+/*.content {*/
+/*!*margin: auto;*!*/
+/*!*width: 70%;*!*/
+/*!*padding: 10px;*!*/
+/*max-width: 1170px;*/
+/*}*/
+
+
+.page-wrapper{
+    position:relative;
+    /*margin: auto;*/
+    width: 70%;
+    margin: 3% auto 5% auto;
+    /*padding: 10px;*/
+    /*max-width: 1170px;*/
 }
 
 #usr-tbl-div {
-    width: 80%;
-    margin: 0px auto;
+    overflow: auto;
 }
 
 #center-div {
@@ -13,14 +29,59 @@ html {
 
 }
 
+.map-tbl{
+    margin: auto;
+}
+
+.map-tbl-td{
+    padding-right: 5%;
+}
+
+/*.ff-text {*/
+    /*font-family: myFirstFont;*/
+/*}*/
+
+.wrapper {
+    position: relative;
+    background-color: #f5f5f5;
+    color: #808080;
+    text-align: center;
+}
+.counter {
+    padding: 10px 0;
+    border-radius: 5px;
+}
+.count-title {
+    font-size: 30px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center; }
+.count-text {
+    font-size: 13px;
+    font-weight: normal;
+    margin-bottom: 0;
+    text-align: center;
+}
+.fa-2x {
+    float: none;
+    display: table;
+    color: #66e2a4;
+}
+
+.hdr-tbl{
+    width: 100%;
+
+}
+
+
+
 /*-----------------
  Logo
  -------------------*/
 
-
-
 .logo{
-    width: 30%;
+    width: 60%;
 }
 
 /*---------------------
@@ -64,9 +125,11 @@ html {
     background: linear-gradient(to right, rgb(100, 224, 162), rgba(255, 255, 255, 0));
     -webkit-border-radius: 20px;
     max-width: 1070px;
+    margin-top: 3%;
 }
 
 .search-tbl {
+    margin-bottom: 3%;
     width:100%;
     table-layout: fixed;
 }
@@ -89,11 +152,9 @@ html {
 }
 
 .search-btn{
-    color: #ffffff;
-    background-color: #49b1bf;
-    border-color: #287486;
-
-    color:aliceblue;
+    color: #fff;
+    background-color: #4ad38b;
+    border-color: #214e37;
 }
 
 .search-drp-dwn{
@@ -114,8 +175,6 @@ html {
 /*------------------------------
 =FOOTER
 ------------------------------*/
-
-
 
 footer {
     /*position: absolute;*/
@@ -166,3 +225,37 @@ footer ul {
 footer ul li a {
     display: block;
 }
+
+/****************
+  Articles
+**************/
+.each-top-five{
+    width: 500px;
+    float: right;
+    margin-right: 70px;
+}
+
+.five-article-text{
+    float: right;
+    width: 280px;
+    margin-right: 10px;
+    height: 168px;
+    overflow: hidden;
+    color: darkslateblue;
+}
+
+.top-five-dd{
+    text-align: right;
+    height: 185px;
+    background: linear-gradient(rgba(212, 212, 212, 0.73), rgb(255, 255, 255));
+    -webkit-border-radius: 11px;
+}
+
+.Details-content{
+    display: table;
+}
+
+.main-content{
+    display:table-cell;
+}
+

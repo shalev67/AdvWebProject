@@ -2,8 +2,6 @@
     "use strict";
     var myApp = angular.module("myApp");
 
-
-
     myApp.service('userService', function($http){
         this.getAllUsers = function(){
             return $http.get('/User/GetAll');

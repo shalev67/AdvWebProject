@@ -1,9 +1,15 @@
-<div class="col-md-6 col-md-offset-3" id="center-div">
-    <h2>Update Detail</h2>
+<div ng-show="!connected" >
+    <a href="#!/login">
+        <h5>Please login first</h5>
+    </a>
+</div>
+<div class="col-md-6 col-md-offset-3" id="center-div" ng-show="connected">
+    <h2>User profile</h2>
 
     <form name="form" ng-submit="updateThisUser()"  role="form" method="PUT">
         <div class="form-group">
             <label >First name</label>
+            <!--<input type="text" name="firstName" id="firstName" ng-init="userCtrl.userToUpdate.firstName=currentUser.firstName" class="form-control" ng-model="userCtrl.userToUpdate.firstName" required />-->
             <input type="text" name="firstName" id="firstName" ng-init="userCtrl.userToUpdate.firstName=currentUser.firstName" class="form-control" ng-model="userCtrl.userToUpdate.firstName" required />
             <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
         </div>
@@ -32,7 +38,7 @@
         <div class="form-group">
             <label>Marital Status</label>
             <div>
-                <select  class="form-control" ng-init="userCtrl.userToUpdate.maritalStatus=currentUser.maritalStatus" ng-model="userCtrl.userToUpdate.maritalStatus" required>
+                <select class="form-control" ng-init="userCtrl.userToUpdate.maritalStatus=currentUser.maritalStatus" ng-model="userCtrl.userToUpdate.maritalStatus" required>
                     <option value="married">Married</option>
                     <option value="single">Single</option>
                     <option value="divorced">Divorced</option>
@@ -44,7 +50,7 @@
 
         <div class="form-group">
             <label>Kids</label>
-            <input type="number" name="kids" id="number" ng-init="userCtrl.userToUpdate.kids=currentUser.maritalStatus" class="form-control" min="0" ng-model="userCtrl.userToUpdate.kids" required />
+            <input type="number" name="kids" id="number" ng-init="userCtrl.userToUpdate.kids=currentUser.kids" class="form-control" min="0" ng-model="userCtrl.userToUpdate.kids" required />
             <span ng-show="form.kids.$dirty && form.kids.$error.required" class="help-block">Number if kids is required</span>
         </div>
 

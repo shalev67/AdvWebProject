@@ -91,12 +91,12 @@ module.exports = function (app) {
 
     app.post('/User/AddTransaction', function (req, res, next) {
         userManager.addTransaction(function (err, id) {
-            if (err) {
-                console.log('createUser Err: ' + err);
-                res.next();
-            } else {
-                res.json({'id': id})
-            }
+                if (err) {
+                    console.log('createUser Err: ' + err);
+                    res.next();
+                } else {
+                    res.json({'id': id})
+                }
 
             },
             req.body)
