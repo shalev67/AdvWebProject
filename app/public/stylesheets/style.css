@@ -2,11 +2,12 @@
 .web-title {
     font-family: "Perpetua Titling MT", serif;
     font-size: 100px;
-    text-shadow: 0 -3px 0 #ffffff8c,
-    0 6px 8px rgba(82, 179, 130, 0),
-    0 9px 10px rgba(0, 0, 0, .15),
-    0 30px 10px rgba(0, 0, 0, 0),
-    0 15px 10px rgba(0, 0, 0, 0.23);
+    text-shadow: 0 -3px 0 #ffffff8c, 0 6px 8px
+    rgba(63, 144, 201, 0.72),
+    0 9px 10px #c3c3c3,
+    0 30px 10px
+    rgba(0, 0, 0, 0), 0 15px 10px
+    rgba(0, 0, 0, 0.23);
 }
 
 .web-about{
@@ -290,7 +291,7 @@ footer ul li a {
     font-size: 20px;
     color: #7f7f7f;
     background: linear-gradient(rgb(55, 139, 199),rgba(57, 140, 199, 0.36), rgb(255, 255, 255));
-    padding-top: 12%;
+    padding-top: 5%;
 }
 
 .top-one-dd:hover {
@@ -329,6 +330,7 @@ footer ul li a {
 }
 
 .fa-lg{
+    /*margin-top: 10px;*/
     color: #7f7f7f;
     height: 100px;
 }

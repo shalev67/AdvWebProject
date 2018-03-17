@@ -16,8 +16,8 @@
             templateUrl: 'views/register.html',
             controller : 'userCtrl'
         }).
-        when('/Venus&Mars', {
-            templateUrl: "views/venusAndMars.html",
+        when('/He&She', {
+            templateUrl: "views/heAndShe.html",
             controller : 'userCtrl'
         }).
         when('/about', {

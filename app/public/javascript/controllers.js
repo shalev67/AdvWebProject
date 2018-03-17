@@ -99,7 +99,6 @@
                             then(function (user, err) {
                                 $rootScope.currentUser = user.data;
 
-                                console.log($rootScope.currentUser);
                                 var expireDate = new Date();
                                 expireDate.setDate(expireDate.getDate() + 1);
 
