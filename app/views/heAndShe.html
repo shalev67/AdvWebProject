@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
-</html>
+<style>
+    .page-wrapper{
+        position:relative;
+        width: 100%;
+        margin: 3% auto 5% auto;
+    }
+</style>
+
+<div class="heAndShe">
+
+    <table class="home-tbl" align="center">
+        <tr align="center">
+            <td align="center">
+                <div ng-show="haveTransactionData" id="userBarChart"></div>
+            </td>
+            <td align="center">
+                <img src="./images/full-heart.png"  style="height: 200px">
+                <!--<img src="./images/half-heart-1.png"  style="height: 200px">-->
+                <!--<img src="./images/half-heart-2.png"  style="height: 200px">-->
+            </td>
+            <td align="center">
+                <div ng-show="haveTransactionData" id="partnerBarChart"></div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+

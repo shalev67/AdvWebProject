@@ -6,7 +6,7 @@
 
         $rootScope.connected = false;
         $scope.loginError = false;
-        $scope.haveTransactionData = false;
+        $rootScope.haveTransactionData = false;
 
         // Limit the age
         var today = new Date();
@@ -120,22 +120,25 @@
         $scope.logout = function () {
             $cookieStore.remove('currentUserId');
             $rootScope.currentUser = {};
+            $rootScope.currentPartner = {};
             $scope.currentUserUpdate = {};
             $rootScope.connected = false;
-            $scope.haveTransactionData = false;
+            $rootScope.haveTransactionData = false;
             $rootScope.isAdmin = false;
             $scope.currentUserId = undefined;
+            $scope.partnerHaveTransactionData = false;
         };
 
         if ($rootScope.connected ||
             $cookieStore.get('currentUserId') !== undefined) {
 
-            $rootScope.connected = true;
             $scope.currentUserId = $cookieStore.get('currentUserId');
 
             userService.getUserByID($scope.currentUserId).then(function (data) {
 
                 $rootScope.currentUser = data.data;
+
+                $rootScope.connected = true;
 
                 // Check if admin
                 if ($rootScope.currentUser.role === 'admin') {
@@ -214,7 +217,7 @@
 
                 //  Charts
                 if ($rootScope.currentUser.transactions.length > 0) {
-                    $scope.haveTransactionData = true;
+                    $rootScope.haveTransactionData = true;
 
                     /*********************
                      * Bar Chart
@@ -412,7 +415,7 @@
     angular.module('userModule').controller('uploadCtrl', ['$scope', '$http', '$rootScope', uploadCtrl])
     //})
 
-    function expensesCtrl ($scope,$rootScope, $http) {
+    function expensesCtrl ($scope,$rootScope, $http, userService, $cookieStore) {
         //myApp.controller("expensesCtrl", function ($scope, $http) {
 
         var expensesUrl = "http://localhost:666/user/" + $scope.currentUserId;
@@ -425,9 +428,432 @@
                 console.log('error on expected expenses:');
                 console.log(error)
             });
+        };
+
+        //  He and She Charts
+        if ($rootScope.connected) {
+            // console.log($rootScope.connected);
+
+            // User Chart
+            if ($rootScope.haveTransactionData) {
+
+                // set the dimensions and margins of the graph
+                var margin = {top: 80, right: 80, bottom: 80, left: 80},
+                    width = 700 - margin.left - margin.right,
+                    height = 700 - margin.top - margin.bottom;
+
+                /*********************
+                 * User Bar Chart
+                 * ******************/
+
+                var url = "/User/GetGroupById/" + $rootScope.currentUser._id;
+
+                // Get the data
+                d3.json(url, function (error, data) {
+
+                    // set the ranges
+                    var x = d3.scaleBand()
+                        .range([0, width])
+                        .padding(0.1);
+                    var y0 = d3.scaleLinear()
+                        .range([height, 0]);
+                    var y1 = d3.scaleLinear()
+                        .range([height, 0]);
+
+                    // append the svg object
+                    var svg = d3.select("#userBarChart").append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform",
+                            "translate(" + margin.left + "," + margin.top + ")");
+
+                    if (data !== undefined) {
+                        data = data.filter(function (i) {
+                            if (i._id.month === 12 && i._id.year === 2015) {
+                                return i.totalPrice;
+                            }
+                        });
+                        data.sort(function (a, b) {
+                            return b.totalPrice - a.totalPrice;
+                        });
+
+
+                        // Scale the range of the data in the domains
+                        x.domain(data.map(function (d) {
+                            return d._id.category;
+                        }));
+
+                        // Get max totalPrice for the y scale
+                        var userMaxPrice = d3.max(data, function (d) {
+                            return d.totalPrice;
+                        });
+
+                        var algoMaxPrice = d3.max(data, function (d) {
+                            return d.totalPrice;
+                        });
+
+                        var maxPrice = userMaxPrice;
+
+                        if (algoMaxPrice > userMaxPrice) {
+                            maxPrice = algoMaxPrice;
+                        }
+
+                        y0.domain([0, maxPrice]);
+
+                        y1.domain([0, maxPrice]);
+
+                        var xAxis = d3.axisBottom()
+                            .scale(x);
+
+                        var yAxisLeft = d3.axisLeft()
+                            .scale(y0);
+
+                        var yAxisRight = d3.axisRight()
+                            .scale(y1);
+
+                        if (error) throw error;
+
+                        // append the rectangles for the bar chart
+                        var bars = svg.selectAll(".bar")
+                            .data(data).enter();
+
+                        bars.append("rect")
+                            .attr("class", "bar1")
+                            .attr("x", function (d) {
+                                return x(d._id.category);
+                            })
+                            .attr("width", x.bandwidth() / 2)
+                            .attr("y", function (d) {
+                                return y0(d.totalPrice);
+                            })
+                            .attr("height", function (d) {
+                                return height - y0(d.totalPrice);
+                            });
+
+                        bars.append("rect")
+                            .attr("class", "bar2")
+                            .attr("x", function (d) {
+                                return x(d._id.category) + x.bandwidth() / 2;
+                            })
+                            .attr("width", x.bandwidth() / 2)
+                            .attr("y", function (d) {
+                                return y1(d.totalPrice);
+                            })
+                            .attr("height", function (d) {
+                                return height - y1(d.totalPrice);
+                            });
+
+
+                        svg.append("g")
+                            .attr("class", "x axis")
+                            .attr("transform", "translate(0," + height + ")")
+                            .call(xAxis);
+
+                        svg.append("g")
+                            .attr("class", "y axis axisLeft")
+                            .attr("transform", "translate(0,0)")
+                            .call(yAxisLeft)
+                            .append("text")
+                            .attr("y", 6)
+                            .attr("dy", "-2em")
+                            .style("text-anchor", "end")
+                            .style("text-anchor", "end")
+                            .text("Dollars");
+
+                        // add legend
+                        // var dataset = {
+                        //     "series": ["You", "Something"],
+                        //     "colors": ["#5297ca", "#949494"]
+                        // };
+                        //
+                        // var legend = svg.append("g")
+                        //     .attr("class", "legend")
+                        //
+                        // legend.selectAll('text')
+                        //     .data(dataset["colors"])
+                        //     .enter()
+                        //     .append("rect")
+                        //     .attr("x", width - margin.right - 100)
+                        //     .attr("y", function (d, i) {
+                        //         return i * 20;
+                        //     })
+                        //     .attr("width", 10)
+                        //     .attr("height", 10)
+                        //     .style("fill", function (d) {
+                        //         return d;
+                        //     });
+                        // legend.selectAll('text')
+                        //     .data(dataset["series"])
+                        //     .enter()
+                        //     .append("text")
+                        //     .attr("x", width - margin.right - 80)
+                        //     .attr("y", function (d, i) {
+                        //         return i * 20 + 9;
+                        //     })
+                        //     .text(function (d) {
+                        //         return d
+                        //     });
+
+                        var tooltip = d3.select("body")
+                            .append('div')
+                            .attr('class', 'tooltip');
+
+                        tooltip.append('div')
+                            .attr('class', 'category');
+                        tooltip.append('div')
+                            .attr('class', 'totalPrice');
+
+                        svg.selectAll("rect")
+                            .on('mouseover', function (d) {
+                                if (!d._id.category) return null;
+
+                                tooltip.select('.category').html("<b>" + d._id.category + "</b>");
+                                tooltip.select('.totalPrice').html(d.totalPrice);
+
+                                tooltip.style('display', 'block');
+                                tooltip.style('opacity', 2);
+
+                            })
+                            .on('mousemove', function (d) {
+                                if (!d._id.category) return null;
+
+                                tooltip.style('top', (d3.event.layerY + 80) + 'px')
+                                    .style('left', (d3.event.layerX + 180) + 'px');
+                            })
+                            .on('mouseout', function () {
+                                tooltip.style('display', 'none');
+                                tooltip.style('opacity', 0);
+                            });
+                    }
+
+                });
+
+                /*********************
+                 * End User Bar Chart
+                 * ******************/
+            }
+
+            // Check if partner exist
+            var partnerEmail = 'user@user.com';//'admin@admin.com'; //TODO: Change to the real partner
+            if(partnerEmail) {
+                //Get partner
+                userService.getUserByEmail(partnerEmail).then(function (user, err) {
+
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        if (user.data) {
+                            $scope.currentPartner = user.data;
+                            if ($rootScope.currentUser.transactions.length > 0) {
+                                $scope.partnerHaveTransactionData = true;
+
+                                /*********************
+                                 * Partner Bar Chart
+                                 * ******************/
+
+                                var url = "/User/GetGroupById/" + $scope.currentPartner._id;
+
+                                // Get the data
+                                d3.json(url, function (error, data) {
+
+                                    // set the ranges
+                                    var x = d3.scaleBand()
+                                        .range([0, width])
+                                        .padding(0.1);
+                                    var y0 = d3.scaleLinear()
+                                        .range([height, 0]);
+                                    var y1 = d3.scaleLinear()
+                                        .range([height, 0]);
+
+                                    // append the svg object
+                                    var svg = d3.select("#partnerBarChart").append("svg")
+                                        .attr("width", width + margin.left + margin.right)
+                                        .attr("height", height + margin.top + margin.bottom)
+                                        .append("g")
+                                        .attr("transform",
+                                            "translate(" + margin.left + "," + margin.top + ")");
+
+
+                                    var url = "/User/GetGroupById/" + $rootScope.currentUser._id;
+
+                                    if (data !== undefined) {
+                                        data = data.filter(function (i) {
+                                            if (i._id.month === 12 && i._id.year === 2015) {
+                                                return i.totalPrice;
+                                            }
+                                        });
+                                        data.sort(function (a, b) {
+                                            return a.totalPrice - b.totalPrice;
+                                        });
+
+
+                                        // Scale the range of the data in the domains
+                                        x.domain(data.map(function (d) {
+                                            return d._id.category;
+                                        }));
+
+                                        // Get max totalPrice for the y scale
+                                        var userMaxPrice = d3.max(data, function (d) {
+                                            return d.totalPrice;
+                                        });
+
+                                        var algoMaxPrice = d3.max(data, function (d) {
+                                            return d.totalPrice;
+                                        });
+
+                                        var maxPrice = userMaxPrice;
+
+                                        if (algoMaxPrice > userMaxPrice) {
+                                            maxPrice = algoMaxPrice;
+                                        }
+
+                                        y0.domain([0, maxPrice]);
+
+                                        y1.domain([0, maxPrice]);
+
+                                        var xAxis = d3.axisBottom()
+                                            .scale(x);
+
+                                        var yAxisLeft = d3.axisLeft()
+                                            .scale(y0);
+
+                                        var yAxisRight = d3.axisRight()
+                                            .scale(y1);
+
+                                        if (error) throw error;
+
+                                        // append the rectangles for the bar chart
+                                        var bars = svg.selectAll(".bar")
+                                            .data(data).enter();
+
+                                        bars.append("rect")
+                                            .attr("class", "bar3")
+                                            .attr("x", function (d) {
+                                                return x(d._id.category);
+                                            })
+                                            .attr("width", x.bandwidth() / 2)
+                                            .attr("y", function (d) {
+                                                return y0(d.totalPrice);
+                                            })
+                                            .attr("height", function (d) {
+                                                return height - y0(d.totalPrice);
+                                            });
+
+                                        bars.append("rect")
+                                            .attr("class", "bar2")
+                                            .attr("x", function (d) {
+                                                return x(d._id.category) + x.bandwidth() / 2;
+                                            })
+                                            .attr("width", x.bandwidth() / 2)
+                                            .attr("y", function (d) {
+                                                return y1(d.totalPrice);
+                                            })
+                                            .attr("height", function (d) {
+                                                return height - y1(d.totalPrice);
+                                            });
+
+
+                                        svg.append("g")
+                                            .attr("class", "x axis")
+                                            .attr("transform", "translate(0," + height + ")")
+                                            .call(xAxis);
+
+
+                                        svg.append("g")
+                                            .attr("class", "y axis axisRight")
+                                            .attr("transform", "translate(" + (width) + ",0)")
+                                            .call(yAxisRight)
+                                            .append("text")
+                                            .attr("y", 6)
+                                            .attr("dy", "-2em")
+                                            .attr("dx", "2em")
+                                            .style("text-anchor", "end");
+
+                                        // add legend
+                                        // var dataset = {
+                                        //     "series": ["Partner", "Something"],
+                                        //     "colors": ["#9f0207", "#949494"]
+                                        // };
+                                        //
+                                        // var legend = svg.append("g")
+                                        //     .attr("class", "legend")
+                                        //
+                                        // legend.selectAll('text')
+                                        //     .data(dataset["colors"])
+                                        //     .enter()
+                                        //     .append("rect")
+                                        //     .attr("x", margin.left - 80)
+                                        //     .attr("y", function (d, i) {
+                                        //         return i * 20;
+                                        //     })
+                                        //     .attr("width", 10)
+                                        //     .attr("height", 10)
+                                        //     .style("fill", function (d) {
+                                        //         return d;
+                                        //     });
+                                        // legend.selectAll('text')
+                                        //     .data(dataset["series"])
+                                        //     .enter()
+                                        //     .append("text")
+                                        //     .attr("x", margin.left - 60)
+                                        //     .attr("y", function (d, i) {
+                                        //         return i * 20 + 9;
+                                        //     })
+                                        //     .text(function (d) {
+                                        //         return d
+                                        //     });
+
+                                        var tooltip = d3.select("body")
+                                            .append('div')
+                                            .attr('class', 'tooltip');
+
+                                        tooltip.append('div')
+                                            .attr('class', 'category');
+                                        tooltip.append('div')
+                                            .attr('class', 'totalPrice');
+
+                                        svg.selectAll("rect")
+                                            .on('mouseover', function (d) {
+                                                if (!d._id.category) return null;
+
+                                                tooltip.select('.category').html("<b>" + d._id.category + "</b>");
+                                                tooltip.select('.totalPrice').html(d.totalPrice);
+
+                                                tooltip.style('display', 'block');
+                                                tooltip.style('opacity', 2);
+
+                                            })
+                                            .on('mousemove', function (d) {
+                                                if (!d._id.category) return null;
+
+                                                tooltip.style('top', (d3.event.layerY + 80) + 'px')
+                                                    .style('left', (d3.event.layerX + 180) + 'px');
+                                            })
+                                            .on('mouseout', function () {
+                                                tooltip.style('display', 'none');
+                                                tooltip.style('opacity', 0);
+                                            });
+                                    }
+
+                                });
+
+                                /*********************
+                                 * End Partner Bar Chart
+                                 * ******************/
+
+
+                            }
+                        }
+                    }
+
+                })
+            }
         }
+
+
     }
-    angular.module('userModule').controller('expensesCtrl', ['$scope','$rootScope', '$http', expensesCtrl])
+    angular.module('userModule').controller('expensesCtrl', ['$scope','$rootScope', '$http', 'userService', '$cookieStore',  expensesCtrl])
     //})
 
 })();

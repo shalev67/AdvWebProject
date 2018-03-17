@@ -334,3 +334,24 @@ footer ul li a {
     color: #7f7f7f;
     height: 100px;
 }
+
+
+/********************
+ He & She
+********************/
+
+.bar1{
+    fill: #3183c0d6;
+}
+.bar2{
+    fill: rgba(127, 127, 127, 0.84);
+}
+.bar3{
+    fill: rgba(159, 2, 7, 0.84);
+}
+
+/*heAndShe .page-wrapper{*/
+    /*position:relative;*/
+    /*width: 100%;*/
+    /*margin: 3% auto 5% auto;*/
+/*}*/

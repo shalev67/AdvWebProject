@@ -18,7 +18,7 @@
         }).
         when('/He&She', {
             templateUrl: "views/heAndShe.html",
-            controller : 'userCtrl'
+            controller : 'expensesCtrl'
         }).
         when('/about', {
             templateUrl: "views/about.html",
