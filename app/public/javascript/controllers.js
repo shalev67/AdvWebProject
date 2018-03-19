@@ -415,20 +415,20 @@
     angular.module('userModule').controller('uploadCtrl', ['$scope', '$http', '$rootScope', uploadCtrl])
     //})
 
-    function expensesCtrl ($scope,$rootScope, $http, userService, $cookieStore) {
+    function expensesCtrl ($scope,$rootScope, $http, userService, expensesService, $cookieStore) {
         //myApp.controller("expensesCtrl", function ($scope, $http) {
 
-        var expensesUrl = "http://localhost:666/user/" + $scope.currentUserId;
+        var date = new Date();
+        $scope.getExpectedExpenses = function (month = date.getMonth() + 1, year = date.getFullYear()) {
 
-        $scope.getExpectedExpenses = function () {
-            $http.get(expensesUrl
-            ).then(function (response) {
+            var expensesUrl = "http://localhost:666/user/" + $scope.currentUserId + "?month=" + month + "&year=" + year;
+            $http.get(expensesUrl).then(function(response){
                 $scope.expectedExpense = response.data;
             }).catch(function (error) {
                 console.log('error on expected expenses:');
                 console.log(error)
             });
-        };
+        }
 
         //  He and She Charts
         if ($rootScope.connected) {
