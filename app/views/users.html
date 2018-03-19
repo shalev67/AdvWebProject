@@ -1,104 +1,130 @@
 
+<div ng-show="!isAdmin" >
+    <h5>Permissions Error:</h5>
+    <a href="#!/home">
+        <p>Back to home </p>
+    </a>
+</div>
 
-Users Manager
+<div ng-show="isAdmin">
+    <canvas class="myCanvas" id="myCanvas" width="850" height="50">
+        Your browser does not support the canvas element.
+    </canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx=canvas.getContext("2d");
+        ctx.font = "30px Palatino Linotype";
 
-<hr/>
+        // Create gradient
+        var grd = ctx.createLinearGradient(0, 500, 1100, 0);
+        grd.addColorStop(0, "MidnightBlue");
+        //grd.addColorStop(1, "DeepSkyBlue");
+        grd.addColorStop(1, "Aqua");
 
-<div class="search-tbl-header">
-    <form name="form" ng-submit="searchUsers()"  role="form" method="POST">
-        <table cellpadding="0" cellspacing="0" border="0" class="search-tbl">
-            <thead>
+
+        // Fill with gradient
+        ctx.fillStyle = grd;
+        ctx.textAlign = "center";
+        ctx.fillText("Users Manager", 100, canvas.height / 2);
+    </script>
+    <hr/>
+
+    <div class="search-tbl-header">
+        <form name="form" ng-submit="searchUsers()"  role="form" method="POST">
+            <table cellpadding="0" cellspacing="0" border="0" class="search-tbl">
+                <thead>
+                <tr>
+
+                    <th class="search-tbl-th">
+                        <input type="text" name="firstName" id="firstName" placeholder="First Name" class="form-control" ng-model="userCtrl.searchUsers.firstName" />
+                    </th>
+
+                    <th class="search-tbl-th">
+                        <input type="text" name="lastName" id="lastName" placeholder="Last Name" class="form-control" ng-model="userCtrl.searchUsers.lastName" />
+                    </th>
+
+                    <th class="search-tbl-th">
+                        <select  class="form-control"  ng-model="userCtrl.searchUsers.zone" >
+                            <option value="">Living zone</option>
+                            <option value="north">North</option>
+                            <option value="center">Center</option>
+                            <option value="south">South</option>
+                        </select>
+                    </th>
+
+                    <th class="search-tbl-th">
+                        <input type="text" name="role" id="role" placeholder="Role" class="form-control" ng-model="userCtrl.searchUsers.role" />
+                    </th>
+
+                    <th class="search-tbl-th">
+                        <button type="submit" class="btn search-btn">Search</button>
+                    </th>
+                </tr>
+                </thead>
+            </table>
+        </form>
+    </div>
+
+
+    <div id="usr-tbl-div">
+        <table class="table table-hover">
+            <thead class="thead-default">
             <tr>
-
-                <th class="search-tbl-th">
-                    <input type="text" name="firstName" id="firstName" placeholder="First Name" class="form-control" ng-model="userCtrl.searchUsers.firstName" />
+                <th>
+                    First Name
                 </th>
-
-                <th class="search-tbl-th">
-                    <input type="text" name="lastName" id="lastName" placeholder="Last Name" class="form-control" ng-model="userCtrl.searchUsers.lastName" />
+                <th>
+                    Last Name
                 </th>
-
-                <th class="search-tbl-th">
-                    <select  class="form-control"  ng-model="userCtrl.searchUsers.zone" >
-                        <option value="">Living zone</option>
-                        <option value="north">North</option>
-                        <option value="center">Center</option>
-                        <option value="south">South</option>
-                    </select>
+                <th>
+                    Birth Date
                 </th>
-
-                <th class="search-tbl-th">
-                    <input type="text" name="role" id="role" placeholder="Role" class="form-control" ng-model="userCtrl.searchUsers.role" />
+                <th>
+                    Gender
                 </th>
+                <th>
+                    Income
+                </th>
+                <th>
+                    Marital Status
+                </th>
+                <th>
+                    Kids
+                </th>
+                <th>
+                    Zone
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Role
+                </th>
+                <th>
 
-                <th class="search-tbl-th">
-                    <button type="submit"   class="btn btn-primary">Search</button>
                 </th>
             </tr>
             </thead>
+            <tbody>
+            <tr ng-repeat="user in appUsers.data |  orderBy : 'firstName' | filter:search:strict" id="users">
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.birthDate | date:"dd/MM/y" }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.income }}</td>
+                <td>{{ user.maritalStatus }}</td>
+                <td>{{ user.kids }}</td>
+                <td>{{ user.zone }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td><button type="button"
+                            class="delete"
+                            ng-click="deleteUser(user._id)"
+                            ng-show="!inactive">Delete</button> </td>
+            </tr>
+            </tbody>
         </table>
-    </form>
-</div>
 
-
-<div id="usr-tbl-div">
-    <table class="table table-hover">
-        <thead class="thead-default">
-        <tr>
-            <th>
-                First Name
-            </th>
-            <th>
-                Last Name
-            </th>
-            <th>
-                Birth Date
-            </th>
-            <th>
-                Gender
-            </th>
-            <th>
-                Income
-            </th>
-            <th>
-                Marital Status
-            </th>
-            <th>
-                Kids
-            </th>
-            <th>
-                Zone
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Role
-            </th>
-            <th>
-
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="user in appUsers.data |  orderBy : 'firstName' | filter:search:strict" id="users">
-            <td>{{ user.firstName }}</td>
-            <td>{{ user.lastName }}</td>
-            <td>{{ user.birthDate | date:"dd/MM/y" }}</td>
-            <td>{{ user.gender }}</td>
-            <td>{{ user.income }}</td>
-            <td>{{ user.maritalStatus }}</td>
-            <td>{{ user.kids }}</td>
-            <td>{{ user.zone }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.role }}</td>
-            <td><button type="button"
-                        class="delete"
-                        ng-click="deleteUser(user._id)"
-                        ng-show="!inactive">Delete</button> </td>
-        </tr>
-        </tbody>
-    </table>
+    </div>
 
 </div>
-

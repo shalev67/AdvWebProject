@@ -98,7 +98,6 @@ function populateDb() {
     var fs = require('fs');
     var userManager = require('./managers/userManager');
     var branchManager = require('./managers/branchManager');
-    //var transactionManager = require('./managers/transactionManager');
     var currentFolder = require('path').dirname(require.main.filename);
     var contents = fs.readFileSync(currentFolder + '/startup.json');
     var jsonContent = JSON.parse(contents);
@@ -108,8 +107,8 @@ function populateDb() {
     users.forEach(function (user, index) {
         userManager.createUser(function (err, newUser) {
                 console.log('Created user: ' + user.email);
-                if(user.email == 'user@user.com' ){
-                    transactions.forEach(function (transaction, tindex) {
+                if(user.email === 'user@user.com' ){
+                    transactions.forEach(function (transaction, index) {
                         userManager.addTransaction(function (err, user){
                         }, newUser, transaction)
                     });

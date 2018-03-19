@@ -21,31 +21,26 @@ module.exports = {
 
     getGroupTransaction: function (callback, _id) {
         User.findOne({'_id': _id}, function (err, user) {
-            console.log(user);
-            if (user != null) {
-                User.aggregate([{$match: {"email": user.email}},
-                        {$unwind: '$transactions'},
-                        {
-                            $group: {
-                                _id: {
-                                    //email: "$email",
-                                    month: {"$month": "$transactions.date"},
-                                    year: {"$year": "$transactions.date"},
-                                    category: "$transactions.category"
-                                },
-                                totalPrice: {"$sum": {"$multiply": ["$transactions.price"]}},
-                                "count": {"$sum": 1}
-                            }
-                        }],
-                    function (err, docs) {
-                        if (err) {
-                            console.error(err);
-                        }
-                        else {
-                            callback(null, docs);
-                        }
-                    })
-            }
+            User.aggregate([{$match: {"email": user.email}},
+                    {$unwind: '$transactions'},
+                    {$group: {
+                        _id: {
+                            //email: "$email",
+                            month: {"$month": "$transactions.date"},
+                            year: {"$year": "$transactions.date"},
+                            category: "$transactions.category"
+                            },
+                        totalPrice: {"$sum": {"$multiply": ["$transactions.price"]}},
+                        "count": {"$sum": 1}
+                        }}],
+                function (err, docs) {
+                    if (err) {
+                        console.error(err);
+                    }
+                    else {
+                        callback(null, docs);
+                    }
+                })
         })
     },
     getUserByEmail: function (callback, email) {
@@ -93,7 +88,7 @@ module.exports = {
 
         user.save(function (err, user) {
             if (err) {
-                console.error(err);
+                //console.error(err);
             }
             else {
 

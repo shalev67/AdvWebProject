@@ -13,12 +13,14 @@
     "debug": "^3.1.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "font-awesome": "^4.7.0",
     "jade": "^1.11.0",
     "mongoose": "^4.13.6",
     "morgan": "^1.9.0",
     "password-hash": "^1.2.2",
     "path": "^0.12.7",
     "serve-favicon": "^2.4.5",
-    "serve-static": "^1.13.1"
+    "serve-static": "^1.13.1",
+    "sweetalert2": "^7.15.1"
   }
 }

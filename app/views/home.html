@@ -1,77 +1,375 @@
-<label ng-if="connected">Hello {{ currentUser.firstName }}</label>
+
+<div class="home-div">
+    <span class='web-title'>Money Adviser</span>
+    <p class='web-about'>
+        Say goodbye to pages and page of monthly invoices..
+    </p>
+    <a href="#!/about" class="web-btn learn-btn">Learn More</a>
+    <a ng-show="!connected" href="#!/register" class="web-btn start-btn">Start now</a>
+    <a ng-show="connected" href="#!/upload" class="web-btn start-btn">Start now</a>
+
+    <table class="home-tbl">
+        <tr align="center">
+            <td align="center">
+                <div class="each-top-five">
+                    <a href="#!/barchart" class="a-top-five">
+                        <dl>
+                            <dd class="top-five-dd">
+                                <i class="fa fa-bar-chart fa-5x"></i>
+                                <div>
+                                    Graph
+                                </div>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+            </td>
+            <td rowspan="2" align="center">
+                <div class="each-top-one">
+                    <a href="#!/He&She" class="a-top-five">
+                        <dl>
+                            <dd class="top-one-dd">
+                                <img src="./images/HeAndShe2.png"  style="height: 250px">
+                                <div>
+                                    He And She
+                                </div>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+            </td>
+            <td align="center">
+                <div class="each-top-five">
+                    <a href="#!/upload" class="a-top-five">
+                        <dl>
+                            <dd class="top-five-dd">
+                                <i class="fa fa-upload fa-5x"></i>
+                                <div>
+                                    Upload Pdf
+                                </div>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <tr align="center">
+            <td align="center">
+                <div class="each-top-five">
+                    <a href="#!/myTransactions" class="a-top-five">
+                        <dl>
+                            <dd class="top-five-dd">
+                                <i class="fa fa-list-alt fa-5x"></i>
+                                <div>
+                                    Transactions
+                                </div>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+            </td>
+            <td align="center">
+                <div class="each-top-five">
+                    <a href="#!/userDetail" class="a-top-five">
+                        <dl>
+                            <dd class="top-five-dd">
+                                <i class="fa fa-id-card-o fa-5x"></i>
+                                <div>
+                                    User Profile
+                                </div>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 
 
-<label ng-if="!connected">Not connected</label>
 
 
 
 
-<table class="table-home-option">
-    <tr>
-        <td>
-            <a href='#!/graph'>
-                <dd class="div-option-dd">
-                    <div class="div-option-text">
-                        <br>
-                        <p>Your statistics</p>
-                    </div>
-                </dd>
-            </a>
-        </td>
-        <td>
-            <a href='#!/transactions'>
-                <dd class="div-option-dd">
-                    <div class="div-option-text">
-                        <br>
-                        <p>View your Transactions </p>
-                    </div>
-                </dd>
-            </a>
-        </td>
-        <td>
-            <a href='#!/upload'>
-                <dd class="div-option-dd">
-                    <div class="div-option-text">
-                        <br>
-                        <p>Upload pdf</p>
-                    </div>
-                </dd>
-            </a>
-        </td>
 
-    </tr>
-    <tr>
-        <td>
-            <a href=#!/home>
-                <dd class="div-option-dd">
-                    <div class="div-option-text">
-                        <br>
-                        <p>Something</p>
-                    </div>
-                </dd>
-            </a>
-        </td>
-        <td>
-            <a href=#!/home>
-                <dd class="div-option-dd">
-                    <div class="div-option-text">
-                        <br>
-                        <p>Something</p>
-                    </div>
-                </dd>
-            </a>
-        </td>
-        <td>
-            <a href=#!/branches>
-                <dd class="div-option-dd">
-                    <div class="div-option-text">
-                        <br>
-                        <p>Contact us</p>
-                    </div>
-                </dd>
-            </a>
-        </td>
-    </tr>
 
-</table>
 
+<!--<table>-->
+    <!--<tr>-->
+        <!--&lt;!&ndash;Upload Pdf&ndash;&gt;-->
+        <!--<td>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/upload" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-download fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Upload Pdf-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/upload" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-upload fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Upload Pdf-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/upload" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-cloud-upload fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Upload Pdf-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</td>-->
+        <!--&lt;!&ndash;Graph&ndash;&gt;-->
+        <!--<td>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/barchart" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-bar-chart fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Graph-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/barchart" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-area-chart fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Graph-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/barchart" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-pie-chart fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Graph-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</td>-->
+        <!--&lt;!&ndash;Transactions&ndash;&gt;-->
+        <!--<td>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/myTransactions" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-list-alt fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Transactions-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/myTransactions" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-list-ul fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Transactions-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/myTransactions" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-table fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Transactions-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/myTransactions" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-file-text-o fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Transactions-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</td>-->
+        <!--&lt;!&ndash;Update Profile&ndash;&gt;-->
+        <!--<td>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/userDetail" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-id-card-o fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Update Profile-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/userDetail" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-id-card fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Update Profile-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/userDetail" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-user-o fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Update Profile-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/userDetail" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-edit fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Update Profile-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/userDetail" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-users fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Update Profile-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/userDetail" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-cog fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--Update Profile-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/He&She" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-venus-mars fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--He And She-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="each-top-five">-->
+                <!--<a href="#!/He&She" class="a-top-five">-->
+                    <!--<dl>-->
+                        <!--<dd class="top-five-dd">-->
+                            <!--<i class="fa fa-female fa-5x"></i>-->
+                            <!--<i class="fa fa-male fa-5x"></i>-->
+                            <!--<div>-->
+                                <!--He And She-->
+                            <!--</div>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</td>-->
+    <!--</tr>-->
+<!--</table>-->
+
+
+<!--<br/><br/><br/><br/><br/>-->
+
+
+
+<!--<i class="fa fa-users fa-2x"></i>-->
+<!--<i class="fa fa-download fa-2x"></i>-->
+
+<!--<i class="fa fa-cog fa-2x"></i>-->
+
+<!--<i class="fa fa-bar-chart fa-2x"></i>-->
+
+<!--<i class="fa fa-id-card fa-2x"></i>-->
+
+
+<!--<i class="fa fa-upload fa-2x"></i>-->
+<!--<i class="fa fa-pencil-square-o fa-2x"></i>-->
+<!--<i class="fa fa-list-alt fa-2x"></i>-->
+
+
+<!--<i class="fa fa-list-ul fa-2x"></i>-->
+<!--<i class="fa fa-table fa-2x"></i>-->
+<!--<i class="fa fa-cloud-upload fa-2x"></i>-->
+<!--<i class="fa fa-file-text-o fa-2x"></i>-->
+<!--<i class="fa fa-female fa-2x"></i>-->
+<!--<i class="fa fa-male fa-2x"></i>-->
+<!--<i class="fa fa-area-chart fa-2x"></i>-->
+
+<!--<i class="fa fa-pie-chart fa-2x"></i>-->
+<!--<i class="fa fa-venus-mars fa-2x"></i>-->
+
+<!--<i class="fa fa-id-card-o fa-2x"></i>-->
+<!--<i class="fa fa-phoenix-framework"></i>-->
+<!--<i class="fa fa-edit fa-2x"></i>-->
+<!--<i class="fa fa-clipboard-list fa-2x"></i>-->
+
+
+
+<!--color: #4ad38b;-->
+ <!--color: #7f7f7f;-->

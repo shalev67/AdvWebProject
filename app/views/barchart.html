@@ -1,14 +1,15 @@
-
+<div ng-show="!connected" >
+    <a href="#!/login">
+        <h5>Please login first</h5>
+    </a>
+</div>
+<div ng-show="connected && !haveTransactionData" >
+    <h5>You dont have any transactions....</h5>
+</div>
 <style>
     .bar{
         fill: teal;
     }
 </style>
 
-<div id="userTransactionBarChart"></div>
-<!--<div ng-show="!haveTransactions" >-->
-    <!--<h5>You dont have any transactions....-->
-    <!--<br><br><br>-->
-        <!--<a href="#!/addTransactions">click here to add transactions</a>-->
-    <!--</h5>-->
-<!--</div>-->
+<div ng-show="haveTransactionData" id="userTransactionBarChart"></div>

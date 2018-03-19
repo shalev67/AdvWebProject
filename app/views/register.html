@@ -15,13 +15,13 @@
 
         <div class="form-group">
             <label>Birth Date</label>
-            <input type="date"  name="birthDate" id="birthDate" class="form-control" ng-model="userCtrl.user.birthDate" required />
+            <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}" min="{{maxAge | date:'yyyy-MM-dd'}}" name="birthDate" id="birthDate" class="form-control" ng-model="userCtrl.user.birthDate" required />
             <span ng-show="form.birthDate.$dirty && form.birthDate.$error.required" class="help-block">Birth Date is required</span>
         </div>
 
         <div class="form-group">
             <label >Gender</label>
-            <select  class="form-control" ng-model="userCtrl.user.gender" required>
+            <select  class="form-control" name="gender" ng-model="userCtrl.user.gender" required>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
             </select>
@@ -37,7 +37,7 @@
         <div class="form-group">
             <label>Marital Status</label>
             <div>
-                <select  class="form-control" ng-model="userCtrl.user.maritalStatus" required>
+                <select class="form-control" name="maritalStatus" ng-model="userCtrl.user.maritalStatus" required>
                     <option value="married">Married</option>
                     <option value="single">Single</option>
                     <option value="divorced">Divorced</option>
@@ -50,14 +50,14 @@
         <div class="form-group">
             <label>Kids</label>
             <input type="number" name="kids" id="number" ng-init="userCtrl.user.kids=0" class="form-control" min="0" ng-model="userCtrl.user.kids" required />
-            <span ng-show="form.kids.$dirty && form.kids.$error.required" class="help-block">Number if kids is required</span>
+            <span ng-show="form.kids.$error.required" class="help-block">Number if kids is required</span>
         </div>
 
 
         <div class="form-group">
             <label>Living zone</label>
             <div>
-                <select  class="form-control" ng-model="userCtrl.user.zone" required>
+                <select  class="form-control" name="zone" ng-model="userCtrl.user.zone" required>
                     <option value="north">North</option>
                     <option value="center">Center</option>
                     <option value="south">South</option>
@@ -79,8 +79,8 @@
         </div>
 
         <div class="form-actions">
-            <!-- <button type="submit" onclick='angular.element(this).scope().createNewUser()' ng-disabled="form.$invalid" class="btn btn-primary">Create</button> -->
-            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Create</button>
+            <!--<button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Create</button>-->
+            <button type="submit" class="btn btn-primary">Create</button>
             <a href="#!/home" class="btn btn-link">Cancel</a>
         </div>
     </form>
