@@ -21,6 +21,7 @@ mongo_train_cols = {'income': 1, 'maritalStatus': 1, 'gender': 1, 'kids': 1, 'zo
 user_id_col = '_id'
 users_collection = db.users
 
+# TODO: get the list of categories from db
 categories = ['שונות', 'מסעדות/קפה', 'דלק', 'קניה אינט"', 'מכולת/סופר', 'תקשורת', 'מחשבים']
 # endregion
 
