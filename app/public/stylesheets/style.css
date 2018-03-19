@@ -1,11 +1,67 @@
-html {
-    position: relative;
-    min-height: 100%;
+
+.web-title {
+    font-family: "Perpetua Titling MT", serif;
+    font-size: 100px;
+    text-shadow: 0 -3px 0 #ffffff8c, 0 6px 8px
+    rgba(63, 144, 201, 0.72),
+    0 9px 10px #c3c3c3,
+    0 30px 10px
+    rgba(0, 0, 0, 0), 0 15px 10px
+    rgba(0, 0, 0, 0.23);
 }
 
+.web-about{
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 20px;
+    color: #7f7f7f;
+}
+
+.web-btn{
+    text-transform: uppercase;
+    /*text-decoration: none;*/
+    letter-spacing: .075em;
+    line-height: 1em;
+    padding: 10px 30px;
+    display: inline-block;
+    border-radius: 15px;
+    width: 175px;
+    transition: all .2s ease-in-out;
+    margin: 5px 5px 5px 5px;
+    border-style: solid;
+    border-color: #378bc7;
+}
+
+.learn-btn{
+    background-color: #e84f7000;
+    color: #378bc7;
+}
+
+.learn-btn:hover{
+    color: #378bc7;
+}
+
+.start-btn{
+     background-color: #378bc7;
+     color: #fff;
+}
+.start-btn:hover{
+      color: #fff;
+}
+
+.page-wrapper{
+    position:relative;
+    /*margin: auto;*/
+    width: 70%;
+    margin: 3% auto 5% auto;
+
+    /*padding: 10px;*/
+    /*max-width: 1170px;*/
+}
+
+
+
 #usr-tbl-div {
-    width: 80%;
-    margin: 0px auto;
+    overflow: auto;
 }
 
 #center-div {
@@ -13,14 +69,59 @@ html {
 
 }
 
+.map-tbl{
+    margin: auto;
+}
+
+.map-tbl-td{
+    padding-right: 5%;
+}
+
+/*.ff-text {*/
+    /*font-family: myFirstFont;*/
+/*}*/
+
+.wrapper {
+    position: relative;
+    background-color: #f5f5f5;
+    color: #808080;
+    text-align: center;
+}
+.counter {
+    padding: 10px 0;
+    border-radius: 5px;
+}
+.count-title {
+    font-size: 30px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center; }
+.count-text {
+    font-size: 13px;
+    font-weight: normal;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.fa-5x{
+    float: none;
+    display: table;
+    color: #7f7f7f;
+}
+
+.hdr-tbl{
+    width: 100%;
+
+}
+
 /*-----------------
  Logo
  -------------------*/
 
-
-
 .logo{
-    width: 30%;
+    /*width: 500px;*/
+    height: 40px;
 }
 
 /*---------------------
@@ -61,12 +162,14 @@ html {
   Search
 -----------------*/
 .search-tbl-header{
-    background: linear-gradient(to right, rgb(100, 224, 162), rgba(255, 255, 255, 0));
+    background: linear-gradient(to right, rgb(59, 142, 201), rgba(255, 255, 255, 0));
     -webkit-border-radius: 20px;
     max-width: 1070px;
+    margin-top: 3%;
 }
 
 .search-tbl {
+    margin-bottom: 3%;
     width:100%;
     table-layout: fixed;
 }
@@ -89,11 +192,9 @@ html {
 }
 
 .search-btn{
-    color: #ffffff;
-    background-color: #49b1bf;
-    border-color: #287486;
-
-    color:aliceblue;
+    color: #fff;
+    background-color: #378bc7;
+    border-color: #214e37;
 }
 
 .search-drp-dwn{
@@ -114,8 +215,6 @@ html {
 /*------------------------------
 =FOOTER
 ------------------------------*/
-
-
 
 footer {
     /*position: absolute;*/
@@ -166,3 +265,93 @@ footer ul {
 footer ul li a {
     display: block;
 }
+
+/****************
+  Home Page
+**************/
+.home-div{
+    margin-top: 80px;
+    margin-bottom: 100px;
+    text-align: center;
+}
+
+.home-tbl{
+    margin-top: 100px;
+    width: 100%;
+    text-align: center;
+}
+
+.each-top-one{
+    width: 400px;
+    height: 250px;
+    text-align: center;
+}
+
+.top-one-dd{
+    font-size: 20px;
+    color: #7f7f7f;
+    background: linear-gradient(rgb(55, 139, 199),rgba(57, 140, 199, 0.36), rgb(255, 255, 255));
+    padding-top: 5%;
+}
+
+.top-one-dd:hover {
+    background: linear-gradient(rgba(61, 142, 201, 0.3), rgb(255, 255, 255));
+    color: #000000;
+}
+
+.each-top-five{
+    width: 220px;
+    height: 200px;
+    text-align: center;
+}
+
+.top-five-dd{
+    font-size: 20px;
+    color: #7f7f7f;
+    background: linear-gradient(rgba(212, 212, 212, 0.41),rgba(212, 212, 212, 0.41), rgb(255, 255, 255));
+    padding-top: 10%;
+}
+
+.top-five-dd:hover {
+    background: linear-gradient(rgba(61, 142, 201, 0.3), rgb(255, 255, 255));
+    color: #000000;
+}
+
+.a-top-five:link{
+    text-decoration: none;
+}
+
+.Details-content{
+    display: table;
+}
+
+.main-content{
+    display:table-cell;
+}
+
+.fa-lg{
+    /*margin-top: 10px;*/
+    color: #7f7f7f;
+    height: 100px;
+}
+
+
+/********************
+ He & She
+********************/
+
+.bar1{
+    fill: #3183c0d6;
+}
+.bar2{
+    fill: rgba(127, 127, 127, 0.84);
+}
+.bar3{
+    fill: rgba(159, 2, 7, 0.84);
+}
+
+/*heAndShe .page-wrapper{*/
+    /*position:relative;*/
+    /*width: 100%;*/
+    /*margin: 3% auto 5% auto;*/
+/*}*/
