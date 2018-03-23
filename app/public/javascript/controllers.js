@@ -218,7 +218,34 @@
                 //  Charts
                 if ($rootScope.currentUser.transactions.length > 0) {
                     $rootScope.haveTransactionData = true;
+                    
+                     // list of monthes
+                     $scope.monthList = [{monthText : "All", number : -1},
+                     {monthText : "January", number : 0},
+                     {monthText : "February", number : 1},
+                     {monthText : "March", number : 2},
+                     {monthText : "April", number : 3},
+                     {monthText : "May", number : 4},
+                     {monthText : "June", number : 5},
+                     {monthText : "July", number : 6},
+                     {monthText : "August", number : 7},
+                     {monthText : "September", number : 8},
+                     {monthText : "October", number : 9},
+                     {monthText : "November", number : 10},
+                     {monthText : "December", number : 11}
+                    ];
+                    $scope.selectedMonth = $scope.monthList[0].number;
 
+                     // list of years
+                     var d = new Date();
+                     var n = d.getFullYear();
+
+                     $scope.yearList = [{value: 'All'}];
+                     for(var i = 2010; i <= n; i++){
+                         $scope.yearList.push({value: i});
+                     }
+
+                    $scope.selectedYear = $scope.yearList[0].value;
                     /*********************
                      * Bar Chart
                      * ******************/
