@@ -104,11 +104,19 @@ function populateDb() {
     var users = jsonContent.users;
     var branches = jsonContent.branches;
     var transactions = jsonContent.transactions;
+    var adminTransactions = jsonContent.adminTransactions;
     users.forEach(function (user, index) {
         userManager.createUser(function (err, newUser) {
-                console.log('Created user: ' + user.email);
+                console.log('Created user: ' + user.email);//adminTransactions
                 if(user.email === 'user@user.com' ){
                     transactions.forEach(function (transaction, index) {
+                        userManager.addTransaction(function (err, user){
+                        }, newUser, transaction)
+                    });
+                }
+
+                if(user.email === 'admin@admin.com' ){
+                    adminTransactions.forEach(function (transaction, index) {
                         userManager.addTransaction(function (err, user){
                         }, newUser, transaction)
                     });
