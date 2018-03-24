@@ -15,12 +15,12 @@
                 <div ng-show="haveTransactionData" id="userBarChart"></div>
             </td>
             <td align="center">
-                <img src="./images/full-heart.png"  style="height: 200px">
-                <!--<img src="./images/half-heart-1.png"  style="height: 200px">-->
-                <!--<img src="./images/half-heart-2.png"  style="height: 200px">-->
+                <img ng-show="!userHeart && !partnerHeart" src="./images/full-heart.png"  style="height: 200px">
+                <img ng-show="userHeart  && !partnerHeart" src="./images/half-heart-2.png"  style="height: 200px">
+                <img ng-show="partnerHeart && !userHeart " src="./images/half-heart-1.png"  style="height: 200px">
             </td>
             <td align="center">
-                <div ng-show="haveTransactionData" id="partnerBarChart"></div>
+                <div ng-show="partnerHaveTransactionData" id="partnerBarChart"></div>
             </td>
         </tr>
     </table>

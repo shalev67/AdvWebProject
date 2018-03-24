@@ -440,6 +440,8 @@
                 // Get  the Date
                 var month = 12;//month = date.getMonth() + 1, year = date.getFullYear()
                 var year = 2015;
+                $scope.userTotalSum = 0;
+                $scope.userExpectedSum = 0;
 
                 // Set the dimensions and margins of the graph
                 var margin = {top: 80, right: 80, bottom: 80, left: 80},
@@ -506,11 +508,17 @@
                                     if (data[i]._id.category === expectedData[j]._id.category) {
                                         obj.expectedPrice = expectedData[j].totalPrice;
                                         obj_c_processed[expectedData[j]._id] = true;
+
+                                        // Sum the total expected price for the heart
+                                        $scope.userExpectedSum += expectedData[i].totalPrice;
                                     }
                                 }
 
                                 obj.expectedPrice = obj.expectedPrice || 0;
                                 arrayList.push(obj);
+
+                                // Sum the total price for the heart
+                                $scope.userTotalSum += data[i].totalPrice;
                             }
 
                             for (var j in expectedData){
@@ -701,6 +709,8 @@
                             $scope.currentPartner = user.data;
                             if ($rootScope.currentUser.transactions.length > 0) {
                                 $scope.partnerHaveTransactionData = true;
+                                $scope.partnerTotalSum = 0;
+                                $scope.partnerExpectedSum = 0;
 
                                 /*********************
                                  * Partner Bar Chart
@@ -760,11 +770,17 @@
                                                     if (data[i]._id.category === expectedData[j]._id.category) {
                                                         obj.expectedPrice = expectedData[j].totalPrice;
                                                         obj_c_processed[expectedData[j]._id] = true;
+
+                                                        // Sum the total expected price for the heart
+                                                        $scope.partnerExpectedSum += expectedData[i].totalPrice;
                                                     }
                                                 }
 
                                                 obj.expectedPrice = obj.expectedPrice || 0;
                                                 arrayList.push(obj);
+
+                                                // Sum the total price for the heart
+                                                $scope.partnerTotalSum += data[i].totalPrice;
                                             }
 
                                             for (var j in expectedData){
@@ -779,6 +795,36 @@
                                                         expectedPrice: expectedData[i].totalPrice});
                                                 }
                                             }
+
+                                            // if($scope.partnerTotalSum && $scope.partnerExpectedSum && $scope.userTotalSum && $scope.userExpectedSum ){
+                                            //     console.log("p1 "+$scope.partnerTotalSum);
+                                            //     console.log("p2 "+$scope.partnerExpectedSum);
+                                            //     console.log("u1 "+$scope.userTotalSum );
+                                            //     console.log("u2 "+$scope.userExpectedSum);
+                                            // }
+
+                                            if($scope.partnerExpectedSum != 0 && $scope.userExpectedSum != 0){
+                                                $scope.userPercentages = $scope.userTotalSum/$scope.userExpectedSum;
+                                                $scope.partnerPercentages = $scope.partnerTotalSum/$scope.partnerExpectedSum;
+
+                                                console.log("p1 "+$scope.partnerPercentages);
+                                                console.log("u2 "+$scope.userPercentages);
+
+                                                $scope.userHeart = false;
+                                                $scope.partnerHeart = false;
+
+                                                if($scope.userPercentages > 1.5 ){
+                                                    $scope.userHeart = true;
+                                                }
+
+                                                if($scope.partnerPercentages >  1.5){
+                                                    $scope.partnerHeart = true;
+                                                }
+                                                // else{
+                                                //
+                                                // }
+                                            }
+
 
                                             // Scale the range of the data in the domains
                                             x.domain(data.map(function (d) {
@@ -949,6 +995,10 @@
 
                 })
             }
+
+
+
+
         }
 
 
