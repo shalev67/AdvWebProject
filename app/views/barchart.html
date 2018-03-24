@@ -11,5 +11,28 @@
         fill: teal;
     }
 </style>
+<div ng-show="haveTransactionData">
+<div class="search-tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0" class="search-tbl" >
+        <thead>
+        <tr>
+               
+                <th class="search-tbl-th"> 
+                 
+                    <label >Month</label>
+                    <select  class="form-control" ng-model="selectedMonth" ng-options="month.number as month.monthText for month in monthList"/>
+                </th> 
+                <th class="search-tbl-th"> 
+                    <label >Year</label>
+                    <select  class="form-control" ng-model="selectedYear" ng-options="year.value as year.value for year in yearList"/>
+                </th>
+        </tr>
+        </thead>
+    </table>
+</div>
 
-<div ng-show="haveTransactionData" id="userTransactionBarChart"></div>
+<div id="userTransactionBarChart"></div>
+
+<div id="userTransactionPieChart"></div>
+
+</div>
