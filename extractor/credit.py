@@ -115,38 +115,31 @@ def add_transaction_to_user(transactions, user_id):
     )
 
 
-def extract_transaction_from_pdf(file_path, user_id):
-    # TODO add error message and handler for textract.exceptions.ShellError exception
-    text = textract.process(file_path, 'UTF-8')
+def extract_transaction_from_isracard_pdf(lines, user_id):
     data = Data()
-
-    decode_text = text.decode()
-    decode_text = remove_rtl(decode_text)
-
-    decode_text = decode_text.split('\n')
-    decode_text = list([value for value in decode_text if value != 'ה.קבע'])
-    decode_text = list([value for value in decode_text if value != ''])
-    data.credit_card_last_digits = extract_credit_card_number(decode_text)
+    lines = list([value for value in lines if value != 'ה.קבע'])
+    lines = list([value for value in lines if value != ''])
+    data.credit_card_last_digits = extract_credit_card_number(lines)
     dates = list()
     businesses = list()
 
-    for a, b in pairwise(decode_text):
+    for a, b in pairwise(lines):
         if is_timestamp(b):
             dates.append(b)
             businesses.append(a)
     dates_len = len(dates)
-    index = decode_text.index('בש"ח')
-    atms = decode_text.count('משיכת מזומנים')
-    prices = list(decode_text[index + 1: index + atms * 2: 2]) + list(decode_text[index + atms * 2 + 1: index + 1 + atms * 2 + dates_len - atms])
-    index = decode_text.index('סכו םעסקה')
+    index = lines.index('בש"ח')
+    atms = lines.count('משיכת מזומנים')
+    prices = list(lines[index + 1: index + atms * 2: 2]) + list(lines[index + atms * 2 + 1: index + 1 + atms * 2 + dates_len - atms])
+    index = lines.index('סכו םעסקה')
     start = index
     categories = list()
     while len(categories) < dates_len or index - start < dates_len:
         index += 1
-        temp = decode_text[index]
+        temp = lines[index]
         temp = temp.replace('.', '')
         if not temp.isdigit():
-            categories.append(decode_text[index])
+            categories.append(lines[index])
     transactions = {"transactions": []}
     for date, business, price, category in zip(dates, businesses, prices, categories):
         transactions['transactions'].append({
@@ -163,6 +156,14 @@ def extract_transaction_from_pdf(file_path, user_id):
         transaction['price'] = int(float(transaction['price']))
         transaction['date'] = datetime.datetime.strptime(date, '%d/%m/%Y')
     add_transaction_to_user(transactions=transactions, user_id=user_id)
+
+
+def extract_transaction_from_pdf(file_path, user_id):
+    # TODO add error message and handler for textract.exceptions.ShellError exception
+    text = textract.process(file_path, 'UTF-8')
+    decode_text = text.decode()
+    decode_text = remove_rtl(decode_text)
+    extract_transaction_from_isracard_pdf(decode_text.split('\n'), user_id)
 
 
 if __name__ == '__main__':
