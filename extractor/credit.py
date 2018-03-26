@@ -64,6 +64,7 @@ def remove_rtl(text):
     text = text.replace('ó', 'ף')
     text = text.replace('ê', 'ך')
     text = text.replace('õ', 'ץ')
+    text = text.replace('', 'נ')
     return text
 
 
