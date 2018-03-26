@@ -2,9 +2,9 @@ import textract
 from itertools import tee
 import base64
 import bson
+import uuid
 import os
-from flask import Flask, request, make_response
-from werkzeug.utils import secure_filename
+from flask import Flask, request, jsonify
 import datetime
 from pymongo import MongoClient
 
@@ -22,17 +22,30 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+@app.after_request
+def cors_enabled(response):
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5000'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    return response
+
+
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
-    if request.method == 'POST':
+    is_request_post = request.method == 'POST'
+    is_user_cookie_string = type(request.cookies.get('currentUserId')) is str
+    is_user_len_ok = type(request.cookies.get('currentUserId')) is str
+    if is_request_post and is_user_cookie_string and is_user_len_ok:
+        user_id = request.cookies.get('currentUserId')[3:-3]
         file_stream = request.form['file']
-        filename = 'data.pdf'
-        with open(os.path.join(app.config['UPLOAD_FOLDER'], 'data.pdf'), 'wb') as file:
+        file_name = uuid.uuid4().hex + '.pdf'
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+        with open(file_path, 'wb') as file:
             file.write(base64.b64decode(file_stream[28:]))
 
-        extract_transaction_from_pdf(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return 'OK!'
+        extract_transaction_from_pdf(file_path, user_id)
+        return jsonify({"message": "User id : %s transaction was updated" % user_id})
     else:
+        # TODO remove GET
         return 'Hello World!'
 
 
@@ -86,7 +99,8 @@ class Data:
     transactions = None
 
 
-def extract_transaction_from_pdf(file_path):
+def extract_transaction_from_pdf(file_path, user_id):
+    # TODO add error message and handler for textract.exceptions.ShellError exception
     text = textract.process(file_path, 'UTF-8')
     data = Data()
 
@@ -135,7 +149,7 @@ def extract_transaction_from_pdf(file_path):
         transaction['date'] = datetime.datetime.strptime(date, '%d/%m/%Y')
     for transaction in transactions['transactions']:
         users_collection.update_one(
-            {'firstName': 'user'},
+            {'_id': bson.ObjectId(user_id)},
             {'$push': {'transactions': transaction}}
         )
 
