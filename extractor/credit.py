@@ -158,12 +158,49 @@ def extract_transaction_from_isracard_pdf(lines, user_id):
     add_transaction_to_user(transactions=transactions, user_id=user_id)
 
 
+def extract_transaction_from_mastercard_pdf(lines, user_id):
+    lines = list([value for value in lines if value != ''])
+    number_of_transactions = lines.index('שם בית עסק') - lines.index('תאריך רכישה') - 1
+    dates_index = lines.index('תאריך רכישה') + 1
+    business_index = lines.index('שם בית עסק') + 1
+    temp = []
+    for line in lines:
+        for number in line.split('₪'):
+            if '.' in number:
+                try:
+                    float(number)
+                    temp.append(float(number))
+                except ValueError:
+                    pass
+    temp = temp[:-1]
+    prices = temp[:number_of_transactions]
+    dates = lines[dates_index:dates_index+number_of_transactions]
+    businesses = lines[business_index:business_index+number_of_transactions]
+    categories = ['לא ידוע' for i in range(number_of_transactions)]
+    transactions = {"transactions": []}
+    for date, business, price, category in zip(dates, businesses, prices, categories):
+        transactions['transactions'].append({
+            'date': date,
+            'business': business,
+            'price': price,
+            'category': category
+        })
+    for transaction in transactions['transactions']:
+        date = transaction['date']
+        transaction['date'] = datetime.datetime.strptime(date, '%d/%m/%Y')
+    add_transaction_to_user(transactions=transactions, user_id=user_id)
+
+
 def extract_transaction_from_pdf(file_path, user_id):
     # TODO add error message and handler for textract.exceptions.ShellError exception
     text = textract.process(file_path, 'UTF-8')
     decode_text = text.decode()
     decode_text = remove_rtl(decode_text)
-    extract_transaction_from_isracard_pdf(decode_text.split('\n'), user_id)
+    lines = decode_text.split('\n')
+    if 'להצטרפותwww.isracard.co.il :' in lines:
+        extract_transaction_from_isracard_pdf(lines, user_id)
+    else:
+        extract_transaction_from_mastercard_pdf(lines, user_id)
 
 
 if __name__ == '__main__':
