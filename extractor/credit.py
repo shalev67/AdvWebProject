@@ -135,7 +135,7 @@ def extract_transaction_from_pdf(file_path, user_id):
     for date, business, price, category in zip(dates, businesses, prices, categories):
         transactions['transactions'].append({
             'date': date,
-            'buissness': business,
+            'business': business,
             'price': price,
             'category': category
         })
