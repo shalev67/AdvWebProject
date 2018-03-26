@@ -99,6 +99,21 @@ class Data:
     transactions = None
 
 
+def add_transaction_to_user(transactions, user_id):
+    current_transactions = users_collection.find_one({'_id': bson.ObjectId(user_id)})['transactions']
+    for transaction in current_transactions:
+        transaction.pop('_id', None)
+
+    transactions['transactions'] = [transaction for transaction in
+                                    transactions['transactions'] if transaction not in current_transactions]
+    for transaction in transactions['transactions']:
+        transaction['_id'] = bson.objectid.ObjectId()
+    users_collection.update_one(
+        {'_id': bson.ObjectId(user_id)},
+        {'$push': {'transactions': {'$each': transactions['transactions']}}}
+    )
+
+
 def extract_transaction_from_pdf(file_path, user_id):
     # TODO add error message and handler for textract.exceptions.ShellError exception
     text = textract.process(file_path, 'UTF-8')
@@ -140,18 +155,13 @@ def extract_transaction_from_pdf(file_path, user_id):
             'category': category
         })
     for transaction in transactions['transactions']:
-        transaction['_id'] = bson.objectid.ObjectId()
         date = transaction['date']
         date = date.split('/')
         date[2] = '20' + date[2]
         date = '/'.join(date)
         transaction['price'] = int(float(transaction['price']))
         transaction['date'] = datetime.datetime.strptime(date, '%d/%m/%Y')
-    for transaction in transactions['transactions']:
-        users_collection.update_one(
-            {'_id': bson.ObjectId(user_id)},
-            {'$push': {'transactions': transaction}}
-        )
+    add_transaction_to_user(transactions=transactions, user_id=user_id)
 
 
 if __name__ == '__main__':
