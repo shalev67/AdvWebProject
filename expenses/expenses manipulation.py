@@ -20,18 +20,24 @@ db = client.test
 mongo_train_cols = {'income': 1, 'maritalStatus': 1, 'gender': 1, 'kids': 1, 'zone': 1, 'birthDate': 1, '_id': 1}
 user_id_col = '_id'
 users_collection = db.users
-
-# TODO: get the list of categories from db
-categories = ['שונות', 'מסעדות/קפה', 'דלק', 'קניה אינט"', 'מכולת/סופר', 'תקשורת', 'מחשבים']
 # endregion
+
+
+# TODO: If possible, get categories from db collection
+def get_categories():
+    return list(users_collection.distinct("transactions.category"))
+
+
+def contains(my_list, my_filter):
+    for x in my_list:
+        if my_filter(x):
+            return True
+    return False
 
 
 # region Reading data from the db about the users
 def read_data(user_id, month, year):
-    # get the properties of the users that are not the current user
-    users_train_data = list(users_collection.find({user_id_col: {"$ne": user_id}}, mongo_train_cols).sort(user_id_col, 1))
-
-    # get the expenses
+    # get the expenses grouped to categories
     get_transactions_total_by_month = [
         {
             "$unwind": {"path": "$transactions"}
@@ -54,18 +60,33 @@ def read_data(user_id, month, year):
             }
         },
         {
-            # group by user_id and category and sum each category's expenses
+            # group by user_id and category, sum each category's expenses and get the necessary data on the user
             "$group": {
                 "_id": {"user_id": "$_id", "category": "$transactions.category"},
                 "transactions": {"$sum": "$transactions.price"},
-                "date": {"$first": "$transactions.date"}
+                "income": {"$first": "$income"},
+                "maritalStatus": {"$first": "$maritalStatus"},
+                "gender": {"$first": "$gender"},
+                "zone": {"$first": "$zone"},
+                "kids": {"$first": "$kids"},
+                "birthDate": {"$first": "$birthDate"}
             }
         }
     ]
 
     users_outcome_per_category_dic = list(users_collection.aggregate(get_transactions_total_by_month))
-    users_outcome_per_category_dic.sort(key= lambda curr: curr["_id"]["user_id"])
 
+    # Get only the data on all of the users (beside the expenses)
+    users_train_data = []
+    for curr in users_outcome_per_category_dic:
+        if not contains(users_train_data, lambda x: x['_id'] == curr['_id']['user_id']):
+            users_train_data.append({'_id': curr['_id']['user_id'], 'income': curr['income'], 'maritalStatus': curr['maritalStatus'],
+                         'gender': curr['gender'], 'zone': curr['zone'], 'kids': curr['kids'], 'birthDate': curr['birthDate']})
+
+    # Get only the expenses of the users
+    users_outcome_per_category_dic = [{'_id': curr['_id'], 'transactions': curr['transactions']} for curr in users_outcome_per_category_dic]
+
+    # Get the data on the current logged user (beside the expenses)
     logged_user_data = list(users_collection.find({user_id_col: user_id}, mongo_train_cols))
 
     return users_train_data, users_outcome_per_category_dic, logged_user_data
@@ -111,24 +132,31 @@ def add_numerical_categories(train_data, current_user_data, one_hot_labels, user
 
 
 def get_prediction(user_id, month, year):
+    categories = get_categories()
     train_data, users_outcome_per_category_dic, current_user_data = read_data(user_id, month, year)
     response = []
     for category in categories:
+        # Make a copy of the data so when we delete the _id field it won't change also in here
         current_user_data_copy = copy.deepcopy(current_user_data)
         train_data_copy = copy.deepcopy(train_data)
-        prediction_of_category = get_prediction_by_category(train_data_copy, users_outcome_per_category_dic, current_user_data_copy, category)
-        response.append({"_id": {"month": month, "year": year, "category": category}, "totalPrice": prediction_of_category[0]})
+
+        if not users_outcome_per_category_dic:
+            response.append(build_response_dictionary(month, year, category, 0))
+        else:
+            # Get the prediction of this category
+            prediction_of_category = get_prediction_by_category(train_data_copy, users_outcome_per_category_dic, current_user_data_copy, category)
+            response.append(build_response_dictionary(month, year, category, prediction_of_category[0]))
     return response
 
+
 def get_prediction_by_category(train_data, users_outcome_per_category_dic, current_user_data, category):
-    # train_data, train_res, current_user_data = read_data_by_month(user_id, month, year)
     train_res = []
     for user_data in train_data:
         # enter the total transactions of the user for the current category, if there is none enter 0
         category_transactions_of_user = [curr["transactions"] for curr in users_outcome_per_category_dic if curr[user_id_col]['user_id'] == user_data[user_id_col] and curr[user_id_col]['category'] == category]
         train_res.append(category_transactions_of_user[0] if category_transactions_of_user else 0)
 
-    # Delete id column is (the transform function of the non numeric values doesn't need it)
+    # Delete id column (the transform function of the non numeric values doesn't need it)
     for data in train_data:
         data.pop('_id')
     current_user_data[0].pop('_id')
@@ -139,6 +167,10 @@ def get_prediction_by_category(train_data, users_outcome_per_category_dic, curre
     neigh.fit(train_data, train_res)
 
     return neigh.predict(current_user_data)
+
+
+def build_response_dictionary(month, year, category, prediction_of_category):
+    return {"_id": {"month": month, "year": year, "category": category}, "totalPrice": prediction_of_category}
 
 
 app = Flask(__name__)
@@ -162,4 +194,4 @@ def after_request(response):
 
 
 if __name__ == '__main__':
-    app.run(debug=debug, port=port, host='0.0.0.0')
+    app.run(debug=debug, port=port, host='0.0.0.0', threaded=True)
