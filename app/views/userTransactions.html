@@ -35,7 +35,7 @@
             <thead>
             <tr>
                 <th class="search-tbl-th"><input ng-model="search.category" placeholder="category" class="search-box"></th>
-                <th class="search-tbl-th"><input ng-model="search.buissness" placeholder="buissness" class="search-box"></th>
+                <th class="search-tbl-th"><input ng-model="search.business" placeholder="business" class="search-box"></th>
                 <th class="search-tbl-th"><input ng-model="search.price" placeholder="price" class="search-box"></th>
             </tr>
             </thead>
@@ -54,7 +54,7 @@
                 </th>
 
                 <th>
-                    Buissness Name
+                    Business Name
                 </th>
                 <th>
                     Price
@@ -65,7 +65,7 @@
             <tr ng-repeat="transaction in currentUser.transactions | orderBy : 'date' | filter:search:strict" id="transactions">
                 <td>{{ transaction.date | date:"dd/MM/yy"}}</td>
                 <td>{{ transaction.category }}</td>
-                <td>{{ transaction.buissness }}</td>
+                <td>{{ transaction.business }}</td>
                 <td>{{ transaction.price }}</td>
             </tr>
             </tbody>

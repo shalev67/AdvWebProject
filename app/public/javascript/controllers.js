@@ -638,31 +638,32 @@
 
     //myApp.controller("uploadCtrl", function ($scope, $http) {
     function uploadCtrl ($scope, $http, $rootScope) {
-        var uploadUrl = "http://localhost:3000";
+        if ($rootScope.connected) {
+            var uploadUrl = "http://localhost:3000";
 
-        $scope.uploadFile = function () {
-            var file = $scope.myFile;
-            var payload = new FormData();
-            payload.append("title", 'data');
-            payload.append('file', file);
-            // var uploadUrl = "../server/service.php", //Url of webservice/api/server
-            //Take the first selected file
-            $http.post(
-                uploadUrl,
-                payload,
-                {
-                    withCredentials: true,
-                    headers: {'Content-Type': undefined}
-                    // ,transformRequest: angular.identity
+            $scope.uploadFile = function () {
+                var file = $scope.myFile;
+                var payload = new FormData();
+                if (file != null) {
+                    payload.append('title', 'data');
+                    payload.append('file', file);
+                    // var uploadUrl = "../server/service.php", //Url of webservice/api/server
+                    //Take the first selected file
+                    $http.post(
+                        uploadUrl,
+                        payload,
+                        {
+                            withCredentials: true,
+                            headers: {'Content-Type': undefined}
+                            // ,transformRequest: angular.identity
+                        }
+                    ).then(function (sucess) {
+                    })
                 }
-            ).then(function (sucess) {
-
-            }).error(function (error) {
-                console.log('eerrrrrrroooor');
-                console.log(error)
-            })
-
-
+                else {
+                    alert('select a pdf file!')
+                }
+            }
         }
     }
     angular.module('userModule').controller('uploadCtrl', ['$scope', '$http', '$rootScope', uploadCtrl])
