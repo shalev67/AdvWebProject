@@ -7,6 +7,7 @@ import os
 from flask import Flask, request, jsonify
 import datetime
 from pymongo import MongoClient
+import string
 
 UPLOAD_FOLDER = '/tmp/'
 ALLOWED_EXTENSIONS = {'pdf'}
@@ -87,6 +88,11 @@ def is_timestamp(date_text):
     return False
 
 
+def is_price(price):
+    allowed = string.digits + '.' + ',' + '-'
+    return all(c in allowed for c in price)
+
+
 class Transaction:
     date = None
     to = None
@@ -130,7 +136,13 @@ def extract_transaction_from_isracard_pdf(lines, user_id):
     dates_len = len(dates)
     index = lines.index('בש"ח')
     atms = lines.count('משיכת מזומנים')
-    prices = list(lines[index + 1: index + atms * 2: 2]) + list(lines[index + atms * 2 + 1: index + 1 + atms * 2 + dates_len - atms])
+    prices_list = []
+    i = lines.index('סכו םעסקה')
+    while len(prices_list) < dates_len * 2 + atms:
+        if is_price(lines[i]):
+            prices_list.append(lines[i])
+        i += 1
+    prices = prices_list[dates_len:dates_len + atms * 2:2] + prices_list[dates_len + atms * 2:]
     index = lines.index('סכו םעסקה')
     start = index
     categories = list()
