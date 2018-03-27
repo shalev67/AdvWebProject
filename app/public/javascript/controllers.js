@@ -431,7 +431,7 @@
                             return d.data._id.category;
                         });
                        }
-
+                  
 
                        // Update bar graph
                        function updateBarChart(data){
@@ -486,6 +486,36 @@
                         })
                         .attr("height", function (d) {
                             return height - y(d.totalPrice);
+                        });
+
+                        // Bar tooltip
+                        var tooltip = d3.select("body")
+                        .append('div')
+                        .attr('class', 'tooltip')
+                        .style("display", "none");
+
+                        tooltip.append('text')
+                        .attr('class', 'totalPrice');
+                        
+                        svg.selectAll("rect")
+                        .on('mouseover', function (d) {
+                            if (!d._id.category) return null;
+
+                            tooltip.select('.totalPrice').html("<b>" + Math.round(d.totalPrice * 100)/100 + "</b>");
+                            tooltip.style('display', 'inline')
+                            .style('opacity', 2)
+                            .style('background', 'lightsteelblue')
+                            .style('font-weight', 'bold');
+
+                        })
+                        .on('mousemove', function (d) {
+                            if (!d._id.category) return null;
+                            tooltip.style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY - 24) + "px");
+                        })
+                        .on('mouseout', function () {
+                            tooltip.style('display', 'none');
+                            tooltip.style('opacity', 0);
                         });
 
                     // add the x Axis
