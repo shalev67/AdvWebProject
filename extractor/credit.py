@@ -153,6 +153,7 @@ def extract_transaction_from_isracard_pdf(lines, user_id):
         date = date.split('/')
         date[2] = '20' + date[2]
         date = '/'.join(date)
+        transaction['price'] = transaction['price'].replace(',', '')
         transaction['price'] = int(float(transaction['price']))
         transaction['date'] = datetime.datetime.strptime(date, '%d/%m/%Y')
     add_transaction_to_user(transactions=transactions, user_id=user_id)
