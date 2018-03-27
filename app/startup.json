@@ -11,7 +11,11 @@
       "zone": "center",
       "email": "admin@admin.com",
       "password": "admin",
-      "role": "admin"
+      "role": "admin",
+      "frienship":{
+        "email":"",
+        "status": ""
+    }
     },
     {
       "firstName": "user",
@@ -24,7 +28,11 @@
       "zone": "north",
       "email": "user@user.com",
       "password": "123",
-      "role": "user"
+      "role": "user",
+      "frienship":{
+        "email":"",
+        "status": ""
+    }
     }
   ],
 

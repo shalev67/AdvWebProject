@@ -66,6 +66,18 @@ var userSchema = new Schema(
             type: String,
             required: [true, 'role is required'],
             enum: ['admin','user']
+        },
+        friendship:{
+            email:{
+                 type: String,
+                minlength: 2,
+                maxlength: 20,
+                lowercase: true
+            },
+            status:{
+                type: String,
+                enum: ['wait to accept','are friends','are not friends']
+            }
         }
     });
 var User = mongoose.model('User', userSchema);

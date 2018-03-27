@@ -31,6 +31,65 @@ server.listen(port, '0.0.0.0');
 server.on('error', onError);
 server.on('listening', onListening);
 
+var io = require('socket.io').listen(server);
+
+var users = []; 
+
+io.on('connection', (socket) => {
+    
+               socket.on('userEmail', (userEmail) => {
+
+                        console.log('emitUserEmail');
+                     users.push({
+                         id : socket.id,
+                         userEmail : userEmail
+                     });
+    
+                     let len = users.length;
+                     len--;
+
+                     for(let i=0; i < users.length; i++){
+                        console.log('userId:' + users[i].id);
+                        console.log('userEmail:' + users[i].userEmail);
+                      }
+
+                     io.emit('userList',users,users[len].id); 
+               });
+    
+               socket.on('friendshipRequest', (data) => {
+
+                    var socketFriend = null;    
+
+                    for(let i=0; i < users.length; i++){
+
+                        if(users[i].userEmail === data.userFriendEmail){
+                            socketFriend = users[i].id;
+                        }
+                      }
+                    
+                      console.log('socketFriend: ' + socketFriend);
+
+                      if(socketFriend)
+                        {
+                            //socket.broadcast.to(socketFriend).emit('getFriendship',{msg:'friend request from ',  name :data.userName});
+                        //    socket.emit('getFriendship',{msg:'friend request from ',  userName :data.userName});  
+                            io.sockets.sockets[socketFriend].emit ('getFriendship',{msg:'friend request from ',  userName :data.userName,
+                            userEmail: data.userEmail ,userFriendEmail: data.userFriendEmail}); 
+                         }
+                });
+    
+               socket.on('disconnect',()=>{
+                   
+                     for(let i=0; i < users.length; i++){
+                       
+                       if(users[i].id === socket.id){
+                             users.splice(i,1); 
+                       }
+                     }
+                     io.emit('exit',users); 
+               });
+    
+           });
 /**
  * Normalize a port into a number, string, or false.
  */

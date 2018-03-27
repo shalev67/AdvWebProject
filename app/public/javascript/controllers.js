@@ -1,7 +1,7 @@
 (function(){
     'use strict';
     //var myApp = angular.module("myApp");
-    function userCtrl ($scope ,$rootScope,$http,userService,$location, $cookieStore) {
+    function userCtrl ($scope,socket ,$rootScope,$http,userService,$location, $cookieStore) {
         var self = this;
 
         $rootScope.connected = false;
@@ -107,6 +107,9 @@
                                     expires: expireDate
                                 });
                                 $location.path('/home');
+
+                                ///var userName = $rootScope.currentUser.firstName + ' ' + $rootScope.currentUser.lastName;
+                                socket.emit('userEmail',userEmail);
                             });
                         }
                         else {
@@ -115,6 +118,129 @@
                 }
             });
         };
+
+        // User socket list
+        $scope.socketId = null;
+        $scope.userList = [];
+
+        socket.on('userList', (userList,socketId) => {
+            if($scope.socketId === null){
+                $scope.socketId = socketId;
+            }
+            $scope.userList = userList;
+        }); 	
+
+        socket.on('exit', (userList) => {
+            $scope.userList = userList;
+        });
+
+        // friendship
+        socket.on('getFriendship',function(data) 
+          {
+            swal({
+                title: data.msg + data.userName,
+                text: "do you want to share your data with him/her?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, confirm it!',
+                cancelButtonText: 'No, cancel!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+              }).then((result) => {
+                if (result.value) {
+
+                    userService.getUserByEmail(data.userFriendEmail).then(function (user, err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else{
+                            user.data.friendship = {email: data.userEmail, status: 'are friends'};
+                            userService.updateUser(user.data).then(function (req,err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                else{
+                                    console.log(userService.getUserByID(user.data._id))
+
+                                    // save the second user
+                                    userService.getUserByEmail(data.userEmail).then(function (user, err) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        else{
+                                            user.data.friendship = {email: data.userFriendEmail, status: 'are friends'};
+                                            userService.updateUser(user.data).then(function (req,err) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                                else{
+                                                    console.log(userService.getUserByID(user.data._id))
+                                                    swal(
+                                                        'success!',
+                                                        'you and ' + data.userName + ' are friends',
+                                                        'success'
+                                                      )
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                // } else if (
+                //   // Read more about handling dismissals
+                //   result.dismiss === swal.DismissReason.cancel
+                // ) {
+                //   swal(
+                //     'Cancelled',
+                //     'Your imaginary file is safe :)',
+                //     'error'
+                //   )
+                // }
+              }});
+             console.log(data);
+             // alert(data.msg + data.userName);
+          });  
+        
+
+        $scope.sendFriendshipRequest = function ()
+        {
+            this.userCtrl.userToUpdate._id = $scope.currentUserId;
+            
+            // check not friendship myself
+            // $scope.userFriendEmail = null;
+        
+            // $scope.userFriendEmail = () => {
+            //     var email = null;
+            //    userService.getUserByID(this.userCtrl.userToUpdate._id).then(function (data, err) {
+            //         if (err) {
+            //             console.log(err);
+            //         }
+            //         else{
+            //             $scope.email = data.data.email;
+            //         }
+            //     })
+            //     this.userCtrl.userToUpdate.friendship.email === $scope.email ? alert("Can't request frient to yourself.") : $scope.userFriendEmail = this.userCtrl.userToUpdate.friendship.email;
+            // };
+    
+            this.userCtrl.userToUpdate.friendship.status = 'wait to accept';
+          //  this.userCtrl.userToUpdate.friendship = {email: email, status: 'wait to accept'};
+            userService.updateUser(this.userCtrl.userToUpdate).then(function (data, err) {
+                if (err) {
+                    console.log(err);
+                }
+            })
+            // socket.emit('friendshipRequest', {userEmail: this.userCtrl.userToUpdate.email, userFriendEmail: $scope.userFriendEmail});  
+            socket.emit('friendshipRequest', {userName: this.userCtrl.userToUpdate.firstName + ' ' + this.userCtrl.userToUpdate.lastName,
+                                 userEmail: $rootScope.currentUser.email , userFriendEmail: this.userCtrl.userToUpdate.friendship.email});  
+            
+            // console.log(userService.getUserByID(this.userCtrl.userToUpdate._id))
+       }
 
         // Logout
         $scope.logout = function () {
@@ -507,7 +633,8 @@
         }
 
     }
-    angular.module('userModule').controller('userCtrl', ['$scope', '$rootScope','$http', 'userService','$location', '$cookieStore', userCtrl])
+    angular.module('userModule').controller('userCtrl', ['$scope','socket', '$rootScope','$http', 'userService','$location', '$cookieStore', userCtrl])
+
 
     //myApp.controller("uploadCtrl", function ($scope, $http) {
     function uploadCtrl ($scope, $http, $rootScope) {
@@ -539,7 +666,7 @@
         }
     }
     angular.module('userModule').controller('uploadCtrl', ['$scope', '$http', '$rootScope', uploadCtrl])
-    //})
+   //})
 
     function expensesCtrl ($scope,$rootScope, $http, userService, expensesService, $cookieStore) {
         //myApp.controller("expensesCtrl", function ($scope, $http) {
@@ -823,7 +950,7 @@
             }
 
             // Check if partner exist
-            var partnerEmail = 'admin@admin.com'; //TODO: Change to the real partner
+            var partnerEmail = $scope.currentUser.friendship.email //'admin@admin.com'; //TODO: Change to the real partner
             if(partnerEmail) {
                 //Get partner
                 userService.getUserByEmail(partnerEmail).then(function (user, err) {

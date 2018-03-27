@@ -11,16 +11,17 @@
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
+    "ejs": "^2.5.8",
+    "express": "^4.16.3",
     "font-awesome": "^4.7.0",
     "jade": "^1.11.0",
-    "mongoose": "^4.13.6",
+    "mongoose": "^4.13.12",
     "morgan": "^1.9.0",
     "password-hash": "^1.2.2",
     "path": "^0.12.7",
     "serve-favicon": "^2.4.5",
     "serve-static": "^1.13.1",
+    "socket.io": "^2.0.4",
     "sweetalert2": "^7.15.1"
   }
 }

@@ -113,6 +113,7 @@ module.exports = {
             dbUser.maritalStatus = user.maritalStatus || dbUser.maritalStatus;
             dbUser.kids = user.kids || dbUser.kids;
             dbUser.zone = user.zone || dbUser.zone;
+            dbUser.friendship = user.friendship || dbUser.friendship;
             dbUser.save(function (err) {
                 if (err) {
                     console.error(err);
