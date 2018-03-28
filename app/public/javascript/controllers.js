@@ -705,7 +705,7 @@
         var date = new Date();
         $scope.getExpectedExpenses = function (month = date.getMonth() + 1, year = date.getFullYear()) {
 
-            var expensesUrl = "http://localhost:666/user/" + $scope.currentUserId + "?month=" + 12 + "&year=" + 2015;
+            var expensesUrl = "http://localhost:3001/user/" + $scope.currentUserId + "?month=" + 12 + "&year=" + 2017;
             $http.get(expensesUrl).then(function(response){
                 $scope.expectedExpense = response.data;
             }).catch(function (error) {
@@ -760,7 +760,7 @@
 
                     if (data !== undefined) {
 
-                        var expensesUrl = "http://localhost:666/user/" + $rootScope.currentUser._id + "?month=" + month + "&year=" + year;
+                        var expensesUrl = "http://localhost:3001/user/" + $rootScope.currentUser._id + "?month=" + month + "&year=" + year;
                         $http.get(expensesUrl).then(function(response){
 
                             // $scope.expectedExpense = response.data;
@@ -1024,7 +1024,7 @@
 
                                     if (data !== undefined) {
 
-                                        var expensesUrl = "http://localhost:666/user/" +  $scope.currentPartner._id + "?month=" + month + "&year=" + year;
+                                        var expensesUrl = "http://localhost:3001/user/" +  $scope.currentPartner._id + "?month=" + month + "&year=" + year;
                                         $http.get(expensesUrl).then(function(response){
 
                                             var expectedData = response.data;

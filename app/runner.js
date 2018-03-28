@@ -164,6 +164,9 @@ function populateDb() {
     var branches = jsonContent.branches;
     var transactions = jsonContent.transactions;
     var adminTransactions = jsonContent.adminTransactions;
+    var yuvalTransactions = jsonContent.yuvalTransactions;
+    var shaniTransaction = jsonContent.shaniTransactions;
+    var tamaraTransactions = jsonContent.tamaraTransactions;
     users.forEach(function (user, index) {
         userManager.createUser(function (err, newUser) {
                 console.log('Created user: ' + user.email);//adminTransactions
@@ -176,6 +179,27 @@ function populateDb() {
 
                 if(user.email === 'admin@admin.com' ){
                     adminTransactions.forEach(function (transaction, index) {
+                        userManager.addTransaction(function (err, user){
+                        }, newUser, transaction)
+                    });
+                }
+
+                if(user.email === 'shalev@gmail.com' ){
+                    yuvalTransactions.forEach(function (transaction, index) {
+                        userManager.addTransaction(function (err, user){
+                        }, newUser, transaction)
+                    });
+                }
+
+                if(user.email === 'shani@gmail.com' ){
+                    shaniTransaction.forEach(function (transaction, index) {
+                        userManager.addTransaction(function (err, user){
+                        }, newUser, transaction)
+                    });
+                }
+
+                if(user.email === 'tamara@gmail.com' ){
+                    tamaraTransactions.forEach(function (transaction, index) {
                         userManager.addTransaction(function (err, user){
                         }, newUser, transaction)
                     });
