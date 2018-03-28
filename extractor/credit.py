@@ -8,6 +8,7 @@ from flask import Flask, request, jsonify
 import datetime
 from pymongo import MongoClient
 import string
+import json
 
 UPLOAD_FOLDER = '/tmp/'
 ALLOWED_EXTENSIONS = {'pdf'}
@@ -123,35 +124,86 @@ def add_transaction_to_user(transactions, user_id):
 
 def extract_transaction_from_isracard_pdf(lines, user_id):
     data = Data()
-    lines = list([value for value in lines if value != 'ה.קבע'])
-    lines = list([value for value in lines if value != ''])
-    data.credit_card_last_digits = extract_credit_card_number(lines)
-    dates = list()
-    businesses = list()
-
-    for a, b in pairwise(lines):
-        if is_timestamp(b):
-            dates.append(b)
-            businesses.append(a)
-    dates_len = len(dates)
-    index = lines.index('בש"ח')
-    atms = lines.count('משיכת מזומנים')
-    prices_list = []
-    i = lines.index('סכו םעסקה')
-    while len(prices_list) < dates_len * 2 + atms:
-        if is_price(lines[i]):
-            prices_list.append(lines[i])
-        i += 1
-    prices = prices_list[dates_len:dates_len + atms * 2:2] + prices_list[dates_len + atms * 2:]
-    index = lines.index('סכו םעסקה')
-    start = index
-    categories = list()
-    while len(categories) < dates_len or index - start < dates_len:
-        index += 1
-        temp = lines[index]
-        temp = temp.replace('.', '')
-        if not temp.isdigit():
-            categories.append(lines[index])
+    remove_list = [
+        'ה.קבע',
+        '',
+        'לא הוצג',
+        'סכו םהחיוב',
+        'בש"ח',
+        '}',
+        'ש םבית עסק',
+        'תאריך',
+        'עסקה',
+        'כרטיס',
+        'בעסקה',
+        'ענף',
+        'ש.אלחוט'
+    ]
+    categories_list = [
+        'ביטוח',
+        'שרות רפואי',
+        'נופש ותיור',
+        'בתי ספר',
+        'פנאי/ספורט',
+        'שירותי רכב',
+        'דלק',
+        'מכולת/סופר',
+        'רהיטים',
+        'מסעדות/קפה',
+        'מוצרי חשמל',
+        "קניה אינט'",
+        "תש' רשויות",
+        'פארמה',
+        'כלי בית',
+        'משתלות',
+        'הלבשה',
+        'מעדניות',
+        'תרבות',
+        'שונות',
+        "תש' רשויות",
+        'ספרי/םדיסק',
+        'אבזרי אפנה',
+        'טוטו/פיס',
+        'הנעלה',
+        'צעצועים',
+        'עיתו/ןדפוס'
+    ]
+    lines = list([value for value in lines if value not in remove_list])
+    start_index = lines.index('עסקות שחויבו  /זוכו  -בארץ')
+    end_index = lines.index('מסגרת הכרטיס ותנאי האשראי')
+    lines = lines[start_index + 1:end_index]
+    categories = list([value for value in lines if value in categories_list])
+    try:
+        remove_index_start = lines.index('פירוט נוסף')
+        remove_index_end = lines.index('עסקות שחויבו  /זוכו  -בארץ')
+    except ValueError:
+        remove_index_start = None
+        remove_index_end = None
+    if remove_index_start and remove_index_end:
+        lines = lines[:remove_index_start] + lines[remove_index_end + 1:]
+    dates = [date for date in lines if is_timestamp(date)]
+    temp = list()
+    prices = list()
+    for line in lines:
+        if is_price(line):
+            temp.append(line)
+        else:
+            if len(temp) and len(prices) < len(dates):
+                if len(temp) > len(dates) * 2:
+                    temp = temp[:len(dates) * 2]
+                if len(temp) % 2 != 0:
+                    temp = temp[:-1]
+                if int(len(temp)/2) + len(prices) > len(dates):
+                    temp = temp[:-2]
+                prices += temp[int(len(temp)/2):]
+            temp = list()
+    lines = list([value for value in lines if value not in categories_list])
+    lines = list([value for value in lines if not is_price(value)])
+    lines = list([value for value in lines if not is_timestamp(value)])
+    lines = list([value for value in lines if value != 'עסקות שחויבו  /זוכו  -בארץ'])
+    lines = list([value for value in lines if value != 'סכו םעסקה'])
+    lines = list([value for value in lines if 'סה"כ חיוב לתאר' not in value])
+    businesses = lines[:len(dates) + 1]
     transactions = {"transactions": []}
     for date, business, price, category in zip(dates, businesses, prices, categories):
         transactions['transactions'].append({
@@ -171,50 +223,13 @@ def extract_transaction_from_isracard_pdf(lines, user_id):
     add_transaction_to_user(transactions=transactions, user_id=user_id)
 
 
-def extract_transaction_from_mastercard_pdf(lines, user_id):
-    lines = list([value for value in lines if value != ''])
-    number_of_transactions = lines.index('שם בית עסק') - lines.index('תאריך רכישה') - 1
-    dates_index = lines.index('תאריך רכישה') + 1
-    business_index = lines.index('שם בית עסק') + 1
-    temp = []
-    for line in lines:
-        for number in line.split('₪'):
-            if '.' in number:
-                try:
-                    float(number)
-                    temp.append(float(number))
-                except ValueError:
-                    pass
-    temp = temp[:-1]
-    prices = temp[:number_of_transactions]
-    dates = lines[dates_index:dates_index+number_of_transactions]
-    businesses = lines[business_index:business_index+number_of_transactions]
-    categories = ['לא ידוע' for i in range(number_of_transactions)]
-    transactions = {"transactions": []}
-    for date, business, price, category in zip(dates, businesses, prices, categories):
-        transactions['transactions'].append({
-            'date': date,
-            'business': business,
-            'price': price,
-            'category': category
-        })
-    for transaction in transactions['transactions']:
-        date = transaction['date']
-        transaction['date'] = datetime.datetime.strptime(date, '%d/%m/%Y')
-    add_transaction_to_user(transactions=transactions, user_id=user_id)
-
-
 def extract_transaction_from_pdf(file_path, user_id):
     # TODO add error message and handler for textract.exceptions.ShellError exception
     text = textract.process(file_path, 'UTF-8')
     decode_text = text.decode()
     decode_text = remove_rtl(decode_text)
     lines = decode_text.split('\n')
-    if 'להצטרפותwww.isracard.co.il :' in lines:
-        extract_transaction_from_isracard_pdf(lines, user_id)
-    else:
-        extract_transaction_from_mastercard_pdf(lines, user_id)
-
+    extract_transaction_from_isracard_pdf(lines, user_id)
 
 if __name__ == '__main__':
     app.run(port=3000, host='0.0.0.0')
