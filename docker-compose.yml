@@ -35,7 +35,7 @@ services:
     hostname: expenses
     container_name: expenses
     ports:
-      - "666:666"
+      - "3001:3001"
     depends_on:
       - db
       - web

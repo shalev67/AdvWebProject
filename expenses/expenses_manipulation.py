@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask ,jsonify, request
 from pandas._libs.lib import datetime
 from sklearn.neighbors import KNeighborsRegressor
 import pandas as pd
@@ -11,7 +11,7 @@ import copy
 from datetime import datetime
 
 debug = True
-port = 666
+port = 3001
 mongo_port = 27017
 client = MongoClient(port=mongo_port)
 db = client.test
