@@ -276,7 +276,7 @@
                     //***PIE CHART init****//
                     //*********************//
                     var widthPie = 960,
-                    heightPie = 350,
+                    heightPie = 360,
                     radiusPie = Math.min(width, height) / 2;
 
                     var colorsPie = ["#778ca3",
@@ -288,6 +288,8 @@
                                      "#20bf6b",
                                      "#bb99ff",
                                      "#408000"];
+
+                    var percentageFormat = d3.format(",.2%");
 
                     var arcPie = d3.arc()
                         .outerRadius(radiusPie - 10)
@@ -308,85 +310,68 @@
                         .attr("height", heightPie + 250)
                         .append("g")
                         .attr("transform", "translate(" + widthPie / 2 + "," + heightPie * 1.7 / 2 + ")");
+                    
+                    BuildStatistics($scope.selectedMonth, $scope.selectedYear);
+                    
 
+                    function BuildStatistics(month, year){
 
-                    var url = "/User/GetGroupById/" + $scope.currentUserId;
-
-                    // Get the data for current year& last month
-                    d3.json(url, function (error, data) {
-
-                        if (data !== undefined) {
-                            
-                                data = data.filter(function (i) {
-                                    if (i._id.month === $scope.selectedMonth &&
-                                         i._id.year === $scope.selectedYear) {
-                                        return i.totalPrice;
-                                    }
-                                });
-                                data.sort(function (a, b) {
-                                    return b.totalPrice - a.totalPrice;
-                                });
-                                                                
-                            if(data.length > 0)
-                            {
-                                $scope.no_data = false;
-                                d3.select("#userTransactionBarChart").style("visibility", "visible");
-                                d3.select("#userTransactionPieChart").style("visibility", "visible");
-                               
-                                // Calling for update functions
-                                updatePieChart(data);
-                                updateBarChart(data); 
-                        }
-                        else{
-                            $scope.no_data = true;
-                            d3.select("#userTransactionBarChart").style("visibility", "hidden");
-                            d3.select("#userTransactionPieChart").style("visibility", "hidden");
-                        }
-                        }
-
-                        $scope.$apply();
-                    });
-                  
-                      $scope.updateGraphs = function (month, year) {
                         month++;
 
                         var url = "/User/GetGroupById/" + $scope.currentUserId;
                         
+                        // Get the data for current year& last month
                         d3.json(url, function (error, data) {
-                
-                                if (data !== undefined) {
-
+    
+                            if (data !== undefined) {
+                                
                                     data = data.filter(function (i) {
-                                        if (i._id.month === month && i._id.year === year) {
+                                        if (i._id.month === month &&
+                                                i._id.year === year) {
                                             return i.totalPrice;
                                         }
                                     });
                                     data.sort(function (a, b) {
                                         return b.totalPrice - a.totalPrice;
                                     });
+                                                                    
+                                if(data.length > 0)
+                                {
+                                    $scope.no_data = false;
+                                    d3.select("#userTransactionBarChart").style("visibility", "visible");
+                                    d3.select("#userTransactionPieChart").style("visibility", "visible");
                                     
-                                    if(data.length > 0)
-                                    {
-                                        $scope.no_data = false;
-                                        d3.select("#userTransactionBarChart").style("visibility", "visible");
-                                        d3.select("#userTransactionPieChart").style("visibility", "visible");
-                                        updatePieChart(data);
-                                        updateBarChart(data); 
-                                }
-                                else{
-                                    $scope.no_data = true;
-                                    d3.select("#userTransactionBarChart").style("visibility", "hidden");
-                                    d3.select("#userTransactionPieChart").style("visibility", "hidden");
-                                }
-                                   
-                                    if (error)throw error;
+                                    // Calling for update functions
+                                    updatePieChart(data);
+                                    updateBarChart(data); 
+                            }
+                            else{
+                                $scope.no_data = true;
+                                d3.select("#userTransactionBarChart").style("visibility", "hidden");
+                                d3.select("#userTransactionPieChart").style("visibility", "hidden");
+                            }
+                            }
+    
+                            $scope.$apply();
+                        });
+                    }
+                
 
-                                    $scope.$apply();
-                                }});
-                       }
+                    $scope.updateGraphs = function (month, year) {
+                        BuildStatistics(month, year);
+                    }
 
                        // Update pie chart
-                       function updatePieChart(data){
+                    function updatePieChart(data){
+
+                        var tots = d3.sum(data, function(d) { 
+                            return d.totalPrice; 
+                        });
+            
+                        data.forEach(function(d) {
+                            d.percentage = d.totalPrice  / tots;
+                        });
+
                         var g = svgPie.selectAll(".arc")
                         .remove()
                         .exit()
@@ -395,36 +380,36 @@
                         .enter().append("g")
                         .attr("class", "arc");
 
-                    g.append("path")
-                        .attr("d", arcPie)
-                        .style("fill", function (d, i) {
-                            return colorsPie[i];
-                        });
+                        g.append("path")
+                            .attr("d", arcPie)
+                            .style("fill", function (d, i) {
+                                return colorsPie[i];
+                            });
 
-                    g.append("text")
-                        .attr("transform", function (d) {
-                            var _d = arcPie.centroid(d);
-                            _d[0] *= 2.5;	//multiply by a constant factor
-                            _d[1] *= 2.5;	//multiply by a constant factor
-                            return "translate(" + _d + ")";
-                        })
-                        .text(function (d) {
-                            return d.data._id.category;
-                        });
-                       }
-                  
-
-                       // Update bar graph
-                       function updateBarChart(data){
-                        
-                         // Remove old x&y axis
+                        g.append("text")
+                            .attr("transform", function (d) {
+                                var _d = arcPie.centroid(d);
+                                _d[0] *= 2.7;	//multiply by a constant factor
+                                _d[1] *= 2.7;	//multiply by a constant factor
+                                return "translate(" + _d + ")";
+                            })
+                            .style("text-anchor", "middle")
+                            .text(function (d) {
+                                return d.data._id.category + ' - ' +  percentageFormat(d.data.percentage);
+                            });
+                        }
+                
+                    // Update bar graph
+                    function updateBarChart(data){
+                    
+                        // Remove old x&y axis
                         svg.selectAll(".x-axis")
-                          .remove()
-                          .exit();
-  
+                            .remove()
+                            .exit();
+
                         svg.selectAll(".y-axis")
-                          .remove()
-                          .exit();
+                            .remove()
+                            .exit();
 
                         // Scale the range of the data in the domains
                         x.domain(data.map(function (d) {
@@ -482,7 +467,7 @@
                         .on('mouseover', function (d) {
                             if (!d._id.category) return null;
 
-                            tooltip.select('.totalPrice').html("<b>" + Math.round(d.totalPrice * 100)/100 + "</b>");
+                            tooltip.select('.totalPrice').html("<b>" + Number(d.totalPrice).toFixed(2) + "</b>");
                             tooltip.style('display', 'inline')
                             .style('opacity', 2)
                             .style('background', 'lightsteelblue')
@@ -499,21 +484,20 @@
                             tooltip.style('opacity', 0);
                         });
 
-                    // add the x Axis
-                    svg.append("g") 
-                        .attr("class", "x-axis")
-                        .attr("transform", "translate(0," + height + ")")
+                        // add the x Axis
+                        svg.append("g") 
+                            .attr("class", "x-axis")
+                            .attr("transform", "translate(0," + height + ")")
+                            .style("font-size","17px")
+                            .call(xAxis);
+                        
+                        // add the y Axis
+                        svg.append("g")
+                        .attr("class", "y-axis")
                         .style("font-size","17px")
-                        .call(xAxis);
-                    
-                    // add the y Axis
-                    svg.append("g")
-                    .attr("class", "y-axis")
-                    .style("font-size","17px")
-                    .call(yAxis);
-                     } // end update bar chart
-                }
-
+                        .call(yAxis);
+                    }
+            }
             });
         }
 
