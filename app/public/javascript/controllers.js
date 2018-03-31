@@ -221,9 +221,13 @@
                     
                     $scope.no_data = false;
 
+                     // Date object for current year&last month for watching the last data
+                     var d = new Date();
+                     var lastMonth = d.getMonth() - 1;
+                     var currYear = d.getFullYear();
+
                      // list of monthes
-                     $scope.monthList = [{monthText : "All", number : -1},
-                     {monthText : "January", number : 0},
+                     $scope.monthList = [{monthText : "January", number : 0},
                      {monthText : "February", number : 1},
                      {monthText : "March", number : 2},
                      {monthText : "April", number : 3},
@@ -236,18 +240,14 @@
                      {monthText : "November", number : 10},
                      {monthText : "December", number : 11}
                     ];
-                    $scope.selectedMonth = $scope.monthList[0].number;
+                    $scope.selectedMonth = $scope.monthList[lastMonth].number;
 
-                     // list of years
-                     var d = new Date();
-                     var n = d.getFullYear();
-
-                     $scope.yearList = [{value: 'All'}];
-                     for(var i = 2010; i <= n; i++){
+                     $scope.yearList = [];
+                     for(var i = 2010; i <= currYear; i++){
                          $scope.yearList.push({value: i});
                      }
 
-                    $scope.selectedYear = $scope.yearList[0].value;
+                    $scope.selectedYear = $scope.yearList[$scope.yearList.length -1].value;
 
                     //*********************//
                     //***BAR CHART init****//
@@ -312,17 +312,21 @@
 
                     var url = "/User/GetGroupById/" + $scope.currentUserId;
 
-                    // Get the data for all months&years
+                    // Get the data for current year& last month
                     d3.json(url, function (error, data) {
 
                         if (data !== undefined) {
-                            data = data.filter(function (i) {
-                                    return i.totalPrice;
-                            });
-                            data.sort(function (a, b) {
-                                return b.totalPrice - a.totalPrice;
-                            });
-
+                            
+                                data = data.filter(function (i) {
+                                    if (i._id.month === $scope.selectedMonth &&
+                                         i._id.year === $scope.selectedYear) {
+                                        return i.totalPrice;
+                                    }
+                                });
+                                data.sort(function (a, b) {
+                                    return b.totalPrice - a.totalPrice;
+                                });
+                                                                
                             if(data.length > 0)
                             {
                                 $scope.no_data = false;
@@ -340,6 +344,7 @@
                         }
                         }
 
+                        $scope.$apply();
                     });
                   
                       $scope.updateGraphs = function (month, year) {
@@ -351,35 +356,11 @@
                 
                                 if (data !== undefined) {
 
-                                    if(year === "All" && month === 0)
-                                    {
-                                        data = data.filter(function (i) {
-                                                return i.totalPrice;
-                                        });
-                                    }
-                                    else if(year === "All")
-                                    {
-                                        data = data.filter(function (i) {
-                                            if (i._id.month === month) {
-                                            return i.totalPrice;
-                                            }
-                                    }); 
-                                    }
-                                    else if(month === 0)
-                                    {
-                                        data = data.filter(function (i) {
-                                            if (i._id.year === year) {
-                                            return i.totalPrice;
-                                            }
-                                    }); 
-                                    }
-                                    else{
                                     data = data.filter(function (i) {
                                         if (i._id.month === month && i._id.year === year) {
                                             return i.totalPrice;
                                         }
                                     });
-                                    }
                                     data.sort(function (a, b) {
                                         return b.totalPrice - a.totalPrice;
                                     });
