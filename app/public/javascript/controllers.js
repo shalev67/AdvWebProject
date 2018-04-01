@@ -687,8 +687,14 @@
             if ($rootScope.haveTransactionData) {
 
                 // Get  the Date
-                var month = 12;//month = date.getMonth() + 1, year = date.getFullYear()
-                var year = 2015;
+                var month = date.getMonth() - 1;
+                var year = date.getFullYear();
+
+                if (month === 0) {
+                    month = 12;
+                    year = year - 1;
+                }
+
                 $scope.userTotalSum = 0;
                 $scope.userExpectedSum = 0;
 
@@ -741,195 +747,196 @@
                                 return b.totalPrice - a.totalPrice;
                             });
 
-                            // Add the expected price
-                            var arrayList = [], obj_c_processed = [];
+                            if(data.length > 0){
+                                // Add the expected price
+                                var arrayList = [], obj_c_processed = [];
 
-                            for (var i in data) {
-                                // var obj = {id: data[i].id, name: data[i].name, goal: data[i].goal};
-                                var obj = {_id: {
-                                        category: data[i]._id.category,
-                                        month: data[i]._id.month,
-                                        year: data[i]._id.year
-                                    },
-                                    totalPrice: data[i].totalPrice};
+                                for (var i in data) {
+                                    // var obj = {id: data[i].id, name: data[i].name, goal: data[i].goal};
+                                    var obj = {_id: {
+                                            category: data[i]._id.category,
+                                            month: data[i]._id.month,
+                                            year: data[i]._id.year
+                                        },
+                                        totalPrice: data[i].totalPrice};
 
-                                for (var j in expectedData) {
-                                    if (data[i]._id.category === expectedData[j]._id.category) {
-                                        obj.expectedPrice = expectedData[j].totalPrice;
-                                        obj_c_processed[expectedData[j]._id] = true;
+                                    for (var j in expectedData) {
+                                        if (data[i]._id.category === expectedData[j]._id.category) {
+                                            obj.expectedPrice = expectedData[j].totalPrice;
+                                            obj_c_processed[expectedData[j]._id] = true;
 
-                                        // Sum the total expected price for the heart
-                                        $scope.userExpectedSum += expectedData[i].totalPrice;
+                                            // Sum the total expected price for the heart
+                                            $scope.userExpectedSum += expectedData[i].totalPrice;
+                                        }
+                                    }
+
+                                    obj.expectedPrice = obj.expectedPrice || 0;
+                                    arrayList.push(obj);
+
+                                    // Sum the total price for the heart
+                                    $scope.userTotalSum += data[i].totalPrice;
+                                }
+
+                                for (var j in expectedData){
+                                    if (typeof obj_c_processed[expectedData[j]._id] === 'undefined') {
+                                        // arrayList.push({id: expectedData[j].id, name: expectedData[j].name, goal: 'no', circle: expectedData[j].circle});
+                                        arrayList.push({_id: {
+                                                category: expectedData[i]._id.category,
+                                                month: expectedData[i]._id.month,
+                                                year: expectedData[i]._id.year
+                                            },
+                                            totalPrice: 0,
+                                            expectedPrice: expectedData[i].totalPrice});
                                     }
                                 }
 
-                                obj.expectedPrice = obj.expectedPrice || 0;
-                                arrayList.push(obj);
+                                // Scale the range of the data in the domains
+                                x.domain(data.map(function (d) {
+                                    return d._id.category;
+                                }));
 
-                                // Sum the total price for the heart
-                                $scope.userTotalSum += data[i].totalPrice;
-                            }
+                                // Get max totalPrice for the y scale
+                                var userMaxPrice = d3.max(data, function (d) {
+                                    return d.totalPrice;
+                                });
 
-                            for (var j in expectedData){
-                                if (typeof obj_c_processed[expectedData[j]._id] === 'undefined') {
-                                    // arrayList.push({id: expectedData[j].id, name: expectedData[j].name, goal: 'no', circle: expectedData[j].circle});
-                                    arrayList.push({_id: {
-                                            category: expectedData[i]._id.category,
-                                            month: expectedData[i]._id.month,
-                                            year: expectedData[i]._id.year
-                                        },
-                                        totalPrice: 0,
-                                        expectedPrice: expectedData[i].totalPrice});
+                                var algoMaxPrice = d3.max(expectedData, function (d) {
+                                    return d.totalPrice;
+                                });
+
+                                var maxPrice = userMaxPrice;
+
+                                if (algoMaxPrice > userMaxPrice) {
+                                    maxPrice = algoMaxPrice;
                                 }
+
+                                y0.domain([0, maxPrice]);
+
+                                y1.domain([0, maxPrice]);
+
+                                var xAxis = d3.axisBottom()
+                                    .scale(x);
+
+                                var yAxisLeft = d3.axisLeft()
+                                    .scale(y0);
+
+                                var yAxisRight = d3.axisRight()
+                                    .scale(y1);
+
+                                if (error) throw error;
+
+                                // append the rectangles for the bar chart
+                                var bars = svg.selectAll(".bar")
+                                    .data(arrayList).enter();
+
+                                bars.append("rect")
+                                    .attr("class", "bar1")
+                                    .attr("x", function (d) {
+                                        return x(d._id.category);
+                                    })
+                                    .attr("width", x.bandwidth() / 2)
+                                    .attr("y", function (d) {
+                                        return y0(d.totalPrice);
+                                    })
+                                    .attr("height", function (d) {
+                                        return height - y0(d.totalPrice);
+                                    });
+
+                                bars.append("rect")
+                                    .attr("class", "bar2")
+                                    .attr("x", function (d) {
+                                        return x(d._id.category) + x.bandwidth() / 2;
+                                    })
+                                    .attr("width", x.bandwidth() / 2)
+                                    .attr("y", function (d) {
+                                        return y1(d.expectedPrice);
+                                    })
+                                    .attr("height", function (d) {
+                                        return height - y1(d.expectedPrice);
+                                    });
+
+
+                                svg.append("g")
+                                    .attr("class", "x axis")
+                                    .attr("transform", "translate(0," + height + ")")
+                                    .call(xAxis);
+
+                                svg.append("g")
+                                    .attr("class", "y axis axisLeft")
+                                    .attr("transform", "translate(0,0)")
+                                    .call(yAxisLeft)
+                                    .append("text")
+                                    .attr("y", 6)
+                                    .attr("dy", "-2em")
+                                    .style("text-anchor", "end")
+                                    .style("text-anchor", "end")
+                                    .text("Dollars");
+
+                                // add legend
+                                var dataset = {
+                                    "series": ["You", "Expected"],
+                                    "colors": ["#5297ca", "#949494"]
+                                };
+
+                                var legend = svg.append("g")
+                                    .attr("class", "legend")
+
+                                legend.selectAll('text')
+                                    .data(dataset["colors"])
+                                    .enter()
+                                    .append("rect")
+                                    .attr("x", width - margin.right - 30)
+                                    .attr("y", function (d, i) {
+                                        return i * 20;
+                                    })
+                                    .attr("width", 10)
+                                    .attr("height", 10)
+                                    .style("fill", function (d) {
+                                        return d;
+                                    });
+                                legend.selectAll('text')
+                                    .data(dataset["series"])
+                                    .enter()
+                                    .append("text")
+                                    .attr("x", width - margin.right - 10)
+                                    .attr("y", function (d, i) {
+                                        return i * 20 + 9;
+                                    })
+                                    .text(function (d) {
+                                        return d
+                                    });
+
+                                var tooltip = d3.select("body")
+                                    .append('div')
+                                    .attr('class', 'tooltip');
+
+                                tooltip.append('div')
+                                    .attr('class', 'category');
+                                tooltip.append('div')
+                                    .attr('class', 'totalPrice');
+
+                                svg.selectAll("rect")
+                                    .on('mouseover', function (d) {
+                                        if (!d._id.category) return null;
+
+                                        tooltip.select('.category').html("<b>" + d._id.category + "</b>");
+                                        tooltip.select('.totalPrice').html(d.totalPrice + " :: " + d.expectedPrice);
+
+                                        tooltip.style('display', 'block');
+                                        tooltip.style('opacity', 2);
+
+                                    })
+                                    .on('mousemove', function (d) {
+                                        if (!d._id.category) return null;
+
+                                        tooltip.style('top', (d3.event.layerY + 80) + 'px')
+                                            .style('left', (d3.event.layerX) + 'px');
+                                    })
+                                    .on('mouseout', function () {
+                                        tooltip.style('display', 'none');
+                                        tooltip.style('opacity', 0);
+                                    });
                             }
-
-                            // Scale the range of the data in the domains
-                            x.domain(data.map(function (d) {
-                                return d._id.category;
-                            }));
-
-                            // Get max totalPrice for the y scale
-                            var userMaxPrice = d3.max(data, function (d) {
-                                return d.totalPrice;
-                            });
-
-                            var algoMaxPrice = d3.max(expectedData, function (d) {
-                                return d.totalPrice;
-                            });
-
-                            var maxPrice = userMaxPrice;
-
-                            if (algoMaxPrice > userMaxPrice) {
-                                maxPrice = algoMaxPrice;
-                            }
-
-                            y0.domain([0, maxPrice]);
-
-                            y1.domain([0, maxPrice]);
-
-                            var xAxis = d3.axisBottom()
-                                .scale(x);
-
-                            var yAxisLeft = d3.axisLeft()
-                                .scale(y0);
-
-                            var yAxisRight = d3.axisRight()
-                                .scale(y1);
-
-                            if (error) throw error;
-
-                            // append the rectangles for the bar chart
-                            var bars = svg.selectAll(".bar")
-                                .data(arrayList).enter();
-
-                            bars.append("rect")
-                                .attr("class", "bar1")
-                                .attr("x", function (d) {
-                                    return x(d._id.category);
-                                })
-                                .attr("width", x.bandwidth() / 2)
-                                .attr("y", function (d) {
-                                    return y0(d.totalPrice);
-                                })
-                                .attr("height", function (d) {
-                                    return height - y0(d.totalPrice);
-                                });
-
-                            bars.append("rect")
-                                .attr("class", "bar2")
-                                .attr("x", function (d) {
-                                    return x(d._id.category) + x.bandwidth() / 2;
-                                })
-                                .attr("width", x.bandwidth() / 2)
-                                .attr("y", function (d) {
-                                    return y1(d.expectedPrice);
-                                })
-                                .attr("height", function (d) {
-                                    return height - y1(d.expectedPrice);
-                                });
-
-
-                            svg.append("g")
-                                .attr("class", "x axis")
-                                .attr("transform", "translate(0," + height + ")")
-                                .call(xAxis);
-
-                            svg.append("g")
-                                .attr("class", "y axis axisLeft")
-                                .attr("transform", "translate(0,0)")
-                                .call(yAxisLeft)
-                                .append("text")
-                                .attr("y", 6)
-                                .attr("dy", "-2em")
-                                .style("text-anchor", "end")
-                                .style("text-anchor", "end")
-                                .text("Dollars");
-
-                            // add legend
-                            var dataset = {
-                                "series": ["You", "Expected"],
-                                "colors": ["#5297ca", "#949494"]
-                            };
-
-                            var legend = svg.append("g")
-                                .attr("class", "legend")
-
-                            legend.selectAll('text')
-                                .data(dataset["colors"])
-                                .enter()
-                                .append("rect")
-                                .attr("x", width - margin.right - 30)
-                                .attr("y", function (d, i) {
-                                    return i * 20;
-                                })
-                                .attr("width", 10)
-                                .attr("height", 10)
-                                .style("fill", function (d) {
-                                    return d;
-                                });
-                            legend.selectAll('text')
-                                .data(dataset["series"])
-                                .enter()
-                                .append("text")
-                                .attr("x", width - margin.right - 10)
-                                .attr("y", function (d, i) {
-                                    return i * 20 + 9;
-                                })
-                                .text(function (d) {
-                                    return d
-                                });
-
-                            var tooltip = d3.select("body")
-                                .append('div')
-                                .attr('class', 'tooltip');
-
-                            tooltip.append('div')
-                                .attr('class', 'category');
-                            tooltip.append('div')
-                                .attr('class', 'totalPrice');
-
-                            svg.selectAll("rect")
-                                .on('mouseover', function (d) {
-                                    if (!d._id.category) return null;
-
-                                    tooltip.select('.category').html("<b>" + d._id.category + "</b>");
-                                    tooltip.select('.totalPrice').html(d.totalPrice + " :: " + d.expectedPrice);
-
-                                    tooltip.style('display', 'block');
-                                    tooltip.style('opacity', 2);
-
-                                })
-                                .on('mousemove', function (d) {
-                                    if (!d._id.category) return null;
-
-                                    tooltip.style('top', (d3.event.layerY + 80) + 'px')
-                                        .style('left', (d3.event.layerX) + 'px');
-                                })
-                                .on('mouseout', function () {
-                                    tooltip.style('display', 'none');
-                                    tooltip.style('opacity', 0);
-                                });
-
 
                         }).catch(function (error) {
                             console.log('error on expected expenses:');
@@ -946,7 +953,7 @@
             }
 
             // Check if partner exist
-            var partnerEmail = $scope.currentUser.friendship.email //'admin@admin.com'; //TODO: Change to the real partner
+            var partnerEmail = $rootScope.currentUser.friendship.email;
             if(partnerEmail) {
                 //Get partner
                 userService.getUserByEmail(partnerEmail).then(function (user, err) {
@@ -956,7 +963,7 @@
                     } else {
                         if (user.data) {
                             $scope.currentPartner = user.data;
-                            if ($rootScope.currentUser.transactions.length > 0) {
+                            if ($scope.currentPartner.transactions.length > 0) {
                                 $scope.partnerHaveTransactionData = true;
                                 $scope.partnerTotalSum = 0;
                                 $scope.partnerExpectedSum = 0;
@@ -1003,225 +1010,218 @@
                                             data.sort(function (a, b) {
                                                 return a.totalPrice - b.totalPrice;
                                             });
-                                            // Add the expected price
-                                            var arrayList = [], obj_c_processed = [];
 
-                                            for (var i in data) {
-                                                // var obj = {id: data[i].id, name: data[i].name, goal: data[i].goal};
-                                                var obj = {_id: {
-                                                        category: data[i]._id.category,
-                                                        month: data[i]._id.month,
-                                                        year: data[i]._id.year
-                                                    },
-                                                    totalPrice: data[i].totalPrice};
+                                            if(data.length > 0){
+                                                // Add the expected price
+                                                var arrayList = [], obj_c_processed = [];
 
-                                                for (var j in expectedData) {
-                                                    if (data[i]._id.category === expectedData[j]._id.category) {
-                                                        obj.expectedPrice = expectedData[j].totalPrice;
-                                                        obj_c_processed[expectedData[j]._id] = true;
+                                                for (var i in data) {
+                                                    // var obj = {id: data[i].id, name: data[i].name, goal: data[i].goal};
+                                                    var obj = {_id: {
+                                                            category: data[i]._id.category,
+                                                            month: data[i]._id.month,
+                                                            year: data[i]._id.year
+                                                        },
+                                                        totalPrice: data[i].totalPrice};
 
-                                                        // Sum the total expected price for the heart
-                                                        $scope.partnerExpectedSum += expectedData[i].totalPrice;
+                                                    for (var j in expectedData) {
+                                                        if (data[i]._id.category === expectedData[j]._id.category) {
+                                                            obj.expectedPrice = expectedData[j].totalPrice;
+                                                            obj_c_processed[expectedData[j]._id] = true;
+
+                                                            // Sum the total expected price for the heart
+                                                            $scope.partnerExpectedSum += expectedData[i].totalPrice;
+                                                        }
+                                                    }
+
+                                                    obj.expectedPrice = obj.expectedPrice || 0;
+                                                    arrayList.push(obj);
+
+                                                    // Sum the total price for the heart
+                                                    $scope.partnerTotalSum += data[i].totalPrice;
+                                                }
+
+                                                for (var j in expectedData){
+                                                    if (typeof obj_c_processed[expectedData[j]._id] === 'undefined') {
+                                                        // arrayList.push({id: expectedData[j].id, name: expectedData[j].name, goal: 'no', circle: expectedData[j].circle});
+                                                        arrayList.push({_id: {
+                                                                category: expectedData[i]._id.category,
+                                                                month: expectedData[i]._id.month,
+                                                                year: expectedData[i]._id.year
+                                                            },
+                                                            totalPrice: 0,
+                                                            expectedPrice: expectedData[i].totalPrice});
                                                     }
                                                 }
 
-                                                obj.expectedPrice = obj.expectedPrice || 0;
-                                                arrayList.push(obj);
 
-                                                // Sum the total price for the heart
-                                                $scope.partnerTotalSum += data[i].totalPrice;
-                                            }
+                                                if($scope.partnerExpectedSum != 0 && $scope.userExpectedSum != 0){
+                                                    $scope.userPercentages = $scope.userTotalSum/$scope.userExpectedSum;
+                                                    $scope.partnerPercentages = $scope.partnerTotalSum/$scope.partnerExpectedSum;
 
-                                            for (var j in expectedData){
-                                                if (typeof obj_c_processed[expectedData[j]._id] === 'undefined') {
-                                                    // arrayList.push({id: expectedData[j].id, name: expectedData[j].name, goal: 'no', circle: expectedData[j].circle});
-                                                    arrayList.push({_id: {
-                                                            category: expectedData[i]._id.category,
-                                                            month: expectedData[i]._id.month,
-                                                            year: expectedData[i]._id.year
-                                                        },
-                                                        totalPrice: 0,
-                                                        expectedPrice: expectedData[i].totalPrice});
-                                                }
-                                            }
+                                                    $scope.userHeart = false;
+                                                    $scope.partnerHeart = false;
 
-                                            // if($scope.partnerTotalSum && $scope.partnerExpectedSum && $scope.userTotalSum && $scope.userExpectedSum ){
-                                            //     console.log("p1 "+$scope.partnerTotalSum);
-                                            //     console.log("p2 "+$scope.partnerExpectedSum);
-                                            //     console.log("u1 "+$scope.userTotalSum );
-                                            //     console.log("u2 "+$scope.userExpectedSum);
-                                            // }
+                                                    if($scope.userPercentages > 1.5 ){
+                                                        $scope.userHeart = true;
+                                                    }
 
-                                            if($scope.partnerExpectedSum != 0 && $scope.userExpectedSum != 0){
-                                                $scope.userPercentages = $scope.userTotalSum/$scope.userExpectedSum;
-                                                $scope.partnerPercentages = $scope.partnerTotalSum/$scope.partnerExpectedSum;
-
-                                                console.log("p1 "+$scope.partnerPercentages);
-                                                console.log("u2 "+$scope.userPercentages);
-
-                                                $scope.userHeart = false;
-                                                $scope.partnerHeart = false;
-
-                                                if($scope.userPercentages > 1.5 ){
-                                                    $scope.userHeart = true;
+                                                    if($scope.partnerPercentages >  1.5){
+                                                        $scope.partnerHeart = true;
+                                                    }
+                                                    // else{
+                                                    //
+                                                    // }
                                                 }
 
-                                                if($scope.partnerPercentages >  1.5){
-                                                    $scope.partnerHeart = true;
+
+                                                // Scale the range of the data in the domains
+                                                x.domain(data.map(function (d) {
+                                                    return d._id.category;
+                                                }));
+
+                                                // Get max totalPrice for the y scale
+                                                var userMaxPrice = d3.max(data, function (d) {
+                                                    return d.totalPrice;
+                                                });
+
+                                                var algoMaxPrice = d3.max(expectedData, function (d) {
+                                                    return d.totalPrice;
+                                                });
+
+                                                var maxPrice = userMaxPrice;
+
+                                                if (algoMaxPrice > userMaxPrice) {
+                                                    maxPrice = algoMaxPrice;
                                                 }
-                                                // else{
-                                                //
-                                                // }
+
+                                                y0.domain([0, maxPrice]);
+
+                                                y1.domain([0, maxPrice]);
+
+                                                var xAxis = d3.axisBottom()
+                                                    .scale(x);
+
+                                                var yAxisLeft = d3.axisLeft()
+                                                    .scale(y0);
+
+                                                var yAxisRight = d3.axisRight()
+                                                    .scale(y1);
+
+                                                if (error) throw error;
+
+                                                // append the rectangles for the bar chart
+                                                var bars = svg.selectAll(".bar")
+                                                    .data(arrayList).enter();
+
+                                                bars.append("rect")
+                                                    .attr("class", "bar3")
+                                                    .attr("x", function (d) {
+                                                        return x(d._id.category);
+                                                    })
+                                                    .attr("width", x.bandwidth() / 2)
+                                                    .attr("y", function (d) {
+                                                        return y0(d.totalPrice);
+                                                    })
+                                                    .attr("height", function (d) {
+                                                        return height - y0(d.totalPrice);
+                                                    });
+
+                                                bars.append("rect")
+                                                    .attr("class", "bar2")
+                                                    .attr("x", function (d) {
+                                                        return x(d._id.category) + x.bandwidth() / 2;
+                                                    })
+                                                    .attr("width", x.bandwidth() / 2)
+                                                    .attr("y", function (d) {
+                                                        return y1(d.expectedPrice);
+                                                    })
+                                                    .attr("height", function (d) {
+                                                        return height - y1(d.expectedPrice);
+                                                    });
+
+
+                                                svg.append("g")
+                                                    .attr("class", "x axis")
+                                                    .attr("transform", "translate(0," + height + ")")
+                                                    .call(xAxis);
+
+
+                                                svg.append("g")
+                                                    .attr("class", "y axis axisRight")
+                                                    .attr("transform", "translate(" + (width) + ",0)")
+                                                    .call(yAxisRight)
+                                                    .append("text")
+                                                    .attr("y", 6)
+                                                    .attr("dy", "-2em")
+                                                    .attr("dx", "2em")
+                                                    .style("text-anchor", "end");
+
+                                                // add legend
+                                                var dataset = {
+                                                    "series": ["Partner", "Expected"],
+                                                    "colors": ["#9f0207", "#949494"]
+                                                };
+
+                                                var legend = svg.append("g")
+                                                    .attr("class", "legend")
+
+                                                legend.selectAll('text')
+                                                    .data(dataset["colors"])
+                                                    .enter()
+                                                    .append("rect")
+                                                    .attr("x", margin.left - 80)
+                                                    .attr("y", function (d, i) {
+                                                        return i * 20;
+                                                    })
+                                                    .attr("width", 10)
+                                                    .attr("height", 10)
+                                                    .style("fill", function (d) {
+                                                        return d;
+                                                    });
+                                                legend.selectAll('text')
+                                                    .data(dataset["series"])
+                                                    .enter()
+                                                    .append("text")
+                                                    .attr("x", margin.left - 60)
+                                                    .attr("y", function (d, i) {
+                                                        return i * 20 + 9;
+                                                    })
+                                                    .text(function (d) {
+                                                        return d
+                                                    });
+
+                                                var tooltip = d3.select("body")
+                                                    .append('div')
+                                                    .attr('class', 'tooltip');
+
+                                                tooltip.append('div')
+                                                    .attr('class', 'category');
+                                                tooltip.append('div')
+                                                    .attr('class', 'totalPrice');
+
+                                                svg.selectAll("rect")
+                                                    .on('mouseover', function (d) {
+                                                        if (!d._id.category) return null;
+
+                                                        tooltip.select('.category').html("<b>" + d._id.category + "</b>");
+                                                        tooltip.select('.totalPrice').html(d.totalPrice + " :: " + d.expectedPrice);
+
+                                                        tooltip.style('display', 'block');
+                                                        tooltip.style('opacity', 2);
+
+                                                    })
+                                                    .on('mousemove', function (d) {
+                                                        if (!d._id.category) return null;
+
+                                                        tooltip.style('top', (d3.event.layerY + 80) + 'px')
+                                                            .style('left', (d3.event.layerX) + 'px');
+                                                    })
+                                                    .on('mouseout', function () {
+                                                        tooltip.style('display', 'none');
+                                                        tooltip.style('opacity', 0);
+                                                    });
                                             }
-
-
-                                            // Scale the range of the data in the domains
-                                            x.domain(data.map(function (d) {
-                                                return d._id.category;
-                                            }));
-
-                                            // Get max totalPrice for the y scale
-                                            var userMaxPrice = d3.max(data, function (d) {
-                                                return d.totalPrice;
-                                            });
-
-                                            var algoMaxPrice = d3.max(expectedData, function (d) {
-                                                return d.totalPrice;
-                                            });
-
-                                            var maxPrice = userMaxPrice;
-
-                                            if (algoMaxPrice > userMaxPrice) {
-                                                maxPrice = algoMaxPrice;
-                                            }
-
-                                            y0.domain([0, maxPrice]);
-
-                                            y1.domain([0, maxPrice]);
-
-                                            var xAxis = d3.axisBottom()
-                                                .scale(x);
-
-                                            var yAxisLeft = d3.axisLeft()
-                                                .scale(y0);
-
-                                            var yAxisRight = d3.axisRight()
-                                                .scale(y1);
-
-                                            if (error) throw error;
-
-                                            // append the rectangles for the bar chart
-                                            var bars = svg.selectAll(".bar")
-                                                .data(arrayList).enter();
-
-                                            bars.append("rect")
-                                                .attr("class", "bar3")
-                                                .attr("x", function (d) {
-                                                    return x(d._id.category);
-                                                })
-                                                .attr("width", x.bandwidth() / 2)
-                                                .attr("y", function (d) {
-                                                    return y0(d.totalPrice);
-                                                })
-                                                .attr("height", function (d) {
-                                                    return height - y0(d.totalPrice);
-                                                });
-
-                                            bars.append("rect")
-                                                .attr("class", "bar2")
-                                                .attr("x", function (d) {
-                                                    return x(d._id.category) + x.bandwidth() / 2;
-                                                })
-                                                .attr("width", x.bandwidth() / 2)
-                                                .attr("y", function (d) {
-                                                    return y1(d.expectedPrice);
-                                                })
-                                                .attr("height", function (d) {
-                                                    return height - y1(d.expectedPrice);
-                                                });
-
-
-                                            svg.append("g")
-                                                .attr("class", "x axis")
-                                                .attr("transform", "translate(0," + height + ")")
-                                                .call(xAxis);
-
-
-                                            svg.append("g")
-                                                .attr("class", "y axis axisRight")
-                                                .attr("transform", "translate(" + (width) + ",0)")
-                                                .call(yAxisRight)
-                                                .append("text")
-                                                .attr("y", 6)
-                                                .attr("dy", "-2em")
-                                                .attr("dx", "2em")
-                                                .style("text-anchor", "end");
-
-                                            // add legend
-                                            var dataset = {
-                                                "series": ["Partner", "Expected"],
-                                                "colors": ["#9f0207", "#949494"]
-                                            };
-
-                                            var legend = svg.append("g")
-                                                .attr("class", "legend")
-
-                                            legend.selectAll('text')
-                                                .data(dataset["colors"])
-                                                .enter()
-                                                .append("rect")
-                                                .attr("x", margin.left - 80)
-                                                .attr("y", function (d, i) {
-                                                    return i * 20;
-                                                })
-                                                .attr("width", 10)
-                                                .attr("height", 10)
-                                                .style("fill", function (d) {
-                                                    return d;
-                                                });
-                                            legend.selectAll('text')
-                                                .data(dataset["series"])
-                                                .enter()
-                                                .append("text")
-                                                .attr("x", margin.left - 60)
-                                                .attr("y", function (d, i) {
-                                                    return i * 20 + 9;
-                                                })
-                                                .text(function (d) {
-                                                    return d
-                                                });
-
-                                            var tooltip = d3.select("body")
-                                                .append('div')
-                                                .attr('class', 'tooltip');
-
-                                            tooltip.append('div')
-                                                .attr('class', 'category');
-                                            tooltip.append('div')
-                                                .attr('class', 'totalPrice');
-
-                                            svg.selectAll("rect")
-                                                .on('mouseover', function (d) {
-                                                    if (!d._id.category) return null;
-
-                                                    tooltip.select('.category').html("<b>" + d._id.category + "</b>");
-                                                    tooltip.select('.totalPrice').html(d.totalPrice + " :: " + d.expectedPrice);
-
-                                                    tooltip.style('display', 'block');
-                                                    tooltip.style('opacity', 2);
-
-                                                })
-                                                .on('mousemove', function (d) {
-                                                    if (!d._id.category) return null;
-
-                                                    tooltip.style('top', (d3.event.layerY + 80) + 'px')
-                                                        .style('left', (d3.event.layerX) + 'px');
-                                                })
-                                                .on('mouseout', function () {
-                                                    tooltip.style('display', 'none');
-                                                    tooltip.style('opacity', 0);
-                                                });
-
 
                                         }).catch(function (error) {
                                             console.log('error on expected expenses:');
