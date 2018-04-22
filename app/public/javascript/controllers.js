@@ -99,6 +99,66 @@
                             then(function (user, err) {
                                 $rootScope.currentUser = user.data;
 
+                                //check if has friendship request
+                                if(user.data.friendship && user.data.friendship.status !="")
+                                    {
+                                        if(user.data.friendship.status == 'wait to send the request')
+                                        {
+                                        userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                            else{
+                                                swal({
+                                                    title: 'friend request from ' + userFriend.data.firstName + ' ' + userFriend.data.lastName,
+                                                    text: "do you want to share your data with him/her?",
+                                                    type: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: '#3085d6',
+                                                    cancelButtonColor: '#d33',
+                                                    confirmButtonText: 'Yes, confirm it!',
+                                                    cancelButtonText: 'No, cancel!',
+                                                    confirmButtonClass: 'btn btn-success',
+                                                    cancelButtonClass: 'btn btn-danger',
+                                                    buttonsStyling: false,
+                                                    reverseButtons: true
+                                                }).then((result) => {
+                                                    if (result.value) 
+                                                    {
+                                                        user.data.friendship.status = 'are friends';
+                                                        userService.updateUser(user.data).then(function (req,err) {
+                                                            if (err) {
+                                                                console.log(err);
+                                                            }
+                                                            else{
+                                                                console.log(userService.getUserByID(user.data._id))
+                            
+                                                                // save the second user
+                                                                userFriend.data.friendship = {email: user.data.email, status: 'are friends'};
+                                                                userService.updateUser(userFriend.data).then(function (req,err) {
+                                                                    if (err) {
+                                                                        console.log(err);
+                                                                    }
+                                                                    else{
+                                                                        console.log(userService.getUserByID(userFriend.data._id))
+                                                                        swal(
+                                                                            'success!',
+                                                                            'you and ' + userFriend.data.firstName + ' ' + userFriend.data.lastName + ' are friends',
+                                                                            'success'
+                                                                            )
+                                                                    }
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+                                                    else{
+                                                        $scope.cancelFriendship();
+                                                    }
+                                                })
+                                          }});
+                                    }
+                                }
+
                                 var expireDate = new Date();
                                 expireDate.setDate(expireDate.getDate() + 1);
 
@@ -119,6 +179,109 @@
             });
         };
 
+        /***************************************************************************************************************/
+        /***************************************************friendship**************************************************/
+        /***************************************************************************************************************/
+
+        // check if you have a friendship for userDetail view
+        $scope.checkFriendship = function () {
+            $scope.notFriend = true;         
+
+            this.userCtrl.userToUpdate._id = $scope.currentUserId;
+            
+            userService.getUserByID(this.userCtrl.userToUpdate._id).then(function (user, err) {
+                if (err) {
+                    console.log(err);
+                }
+                else{
+                    //check if has friendship request
+                    if(user.data.friendship)
+                        {
+                            if(user.data.friendship.status == 'are friends')
+                            {
+                                $scope.notFriend = false;
+
+                                // get name of the friend
+                                userService.getUserByEmail(user.data.friendship.email).
+                                    then(function (userFriend, err) {
+                                        $scope.friend = userFriend.data.firstName + ' ' + userFriend.data.lastName;
+                                    })
+                            }
+                        }
+                    }
+            })
+        }
+
+        // cancel freindship 
+        $scope.cancelFriendship = function()
+        {
+            // cancel freindship on bottun on userDetail view
+            if(this.userCtrl.userToUpdate)
+            {
+                this.userCtrl.userToUpdate._id = $scope.currentUserId;
+                $scope.notFriend = true;
+
+                userService.getUserByID(this.userCtrl.userToUpdate._id).then(function (user, err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else
+                    {
+                        userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        
+                        userFriend.data.friendship = {email: '', status: ''};
+                            userService.updateUser(userFriend.data).then(function (data, err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            })
+                        })
+                        user.data.friendship = {email: '', status: ''};
+                        userService.updateUser(user.data).then(function (data, err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        })
+                
+                    }
+                }) 
+            }
+            // cancel freindship on bottun on swall
+            else if(this.userCtrl.userEmail)
+            {
+                userService.getUserByEmail(this.userCtrl.userEmail).then(function (user, err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else
+                    {
+                        userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        
+                        userFriend.data.friendship = {email: '', status: ''};
+                            userService.updateUser(userFriend.data).then(function (data, err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            })
+                        })
+                        user.data.friendship = {email: '', status: ''};
+                        userService.updateUser(user.data).then(function (data, err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        })
+                
+                    }
+                }) 
+            }
+        }
+        
         // User socket list
         $scope.socketId = null;
         $scope.userList = [];
@@ -134,7 +297,7 @@
             $scope.userList = userList;
         });
 
-        // friendship
+        // real time send friendship request
         socket.on('getFriendship',function(data) 
           {
             swal({
@@ -151,7 +314,8 @@
                 buttonsStyling: false,
                 reverseButtons: true
               }).then((result) => {
-                if (result.value) {
+                if (result.value) 
+                {
 
                     userService.getUserByEmail(data.userFriendEmail).then(function (user, err) {
                         if (err) {
@@ -192,19 +356,12 @@
                             })
                         }
                     })
-                // } else if (
-                //   // Read more about handling dismissals
-                //   result.dismiss === swal.DismissReason.cancel
-                // ) {
-                //   swal(
-                //     'Cancelled',
-                //     'Your imaginary file is safe :)',
-                //     'error'
-                //   )
-                // }
-              }});
+                }
+                else{
+                    $scope.cancelFriendship();
+                }
+            });
              console.log(data);
-             // alert(data.msg + data.userName);
           });  
         
 
@@ -229,18 +386,34 @@
             // };
     
             this.userCtrl.userToUpdate.friendship.status = 'wait to accept';
-          //  this.userCtrl.userToUpdate.friendship = {email: email, status: 'wait to accept'};
             userService.updateUser(this.userCtrl.userToUpdate).then(function (data, err) {
                 if (err) {
                     console.log(err);
                 }
             })
-            // socket.emit('friendshipRequest', {userEmail: this.userCtrl.userToUpdate.email, userFriendEmail: $scope.userFriendEmail});  
+
+            //update status the second user
+            userService.getUserByEmail(this.userCtrl.userToUpdate.friendship.email).then(function (user, err) {
+                if (err) {
+                    console.log(err);
+                }
+                else{
+                    user.data.friendship = {email: $rootScope.currentUser.email , status: 'wait to send the request'};
+                      userService.updateUser(user.data).then(function (data, err) {
+                          if (err) {
+                              console.log(err);
+                          }
+                      })
+                }
+            })
+            
             socket.emit('friendshipRequest', {userName: this.userCtrl.userToUpdate.firstName + ' ' + this.userCtrl.userToUpdate.lastName,
                                  userEmail: $rootScope.currentUser.email , userFriendEmail: this.userCtrl.userToUpdate.friendship.email});  
-            
-            // console.log(userService.getUserByID(this.userCtrl.userToUpdate._id))
        }
+
+        /***************************************************************************************************************/
+        /***************************************************End friendship**********************************************/
+        /***************************************************************************************************************/
 
         // Logout
         $scope.logout = function () {
@@ -953,6 +1126,7 @@
             }
 
             // Check if partner exist
+            if($rootScope.currentUser.friendship) {
             var partnerEmail = $rootScope.currentUser.friendship.email;
             if(partnerEmail) {
                 //Get partner
@@ -1244,6 +1418,7 @@
 
                 })
             }
+        }
 
 
 

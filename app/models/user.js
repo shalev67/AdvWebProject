@@ -69,14 +69,14 @@ var userSchema = new Schema(
         },
         friendship:{
             email:{
-                 type: String,
-                minlength: 2,
+                type: String,
+                //minlength: 2,
                 maxlength: 20,
                 lowercase: true
             },
             status:{
                 type: String,
-                enum: ['wait to accept','are friends','are not friends']
+                enum: ['wait to accept','are friends','', 'wait to send the request']
             }
         }
     });
