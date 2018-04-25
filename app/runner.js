@@ -198,7 +198,7 @@ function populateDb() {
                     });
                 }
 
-                if(user.email === 'adelegmail.com' ){
+                if(user.email === 'adele@gmail.com' ){
                     tamaraTransactions.forEach(function (transaction, index) {
                         userManager.addTransaction(function (err, user){
                         }, newUser, transaction)
