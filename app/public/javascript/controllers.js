@@ -826,10 +826,13 @@
                             // ,transformRequest: angular.identity
                         }
                     ).then(function (sucess) {
+                        swal(
+                            'upload file successfully!'
+                        );
                     })
                 }
                 else {
-                    alert('select a pdf file!')
+                    swal('select a pdf file!');
                 }
             }
         }
