@@ -35,15 +35,15 @@
       }
     },
     {
-      "firstName": "yuval",
-      "lastName": "shalev",
+      "firstName": "john",
+      "lastName": "doe",
       "birthDate": "11/23/1991",
       "gender": "male",
       "income": 28000,
       "maritalStatus": "single",
       "kids": 0,
       "zone": "center",
-      "email": "shalev@gmail.com",
+      "email": "john@gmail.com",
       "password": "123",
       "role": "user",
       "frienship": {
@@ -52,15 +52,15 @@
       }
     },
     {
-      "firstName": "shani",
-      "lastName": "natan",
+      "firstName": "jane",
+      "lastName": "roe",
       "birthDate": "10/20/1993",
       "gender": "female",
       "income": 8000,
       "maritalStatus": "single",
       "kids": 0,
       "zone": "center",
-      "email": "shani@gmail.com",
+      "email": "jane@gmail.com",
       "password": "123",
       "role": "user",
       "frienship": {
@@ -69,15 +69,15 @@
       }
     },
     {
-      "firstName": "tamara",
-      "lastName": "abramov",
+      "firstName": "adele",
+      "lastName": "adkins",
       "birthDate": "02/15/1990",
       "gender": "female",
       "income": 8700,
       "maritalStatus": "single",
       "kids": 0,
       "zone": "north",
-      "email": "tamara@gmail.com",
+      "email": "adele@gmail.com",
       "password": "123",
       "role": "user",
       "frienship": {

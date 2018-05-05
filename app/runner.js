@@ -184,21 +184,21 @@ function populateDb() {
                     });
                 }
 
-                if(user.email === 'shalev@gmail.com' ){
+                if(user.email === 'john@gmail.com' ){
                     yuvalTransactions.forEach(function (transaction, index) {
                         userManager.addTransaction(function (err, user){
                         }, newUser, transaction)
                     });
                 }
 
-                if(user.email === 'shani@gmail.com' ){
+                if(user.email === 'jane@gmail.com' ){
                     shaniTransaction.forEach(function (transaction, index) {
                         userManager.addTransaction(function (err, user){
                         }, newUser, transaction)
                     });
                 }
 
-                if(user.email === 'tamara@gmail.com' ){
+                if(user.email === 'adele@gmail.com' ){
                     tamaraTransactions.forEach(function (transaction, index) {
                         userManager.addTransaction(function (err, user){
                         }, newUser, transaction)
