@@ -11,28 +11,29 @@
         fill: teal;
     }
 </style>
-<canvas class="myCanvas" id="myCanvas" width="850" height="50">
-    Your browser does not support the canvas element.
-</canvas>
-<script>
-    var canvas = document.getElementById("myCanvas");
-    var ctx=canvas.getContext("2d");
-    ctx.font = "30px Palatino Linotype";
-
-    // Create gradient
-    var grd = ctx.createLinearGradient(0, 500, 1100, 0);
-    grd.addColorStop(0, "MidnightBlue");
-    //grd.addColorStop(1, "DeepSkyBlue");
-    grd.addColorStop(1, "Aqua");
-
-
-    // Fill with gradient
-    ctx.fillStyle = grd;
-    ctx.textAlign = "center";
-    ctx.fillText("Statistics", 120, canvas.height / 2);
-</script>
-<hr/>
 <div ng-show="haveTransactionData">
+    <canvas class="myCanvas" id="myCanvas" width="850" height="50">
+        Your browser does not support the canvas element.
+    </canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx=canvas.getContext("2d");
+        ctx.font = "30px Palatino Linotype";
+
+        // Create gradient
+        var grd = ctx.createLinearGradient(0, 500, 1100, 0);
+        grd.addColorStop(0, "MidnightBlue");
+        //grd.addColorStop(1, "DeepSkyBlue");
+        grd.addColorStop(1, "Aqua");
+
+
+        // Fill with gradient
+        ctx.fillStyle = grd;
+        ctx.textAlign = "center";
+        ctx.fillText("Statistics", 65, canvas.height / 2);
+    </script>
+    <hr/>
+
 <div class="search-tbl-header">
     <table cellpadding="0" cellspacing="0" border="0" class="search-tbl" >
         <thead>

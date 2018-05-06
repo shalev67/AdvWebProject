@@ -45,7 +45,7 @@
         <!--Logo-->
         <h1 class="logo">
             <a href="#!/home">
-                <img src="./images/Logo6.png" class="logo">
+                <img src="./images/logoMA.png" class="logo">
             </a>
         </h1>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,16 +56,16 @@
 
             <ul class="navbar-nav mr-auto main-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#!/home"> Home</a>
+                    <a class="nav-link" href="#!/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!/myTransactions">Transactions</a>
+                    <a ng-show="connected" class="nav-link" href="#!/myTransactions">Transactions</a>
                 </li>
                 <li class="nav-item" >
-                    <a class="nav-link" href="#!/He&She">He & She</a>
+                    <a ng-show="connected" class="nav-link" href="#!/He&She">He & She</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!/barchart">Statistics</a>
+                    <a ng-show="connected" class="nav-link" href="#!/barchart">Statistics</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#!/about">About</a>
