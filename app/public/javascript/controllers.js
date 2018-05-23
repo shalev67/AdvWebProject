@@ -863,7 +863,8 @@
             if ($rootScope.haveTransactionData) {
 
                 // Get  the Date
-                var month = date.getMonth() - 1;
+                // var month = date.getMonth() - 1;
+                var month = 2;
                 var year = date.getFullYear();
 
                 if (month === 0) {
