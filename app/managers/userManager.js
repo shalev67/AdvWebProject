@@ -9,7 +9,7 @@ mongoose.Promise = global.Promise;
 
 module.exports = {
     listUsers: function (callback) {
-        User.find({}, function (err, users) {
+        User.find({},'firstName lastName birthDate gender income maritalStatus kids zone email role', function (err, users) {
             callback(null, users);
         });
     },
