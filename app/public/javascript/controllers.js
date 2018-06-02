@@ -539,6 +539,7 @@
                      {monthText : "November", number : 10},
                      {monthText : "December", number : 11}
                     ];
+
                     $scope.selectedMonth = $scope.monthList[lastMonth].number;
 
                      $scope.yearList = [];
@@ -547,7 +548,12 @@
                      }
 
                     $scope.selectedYear = $scope.yearList[$scope.yearList.length -1].value;
-
+                    var url = "/User/GetGroupById/" + $scope.currentUserId;
+                    var groups = $http.get(url);
+                    yearList = new set();
+                    for (i=0; i<groups.length; i++){
+                        yearList.add(groups[i]._id.year)
+                    }
                     //*********************//
                     //***BAR CHART init****//
                     //*********************//
