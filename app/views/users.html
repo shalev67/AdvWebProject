@@ -118,13 +118,13 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.role }}</td>
                 <td><button type="button"
-                            class="delete"
-                            ng-click="deleteUser(user._id)"
-                            ng-show="!inactive">Delete</button> </td>
-                <td><button type="button"
-                            class="update"
+                            class="fa fa-edit"
                             ng-click="updateUser(user)"
-                            ng-show="!inactive">Update</button> </td>
+                            ng-show="!inactive"></button> </td>
+                <td><button type="button"
+                            class="fa fa-trash"
+                            ng-click="deleteUser(user._id)"
+                            ng-show="!inactive"></button> </td>
             </tr>
             </tbody>
         </table>
