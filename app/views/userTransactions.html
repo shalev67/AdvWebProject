@@ -59,6 +59,9 @@
                 <th>
                     Price
                 </th>
+                <th>
+
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -67,6 +70,10 @@
                 <td>{{ transaction.category }}</td>
                 <td>{{ transaction.business }}</td>
                 <td>{{ transaction.price }}</td>
+                <td><button type="button"
+                            class="fa fa-trash"
+                            ng-click="deleteUser(user._id)"
+                            ng-show="!inactive"></button> </td>
             </tr>
             </tbody>
         </table>
