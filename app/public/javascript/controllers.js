@@ -807,7 +807,7 @@
     //myApp.controller("uploadCtrl", function ($scope, $http) {
     function uploadCtrl ($scope, $http, $rootScope) {
         if ($rootScope.connected) {
-            var uploadUrl = "http://localhost:3000";
+            var uploadUrl = "http://193.106.55.144:3000";
 
             $scope.uploadFile = function () {
                 var file = $scope.myFile;
@@ -846,7 +846,7 @@
         var date = new Date();
         $scope.getExpectedExpenses = function (month = date.getMonth() + 1, year = date.getFullYear()) {
 
-            var expensesUrl = "http://localhost:3001/user/" + $scope.currentUserId + "?month=" + 12 + "&year=" + 2017;
+            var expensesUrl = "http://193.106.55.144:3001/user/" + $scope.currentUserId + "?month=" + 12 + "&year=" + 2017;
             $http.get(expensesUrl).then(function(response){
                 $scope.expectedExpense = response.data;
             }).catch(function (error) {
@@ -908,7 +908,7 @@
 
                     if (data !== undefined) {
 
-                        var expensesUrl = "http://localhost:3001/user/" + $rootScope.currentUser._id + "?month=" + month + "&year=" + year;
+                        var expensesUrl = "http://193.106.55.144:3001/user/" + $rootScope.currentUser._id + "?month=" + month + "&year=" + year;
                         $http.get(expensesUrl).then(function(response){
 
                             // $scope.expectedExpense = response.data;
@@ -1174,7 +1174,7 @@
 
                                     if (data !== undefined) {
 
-                                        var expensesUrl = "http://localhost:3001/user/" +  $scope.currentPartner._id + "?month=" + month + "&year=" + year;
+                                        var expensesUrl = "http://193.106.55.144:3001/user/" +  $scope.currentPartner._id + "?month=" + month + "&year=" + year;
                                         $http.get(expensesUrl).then(function(response){
 
                                             var expectedData = response.data;

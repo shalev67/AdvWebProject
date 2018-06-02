@@ -26,7 +26,7 @@ def allowed_file(filename):
 
 @app.after_request
 def cors_enabled(response):
-    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5000'
+    response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response
 
@@ -232,4 +232,4 @@ def extract_transaction_from_pdf(file_path, user_id):
     extract_transaction_from_isracard_pdf(lines, user_id)
 
 if __name__ == '__main__':
-    app.run(port=3000, host='0.0.0.0')
+    app.run(port=3000, host='0.0.0.0', threaded=True)
