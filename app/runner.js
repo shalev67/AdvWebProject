@@ -15,7 +15,7 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/test', { useMongoClient: true });
 mongoose.Promise = global.Promise;
-populateDb();
+// populateDb();
 
 /**
  * Create HTTP server.
