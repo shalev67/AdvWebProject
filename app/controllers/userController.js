@@ -144,4 +144,4 @@ module.exports = function (app) {
             req.body)
     });
 
-}
+};
