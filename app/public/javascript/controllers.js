@@ -467,11 +467,43 @@
                                 reverseButtons: true
                             }).then(function (result) {
                                 if (result.value) {
-                                    userService.deleteUser(id).then(function () {
-                                        userService.getAllUsers().then(function (data) {
-                                            $scope.appUsers = data;
-                                        });
+
+                                    userService.getUserByID(id).then(function (user, err) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        else
+                                        {
+
+                                            userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+
+                                                userFriend.data.friendship = {email: '', status: ''};
+                                                userService.updateUser(userFriend.data).then(function (data, err) {
+                                                    if (err) {
+                                                        console.log(err);
+                                                    }
+                                                })
+                                            });
+                                            user.data.friendship = {email: '', status: ''};
+                                            userService.updateUser(user.data).then(function (data, err) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                            })
+
+                                            userService.deleteUser(id).then(function () {
+                                                userService.getAllUsers().then(function (data) {
+                                                    $scope.appUsers = data;
+                                                });
+                                            });
+
+                                        }
                                     });
+
+
                                     swal(
                                         'Deleted!',
                                         'The user has been deleted.',
@@ -567,11 +599,16 @@
                     var svg = d3.select("#userTransactionBarChart").append("svg")
                         .attr("width", width + margin.left + margin.right)
                         .attr("height", height + margin.top + margin.bottom)
+                        .attr("id", "svgUTBC")
                         .append("g")
                         .attr("transform",
                             "translate(" + margin.left + "," + margin.top + ")");
 
-                     //*********************//
+
+
+
+
+                    //*********************//
                     //***PIE CHART init****//
                     //*********************//
                     var widthPie = 960,
