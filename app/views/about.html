@@ -1,0 +1,85 @@
+<img src="./images/about.jpg"  style="width:100%;position: relative; margin: 0 auto; border-radius: 22px;">
+<br>
+<br>
+<br>
+<canvas class="mission" id="mission" width="850" height="50">
+    Your browser does not support the canvas element.
+</canvas>
+<script>
+    var canvas = document.getElementById("mission");
+    var ctx=canvas.getContext("2d");
+    ctx.font = "30px Palatino Linotype";
+
+    // Create gradient
+    var grd = ctx.createLinearGradient(0, 500, 1100, 0);
+    grd.addColorStop(0, "MidnightBlue");
+    grd.addColorStop(1, "Aqua");
+
+
+    // Fill with gradient
+    ctx.fillStyle = grd;
+    ctx.textAlign = "center";
+    ctx.fillText("Our mission", 81, canvas.height / 2);
+</script>
+<p style="text-align: left; ">
+Whether you thinking you are wasting a lot of money or not, <br/>
+our mission is to supply you the best platform <br/>
+for understanding your Consumption habits and help you improve them by click. <br/>
+</p>
+
+
+<canvas class="vission" id="vission" width="850" height="50" >
+    Your browser does not support the canvas element.
+</canvas>
+
+<script>
+    var canvas = document.getElementById("vission");
+    var ctx=canvas.getContext("2d");
+    ctx.font = "30px Palatino Linotype";
+
+    // Create gradient
+    var grd = ctx.createLinearGradient(0, 500, 1100, 0);
+    grd.addColorStop(0, "MidnightBlue");
+    grd.addColorStop(1, "Aqua");
+
+
+    // Fill with gradient
+    ctx.fillStyle = grd;
+    ctx.textAlign = "center";
+    ctx.fillText("Our vision", 70, canvas.height / 2);
+</script>
+
+<p style="text-align: left; ">
+We in Money Adviser believe in making people life
+easier and better. <br/>
+According to this vision, we offer our clients a variety of tools <br/>
+that will help them use smarter their money. <br/>
+</p>
+
+<canvas class="team" id="team" width="850" height="50">
+    Your browser does not support the canvas element.
+</canvas>
+<script>
+    var canvas = document.getElementById("team");
+    var ctx=canvas.getContext("2d");
+    ctx.font = "30px Palatino Linotype";
+
+    // Create gradient
+    var grd = ctx.createLinearGradient(0, 500, 1100, 0);
+    grd.addColorStop(0, "MidnightBlue");
+    grd.addColorStop(1, "Aqua");
+
+
+    // Fill with gradient
+    ctx.fillStyle = grd;
+    ctx.textAlign = "center";
+    ctx.fillText("Our team", 64, canvas.height / 2);
+</script>
+<p style="text-align: left; ">
+Our team is composed from 5 enthusiastic programmers: <br/><br/>
+Shany Natan <br/>
+Ravid Nagar<br/>
+Yuval Shalev<br/>
+Eran Pinchevsky<br/>
+Tamara Abramov
+</p>

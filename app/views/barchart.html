@@ -10,6 +10,63 @@
     .bar{
         fill: teal;
     }
-</style>
 
-<div ng-show="haveTransactionData" id="userTransactionBarChart"></div>
+    #svgUTBC{
+        overflow: visible;
+    }
+</style>
+<div ng-show="haveTransactionData">
+    <canvas class="myCanvas" id="myCanvas" width="850" height="50">
+        Your browser does not support the canvas element.
+    </canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx=canvas.getContext("2d");
+        ctx.font = "30px Palatino Linotype";
+
+        // Create gradient
+        var grd = ctx.createLinearGradient(0, 500, 1100, 0);
+        grd.addColorStop(0, "MidnightBlue");
+        //grd.addColorStop(1, "DeepSkyBlue");
+        grd.addColorStop(1, "Aqua");
+
+
+        // Fill with gradient
+        ctx.fillStyle = grd;
+        ctx.textAlign = "center";
+        ctx.fillText("Statistics", 65, canvas.height / 2);
+    </script>
+    <hr/>
+
+<div class="search-tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0" class="search-tbl" >
+        <thead>
+        <tr>
+                <th class="search-tbl-th"> 
+                 
+                    <label >Month</label>
+                    <select  class="form-control" ng-model="selectedMonth" ng-change="updateGraphs(selectedMonth, selectedYear)" ng-options="month.number as month.monthText for month in monthList"/>
+                </th> 
+                <th class="search-tbl-th"> 
+                    <label >Year</label>
+                    <select  class="form-control" ng-model="selectedYear" ng-change="updateGraphs(selectedMonth, selectedYear)" ng-options="year.value as year.value for year in yearList"/>
+                </th>
+        </tr>
+        </thead>
+    </table>
+
+    
+</div>
+
+    <div id="noDataMessage" ng-show="no_data">
+        <br>
+        <h5>no data to show for this period</h5>
+    </div>
+    <div id="userTransactionBarChart"></div>
+    <br>
+    <br>
+    <div id="userTransactionPieChart"></div>
+   
+   </div>
+</div>
+

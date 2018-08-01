@@ -1,2 +1,4 @@
 textract
 flask
+mongoengine
+ipython

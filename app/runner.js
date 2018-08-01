@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node///
 
 /**
  * Module dependencies.
@@ -31,6 +31,65 @@ server.listen(port, '0.0.0.0');
 server.on('error', onError);
 server.on('listening', onListening);
 
+var io = require('socket.io').listen(server);
+
+var users = []; 
+
+io.on('connection', (socket) => {
+    
+               socket.on('userEmail', (userEmail) => {
+
+                        console.log('emitUserEmail');
+                     users.push({
+                         id : socket.id,
+                         userEmail : userEmail
+                     });
+    
+                     let len = users.length;
+                     len--;
+
+                     for(let i=0; i < users.length; i++){
+                        console.log('userId:' + users[i].id);
+                        console.log('userEmail:' + users[i].userEmail);
+                      }
+
+                     io.emit('userList',users,users[len].id); 
+               });
+    
+               socket.on('friendshipRequest', (data) => {
+
+                    var socketFriend = null;    
+
+                    for(let i=0; i < users.length; i++){
+
+                        if(users[i].userEmail === data.userFriendEmail){
+                            socketFriend = users[i].id;
+                        }
+                      }
+                    
+                      console.log('socketFriend: ' + socketFriend);
+
+                      if(socketFriend)
+                        {
+                            //socket.broadcast.to(socketFriend).emit('getFriendship',{msg:'friend request from ',  name :data.userName});
+                        //    socket.emit('getFriendship',{msg:'friend request from ',  userName :data.userName});  
+                            io.sockets.sockets[socketFriend].emit ('getFriendship',{msg:'friend request from ',  userName :data.userName,
+                            userEmail: data.userEmail ,userFriendEmail: data.userFriendEmail}); 
+                         }
+                });
+    
+               socket.on('disconnect',()=>{
+                   
+                     for(let i=0; i < users.length; i++){
+                       
+                       if(users[i].id === socket.id){
+                             users.splice(i,1); 
+                       }
+                     }
+                     io.emit('exit',users); 
+               });
+    
+           });
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -104,11 +163,43 @@ function populateDb() {
     var users = jsonContent.users;
     var branches = jsonContent.branches;
     var transactions = jsonContent.transactions;
+    var adminTransactions = jsonContent.adminTransactions;
+    var yuvalTransactions = jsonContent.yuvalTransactions;
+    var shaniTransaction = jsonContent.shaniTransactions;
+    var tamaraTransactions = jsonContent.tamaraTransactions;
     users.forEach(function (user, index) {
         userManager.createUser(function (err, newUser) {
-                console.log('Created user: ' + user.email);
+                console.log('Created user: ' + user.email);//adminTransactions
                 if(user.email === 'user@user.com' ){
                     transactions.forEach(function (transaction, index) {
+                        userManager.addTransaction(function (err, user){
+                        }, newUser, transaction)
+                    });
+                }
+
+                if(user.email === 'admin@admin.com' ){
+                    adminTransactions.forEach(function (transaction, index) {
+                        userManager.addTransaction(function (err, user){
+                        }, newUser, transaction)
+                    });
+                }
+
+                if(user.email === 'john@gmail.com' ){
+                    yuvalTransactions.forEach(function (transaction, index) {
+                        userManager.addTransaction(function (err, user){
+                        }, newUser, transaction)
+                    });
+                }
+
+                if(user.email === 'jane@gmail.com' ){
+                    shaniTransaction.forEach(function (transaction, index) {
+                        userManager.addTransaction(function (err, user){
+                        }, newUser, transaction)
+                    });
+                }
+
+                if(user.email === 'adele@gmail.com' ){
+                    tamaraTransactions.forEach(function (transaction, index) {
                         userManager.addTransaction(function (err, user){
                         }, newUser, transaction)
                     });

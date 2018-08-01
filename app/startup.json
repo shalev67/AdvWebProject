@@ -11,7 +11,11 @@
       "zone": "center",
       "email": "admin@admin.com",
       "password": "admin",
-      "role": "admin"
+      "role": "admin",
+      "frienship":{
+        "email":"",
+        "status": ""
+    }
     },
     {
       "firstName": "user",
@@ -24,7 +28,62 @@
       "zone": "north",
       "email": "user@user.com",
       "password": "123",
-      "role": "user"
+      "role": "user",
+      "frienship": {
+        "email": "",
+        "status": ""
+      }
+    },
+    {
+      "firstName": "john",
+      "lastName": "doe",
+      "birthDate": "11/23/1991",
+      "gender": "male",
+      "income": 28000,
+      "maritalStatus": "single",
+      "kids": 0,
+      "zone": "center",
+      "email": "john@gmail.com",
+      "password": "123",
+      "role": "user",
+      "frienship": {
+        "email": "",
+        "status": ""
+      }
+    },
+    {
+      "firstName": "jane",
+      "lastName": "roe",
+      "birthDate": "10/20/1993",
+      "gender": "female",
+      "income": 8000,
+      "maritalStatus": "single",
+      "kids": 0,
+      "zone": "center",
+      "email": "jane@gmail.com",
+      "password": "123",
+      "role": "user",
+      "frienship": {
+        "email": "",
+        "status": ""
+      }
+    },
+    {
+      "firstName": "adele",
+      "lastName": "adkins",
+      "birthDate": "02/15/1990",
+      "gender": "female",
+      "income": 8700,
+      "maritalStatus": "single",
+      "kids": 0,
+      "zone": "north",
+      "email": "adele@gmail.com",
+      "password": "123",
+      "role": "user",
+      "frienship": {
+        "email": "",
+        "status": ""
+      }
     }
   ],
 
@@ -115,148 +174,2771 @@
       "price":"50.00",
       "category":"שונות",
       "date":"20/12/15",
-      "buissness":"משיכת מזומנים"
+      "business":"משיכת מזומנים"
     },
     {
       "price":"50.00",
       "category":"שונות",
       "date":"21/12/15",
-      "buissness":"משיכת מזומנים"
+      "business":"משיכת מזומנים"
     },
     {
       "price":"90.00",
       "category":"מסעדות/קפה",
       "date":"10/12/15",
-      "buissness":"קאלמה"
+      "business":"קאלמה"
     },
     {
       "price":"177.00",
       "category":"דלק",
       "date":"12/12/15",
-      "buissness":"דלק מנטה שבעת הכוכבי"
+      "business":"דלק מנטה שבעת הכוכבי"
     },
     {
       "price":"28.10",
       "category":"מסעדות/קפה",
       "date":"13/12/15",
-      "buissness":"רשת כוורת בצה\"ל"
+      "business":"רשת כוורת בצה\"ל"
     },
     {
       "price":"53.00",
       "category":"מסעדות/קפה",
       "date":"13/12/15",
-      "buissness":"משה מתוק בע\"מ -בר נו"
+      "business":"משה מתוק בע\"מ -בר נו"
     },
     {
       "price":"40.00",
       "category":"מסעדות/קפה",
       "date":"14/12/15",
-      "buissness":"שווארמה בשדרה"
+      "business":"שווארמה בשדרה"
     },
     {
       "price":"430.00",
       "category":"קניה אינט\"",
       "date":"14/12/15",
-      "buissness":"לא הוצג טעינות  -חבר של קבע"
+      "business":"לא הוצג טעינות  -חבר של קבע"
     },
     {
       "price":"78.00",
       "category":"קניה אינט\"",
       "date":"15/12/15",
-      "buissness":"לא הוצג טעינות \"חבר\" טעמים"
+      "business":"לא הוצג טעינות \"חבר\" טעמים"
     },
     {
       "price":"45.00",
       "category":"שונות",
       "date":"16/12/15",
-      "buissness":"אהרל\"ה"
+      "business":"אהרל\"ה"
     },
     {
       "price":"55.00",
       "category":"שונות",
       "date":"16/12/15",
-      "buissness":"חניו ןמוגרבי"
+      "business":"חניו ןמוגרבי"
     },
     {
       "price":"17.30",
       "category":"מסעדות/קפה",
       "date":"17/12/15",
-      "buissness":"רשת כוורת בצה\"ל"
+      "business":"רשת כוורת בצה\"ל"
     },
     {
       "price":"31.00",
       "category":"קניה אינט\"",
       "date":"20/12/15",
-      "buissness":"לא הוצג טעינות \"חבר\" טעמים"
+      "business":"לא הוצג טעינות \"חבר\" טעמים"
     },
     {
       "price":"38.80",
       "category":"מכולת/סופר",
       "date":"23/12/15",
-      "buissness":"אי א םפי א םהנשיא"
+      "business":"אי א םפי א םהנשיא"
     },
     {
       "price":"38.00",
       "category":"מסעדות/קפה",
       "date":"27/12/15",
-      "buissness":"שוקידה"
+      "business":"שוקידה"
     },
     {
       "price":"19.90",
       "category":"מכולת/סופר",
       "date":"27/12/15",
-      "buissness":"שופרסל שלי רמת אביב"
+      "business":"שופרסל שלי רמת אביב"
     },
     {
       "price":"5.70",
       "category":"מסעדות/קפה",
       "date":"27/12/15",
-      "buissness":"דואלי מכונות אוטומטי"
+      "business":"דואלי מכונות אוטומטי"
     },
     {
       "price":"8.22",
       "category":"שונות",
       "date":"29/12/15",
-      "buissness":"פנגו -חניה סלולארית"
+      "business":"פנגו -חניה סלולארית"
     },
     {
       "price":"59.00",
       "category":"תקשורת",
       "date":"30/12/15",
-      "buissness":"גול ןטלקום"
+      "business":"גול ןטלקום"
     },
     {
       "price":"94.00",
       "category":"קניה אינט\"",
       "date":"30/12/15",
-      "buissness":"לא הוצג טעינות \"חבר\" טעמים"
+      "business":"לא הוצג טעינות \"חבר\" טעמים"
     },
     {
       "price":"122.00",
       "category":"מסעדות/קפה",
       "date":"31/12/15",
-      "buissness":"אוליב בוגרשוב"
+      "business":"אוליב בוגרשוב"
     },
     {
       "price":"139.00",
       "category":"שונות",
       "date":"31/12/15",
-      "buissness":"קיי אס פי מחשבי םדי"
+      "business":"קיי אס פי מחשבי םדי"
     },
     {
       "price":"119.00",
       "category":"קניה אינט\"",
       "date":"04/01/16",
-      "buissness":"לא הוצג טעינות \"חבר\" טעמים"
+      "business":"לא הוצג טעינות \"חבר\" טעמים"
     },
     {
       "price":"156.00",
       "category":"מחשבים",
       "date":"06/01/16",
-      "buissness":"באג מולטיסט םבע\"מ"
+      "business":"באג מולטיסט םבע\"מ"
+    }
+  ],
+  "adminTransactions":[
+    {
+      "price":"50.00",
+      "category":"שונות",
+      "date":"20/12/15",
+      "business":"משיכת מזומנים"
+    },
+    {
+      "price":"50.00",
+      "category":"שונות",
+      "date":"21/12/15",
+      "business":"משיכת מזומנים"
+    },
+    {
+      "price":"90.00",
+      "category":"מסעדות/קפה",
+      "date":"10/12/15",
+      "business":"קאלמה"
+    },
+    {
+      "price":"28.10",
+      "category":"מסעדות/קפה",
+      "date":"13/12/15",
+      "business":"רשת כוורת בצה\"ל"
+    },
+    {
+      "price":"53.00",
+      "category":"מסעדות/קפה",
+      "date":"13/12/15",
+      "business":"משה מתוק בע\"מ -בר נו"
+    },
+    {
+      "price":"40.00",
+      "category":"מסעדות/קפה",
+      "date":"14/12/15",
+      "business":"שווארמה בשדרה"
+    },
+    {
+      "price":"78.00",
+      "category":"קניה אינט\"",
+      "date":"15/12/15",
+      "business":"לא הוצג טעינות \"חבר\" טעמים"
+    },
+    {
+      "price":"45.00",
+      "category":"שונות",
+      "date":"16/12/15",
+      "business":"אהרל\"ה"
+    },
+    {
+      "price":"55.00",
+      "category":"שונות",
+      "date":"16/12/15",
+      "business":"חניו ןמוגרבי"
+    },
+    {
+      "price":"17.30",
+      "category":"מסעדות/קפה",
+      "date":"17/12/15",
+      "business":"רשת כוורת בצה\"ל"
+    },
+    {
+      "price":"31.00",
+      "category":"קניה אינט\"",
+      "date":"20/12/15",
+      "business":"לא הוצג טעינות \"חבר\" טעמים"
+    },
+    {
+      "price":"38.80",
+      "category":"מכולת/סופר",
+      "date":"23/12/15",
+      "business":"אי א םפי א םהנשיא"
+    },
+    {
+      "price":"59.00",
+      "category":"תקשורת",
+      "date":"30/12/15",
+      "business":"גול ןטלקום"
+    },
+    {
+      "price":"94.00",
+      "category":"קניה אינט\"",
+      "date":"30/12/15",
+      "business":"לא הוצג טעינות \"חבר\" טעמים"
+    },
+    {
+      "price":"122.00",
+      "category":"מסעדות/קפה",
+      "date":"31/12/15",
+      "business":"אוליב בוגרשוב"
+    },
+    {
+      "price":"139.00",
+      "category":"שונות",
+      "date":"31/12/15",
+      "business":"קיי אס פי מחשבי םדי"
+    }
+
+  ],
+  "yuvalTransactions":[
+    {
+      "business": "לא הוצג אפל pay-box",
+      "category": "שונות",
+      "date": "17/12/17",
+      "price": 51
+    },
+    {
+      "business": "פנגו פיי אנד גו בע\"מ",
+      "category": "שונות",
+      "date": "26/12/17",
+      "price": 7
+    },
+    {
+      "business": "פניקס חיי םובריאות",
+      "category": "ביטוח",
+      "date": "02/01/18",
+      "price": -60
+    },
+    {
+      "business": "פניקס חיי םובריאות",
+      "category": "ביטוח",
+      "date": "02/01/18",
+      "price": -60
+    },
+    {
+      "business": "ארומה שוסטר",
+      "category": "מסעדות/קפה",
+      "date": "07/11/17",
+      "price": 44
+    },
+    {
+      "business": "port 19",
+      "category": "שונות",
+      "date": "09/11/17",
+      "price": 59
+    },
+    {
+      "business": "ג.א סושי בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "09/11/17",
+      "price": 136
+    },
+    {
+      "business": "חניו ןרכב די.סי בע\"מ",
+      "category": "שונות",
+      "date": "09/11/17",
+      "price": 18
+    },
+    {
+      "business": "אלו ןג ןיבנה",
+      "category": "דלק",
+      "date": "11/11/17",
+      "price": 182
+    },
+    {
+      "business": "צ'וקה",
+      "category": "מסעדות/קפה",
+      "date": "12/11/17",
+      "price": 53
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "12/11/17",
+      "price": 4
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "12/11/17",
+      "price": 14
+    },
+    {
+      "business": "צ'וקה",
+      "category": "מסעדות/קפה",
+      "date": "13/11/17",
+      "price": 53
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "13/11/17",
+      "price": 6
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "מכולת/סופר",
+      "date": "13/11/17",
+      "price": 43
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "14/11/17",
+      "price": 7
+    },
+    {
+      "business": "מקדונלדס קניו ןאביב",
+      "category": "מסעדות/קפה",
+      "date": "14/11/17",
+      "price": 58
+    },
+    {
+      "business": "צ'וקה",
+      "category": "מסעדות/קפה",
+      "date": "15/11/17",
+      "price": 53
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "15/11/17",
+      "price": 32
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "מכולת/סופר",
+      "date": "16/11/17",
+      "price": 52
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "מכולת/סופר",
+      "date": "20/11/17",
+      "price": 39
+    },
+    {
+      "business": "ארומה שוסטר",
+      "category": "מסעדות/קפה",
+      "date": "22/11/17",
+      "price": 47
+    },
+    {
+      "business": " IPIחניו ןמוגרבי",
+      "category": "שונות",
+      "date": "23/11/17",
+      "price": 25
+    },
+    {
+      "business": "שותפות ניהול מגדלי א",
+      "category": "שונות",
+      "date": "23/11/17",
+      "price": 15
+    },
+    {
+      "business": "חניו ןרכב די.סי בע\"מ",
+      "category": "שונות",
+      "date": "24/11/17",
+      "price": 20
+    },
+    {
+      "business": "לא הוצג אפל pay-box",
+      "category": "שונות",
+      "date": "26/11/17",
+      "price": 28
+    },
+    {
+      "business": "פנגו פיי אנד גו בע\"מ",
+      "category": "שונות",
+      "date": "26/11/17",
+      "price": 8
+    },
+    {
+      "business": "אצל באבי בבית",
+      "category": "מסעדות/קפה",
+      "date": "27/11/17",
+      "price": 32
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "27/11/17",
+      "price": 14
+    },
+    {
+      "business": "לא הוצג PEPPER PAY",
+      "category": "שונות",
+      "date": "28/11/17",
+      "price": 1
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "28/11/17",
+      "price": 23
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "28/11/17",
+      "price": 11
+    },
+    {
+      "business": "פניקס חיי םובריאות",
+      "category": "ביטוח",
+      "date": "28/11/17",
+      "price": 60
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "29/11/17",
+      "price": 7
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "29/11/17",
+      "price": 6
+    },
+    {
+      "business": "פביאנו פוד בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "29/11/17",
+      "price": 42
+    },
+    {
+      "business": "פז  YELLOWאש\"ל",
+      "category": "דלק",
+      "date": "30/11/17",
+      "price": 184
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "30/11/17",
+      "price": 13
+    },
+    {
+      "business": "בכור את שושי פתח תקו",
+      "category": "שונות",
+      "date": "30/11/17",
+      "price": 58
+    },
+    {
+      "business": " KSPרשל\"צ",
+      "category": "מוצרי חשמל",
+      "date": "01/12/17",
+      "price": 4490
+    },
+    {
+      "business": "באג ביג אשדוד",
+      "category": "מסעדות/קפה",
+      "date": "02/12/17",
+      "price": 73
+    },
+    {
+      "business": "צ'וקה",
+      "category": "שונות",
+      "date": "03/12/17",
+      "price": 53
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "12/02/18",
+      "price": 6
+    },
+    {
+      "business": "פז  YELLOWרונית -",
+      "category": "דלק",
+      "date": "12/02/18",
+      "price": 217
+    },
+    {
+      "business": "יוס ףהחומוסייה רמת א",
+      "category": "מסעדות/קפה",
+      "date": "12/02/18",
+      "price": 50
+    },
+    {
+      "business": "אצל באבי בבית",
+      "category": "מסעדות/קפה",
+      "date": "13/02/18",
+      "price": 32
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "13/02/18",
+      "price": 7
+    },
+    {
+      "business": "מקדונלדס ביג אשדוד",
+      "category": "מסעדות/קפה",
+      "date": "16/02/18",
+      "price": 15
+    },
+    {
+      "business": "אצל באבי בבית",
+      "category": "מסעדות/קפה",
+      "date": "18/02/18",
+      "price": 32
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "18/02/18",
+      "price": 4
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "19/02/18",
+      "price": 6
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "19/02/18",
+      "price": 20
+    },
+    {
+      "business": "לא הוצג דומינוס פיצה",
+      "category": "מסעדות/קפה",
+      "date": "21/02/18",
+      "price": 77
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "21/02/18",
+      "price": 4
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "21/02/18",
+      "price": 5
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "22/02/18",
+      "price": 23
+    },
+    {
+      "business": "ג'ק ביי בלאק ראשונים",
+      "category": "מסעדות/קפה",
+      "date": "22/02/18",
+      "price": 73
+    },
+    {
+      "business": "קניו ןעזריאלי ראשונ",
+      "category": "שונות",
+      "date": "22/02/18",
+      "price": 7
+    },
+    {
+      "business": "קשת טעמים",
+      "category": "מכולת/סופר",
+      "date": "24/02/18",
+      "price": 17
+    },
+    {
+      "business": "port 19",
+      "category": "שונות",
+      "date": "25/02/18",
+      "price": 59
+    },
+    {
+      "business": "חניו ןרכב די.סי בע\"מ",
+      "category": "שונות",
+      "date": "25/02/18",
+      "price": 19
+    },
+    {
+      "business": "פנגו-חניה סלולארית",
+      "category": "שונות",
+      "date": "26/02/18",
+      "price": 5
+    },
+    {
+      "business": "מקדונלדס רמת אביב ג'",
+      "category": "מסעדות/קפה",
+      "date": "26/02/18",
+      "price": 127
+    },
+    {
+      "business": "מקדונלדס קניו ןאביב",
+      "category": "מסעדות/קפה",
+      "date": "27/02/18",
+      "price": 67
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "מכולת/סופר",
+      "date": "27/02/18",
+      "price": 39
+    },
+    {
+      "business": "צומת ספרי םרמת אביב",
+      "category": "ספרי/םדיסק",
+      "date": "28/02/18",
+      "price": 177
+    },
+    {
+      "business": "מקדונלדס רמת אביב ג'",
+      "category": "מסעדות/קפה",
+      "date": "28/02/18",
+      "price": 67
+    },
+    {
+      "business": "יוס ףהחומוסייה רמת א",
+      "category": "מסעדות/קפה",
+      "date": "01/03/18",
+      "price": 50
+    },
+    {
+      "business": "אלו ןג ןיבנה",
+      "category": "דלק",
+      "date": "03/03/18",
+      "price": 260
+    },
+    {
+      "business": " BBBראש פינה",
+      "category": "מסעדות/קפה",
+      "date": "05/03/18",
+      "price": 112
+    },
+    {
+      "business": "שופרסל דיל חצור גליל",
+      "category": "מכולת/סופר",
+      "date": "05/03/18",
+      "price": 73
+    },
+    {
+      "business": "פז  YELLOWאש\"ל",
+      "category": "דלק",
+      "date": "07/03/18",
+      "price": 178
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "07/03/18",
+      "price": 15
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "08/03/18",
+      "price": 4
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "08/03/18",
+      "price": 4
+    },
+    {
+      "business": "משיכת מזומנים",
+      "category": "שונות",
+      "date": "29/10/17",
+      "price": 100
+    },
+    {
+      "business": "ויקטורי שבעת הכוכבים",
+      "category": "מכולת/סופר",
+      "date": "09/10/17",
+      "price": 41
+    },
+    {
+      "business": "לא הוצג אפל pay-box",
+      "category": "שונות",
+      "date": "15/10/17",
+      "price": 28
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "15/10/17",
+      "price": 5
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "16/10/17",
+      "price": 7
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "16/10/17",
+      "price": 6
+    },
+    {
+      "business": "פביאנו פוד בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "16/10/17",
+      "price": 47
+    },
+    {
+      "business": "אל ףבית קפה",
+      "category": "שונות",
+      "date": "17/10/17",
+      "price": 19
+    },
+    {
+      "business": "קפה בר הבימה",
+      "category": "מסעדות/קפה",
+      "date": "17/10/17",
+      "price": 39
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "17/10/17",
+      "price": 8
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "17/10/17",
+      "price": 8
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "17/10/17",
+      "price": 6
+    },
+    {
+      "business": "פביאנו פוד בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "17/10/17",
+      "price": 36
+    },
+    {
+      "business": "אחוזות החו - ףחניון",
+      "category": "תש' רשויות",
+      "date": "17/10/17",
+      "price": 57
+    },
+    {
+      "business": "גיי םזון",
+      "category": "צעצועים",
+      "date": "19/10/17",
+      "price": 22
+    },
+    {
+      "business": "פביאנו פוד בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "19/10/17",
+      "price": 39
+    },
+    {
+      "business": "פז  YELLOWרונית -",
+      "category": "דלק",
+      "date": "19/10/17",
+      "price": 185
+    },
+    {
+      "business": "מקדונלדס קניו ןאביב",
+      "category": "מסעדות/קפה",
+      "date": "19/10/17",
+      "price": 63
+    },
+    {
+      "business": "קפה לנדוור סינמה ס",
+      "category": "מסעדות/קפה",
+      "date": "19/10/17",
+      "price": 86
+    },
+    {
+      "business": "קשת טעמים",
+      "category": "מכולת/סופר",
+      "date": "21/10/17",
+      "price": 14
+    },
+    {
+      "business": "יינות בית ןסיטי אשדו",
+      "category": "מכולת/סופר",
+      "date": "21/10/17",
+      "price": 30
+    },
+    {
+      "business": "פילדלפיה צפון",
+      "category": "מסעדות/קפה",
+      "date": "22/10/17",
+      "price": 54
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "22/10/17",
+      "price": 13
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "22/10/17",
+      "price": 4
+    },
+    {
+      "business": "שמו הקונדטוריה בעמ-ר",
+      "category": "מעדניות",
+      "date": "23/10/17",
+      "price": 150
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "24/10/17",
+      "price": 4
+    },
+    {
+      "business": " IPIחניו ןמוגרבי",
+      "category": "שונות",
+      "date": "24/10/17",
+      "price": 55
+    },
+    {
+      "business": "ג'מס פתח תקווה מ מ",
+      "category": "מסעדות/קפה",
+      "date": "24/10/17",
+      "price": 75
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "26/10/17",
+      "price": 19
+    },
+    {
+      "business": "פביאנו פוד בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "26/10/17",
+      "price": 41
+    },
+    {
+      "business": "מקדונלדס ביג אשדוד",
+      "category": "מסעדות/קפה",
+      "date": "26/10/17",
+      "price": 55
+    },
+    {
+      "business": "פנגו -חניה סלולארית",
+      "category": "שונות",
+      "date": "26/10/17",
+      "price": 7
+    },
+    {
+      "business": "יס פלאנט ראשו ןלציון",
+      "category": "תרבות",
+      "date": "26/10/17",
+      "price": 33
+    },
+    {
+      "business": "לא הוצג ק .פו - ןפלאנט ראשון",
+      "category": "תרבות",
+      "date": "26/10/17",
+      "price": 88
+    },
+    {
+      "business": "צ'וקה",
+      "category": "מסעדות/קפה",
+      "date": "29/10/17",
+      "price": 53
+    },
+    {
+      "business": "חניו ןק.אביב",
+      "category": "שונות",
+      "date": "29/10/17",
+      "price": 6
+    },
+    {
+      "business": "פניקס חיי םובריאות",
+      "category": "ביטוח",
+      "date": "29/10/17",
+      "price": 60
+    },
+    {
+      "business": "אצל באבי בבית",
+      "category": "שונות",
+      "date": "30/10/17",
+      "price": 32
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "30/10/17",
+      "price": 20
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "31/10/17",
+      "price": 4
+    },
+    {
+      "business": "פז  YELLOWאש\"ל",
+      "category": "דלק",
+      "date": "31/10/17",
+      "price": 197
+    },
+    {
+      "business": "מקדונלדס-גלילות",
+      "category": "מסעדות/קפה",
+      "date": "31/10/17",
+      "price": 14
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "מכולת/סופר",
+      "date": "31/10/17",
+      "price": 14
+    },
+    {
+      "business": "ג'מס פתח תקווה מ מ",
+      "category": "מסעדות/קפה",
+      "date": "31/10/17",
+      "price": 80
+    },
+    {
+      "business": "פביאנו פוד בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "01/11/17",
+      "price": 41
+    },
+    {
+      "business": "פילדלפיה צפון",
+      "category": "מסעדות/קפה",
+      "date": "02/11/17",
+      "price": 54
+    },
+    {
+      "business": "גלאטו ונציה",
+      "category": "מסעדות/קפה",
+      "date": "05/11/17",
+      "price": 23
+    },
+    {
+      "business": "לא הוצג אפל pay-box",
+      "category": "שונות",
+      "date": "05/11/17",
+      "price": 28
+    },
+    {
+      "business": "לא הוצג אפל pay-box",
+      "category": "שונות",
+      "date": "06/11/17",
+      "price": 32
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "07/11/17",
+      "price": 36
+    },
+    {
+      "business": "אצל באבי בבית",
+      "category": "מסעדות/קפה",
+      "date": "08/11/17",
+      "price": 37
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "08/11/17",
+      "price": 16
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "09/11/17",
+      "price": 16
+    },
+    {
+      "business": "משיכת מזומנים",
+      "category": "שונות",
+      "date": "28/09/17",
+      "price": 3000
+    },
+    {
+      "business": "שווארמה בשדרה",
+      "category": "מסעדות/קפה",
+      "date": "10/09/17",
+      "price": 59
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "11/09/17",
+      "price": 20
+    },
+    {
+      "business": "מקדונלדס רמת אביב ג'",
+      "category": "מסעדות/קפה",
+      "date": "11/09/17",
+      "price": 73
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "מכולת/סופר",
+      "date": "12/09/17",
+      "price": 43
+    },
+    {
+      "business": "דליציה",
+      "category": "מסעדות/קפה",
+      "date": "13/09/17",
+      "price": 98
+    },
+    {
+      "business": "אי.א.םפי.אם",
+      "category": "מכולת/סופר",
+      "date": "13/09/17",
+      "price": 55
+    },
+    {
+      "business": "בכור את שושי פתח תקו",
+      "category": "שונות",
+      "date": "13/09/17",
+      "price": 87
+    },
+    {
+      "business": "פילדלפיה צפון",
+      "category": "מסעדות/קפה",
+      "date": "14/09/17",
+      "price": 60
+    },
+    {
+      "business": "חניו ןרכב די.סי בע\"מ",
+      "category": "שונות",
+      "date": "14/09/17",
+      "price": 20
+    },
+    {
+      "business": "קאלמה",
+      "category": "מסעדות/קפה",
+      "date": "16/09/17",
+      "price": 43
+    },
+    {
+      "business": "אניפט חנות חיות",
+      "category": "שונות",
+      "date": "16/09/17",
+      "price": 19
+    },
+    {
+      "business": "אצל באבי בבית",
+      "category": "שונות",
+      "date": "17/09/17",
+      "price": 37
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "מכולת/סופר",
+      "date": "17/09/17",
+      "price": 46
+    },
+    {
+      "business": "פילדלפיה צפון",
+      "category": "מסעדות/קפה",
+      "date": "18/09/17",
+      "price": 60
+    },
+    {
+      "business": "לא הוצג אפל pay-box",
+      "category": "שונות",
+      "date": "19/09/17",
+      "price": 80
+    },
+    {
+      "business": "לא הוצג לתת תקוה",
+      "category": "תרבות",
+      "date": "20/09/17",
+      "price": 100
+    },
+    {
+      "business": "גלובוס מקס אשדוד",
+      "category": "מכולת/סופר",
+      "date": "21/09/17",
+      "price": 80
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "מסעדות/קפה",
+      "date": "24/09/17",
+      "price": 53
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "25/09/17",
+      "price": 5
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "25/09/17",
+      "price": 6
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מכולת/סופר",
+      "date": "25/09/17",
+      "price": 14
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "מסעדות/קפה",
+      "date": "25/09/17",
+      "price": 39
+    },
+    {
+      "business": "פביאנו פוד בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "26/09/17",
+      "price": 39
+    },
+    {
+      "business": "מסעדת אחלה",
+      "category": "מסעדות/קפה",
+      "date": "27/09/17",
+      "price": 48
+    },
+    {
+      "business": "מש  -קר בע\"מ",
+      "category": "ביטוח",
+      "date": "27/09/17",
+      "price": 5
+    },
+    {
+      "business": "לא הוצג פספורט כארד ישראל",
+      "category": "ביטוח",
+      "date": "27/09/17",
+      "price": 74
+    },
+    {
+      "business": "פניקס חיי םובריאות",
+      "category": "מכולת/סופר",
+      "date": "27/09/17",
+      "price": 60
+    },
+    {
+      "business": "שופרסל שלי רמת אביב",
+      "category": "שונות",
+      "date": "28/09/17",
+      "price": 84
+    },
+    {
+      "business": "אהרל'ה",
+      "category": "מסעדות/קפה",
+      "date": "01/10/17",
+      "price": 65
+    },
+    {
+      "business": "ארומה טאגור",
+      "category": "מכולת/סופר",
+      "date": "01/10/17",
+      "price": 23
+    },
+    {
+      "business": "אי.א.םפי.אם",
+      "category": "שונות",
+      "date": "02/10/17",
+      "price": 29
+    },
+    {
+      "business": " IPIחניו ןמוגרבי",
+      "category": "מסעדות/קפה",
+      "date": "02/10/17",
+      "price": 35
+    },
+    {
+      "business": "ארומה נתבג טרמינל 3",
+      "category": "שונות",
+      "date": "02/10/17",
+      "price": 50
+    },
+    {
+      "business": "פנגו-חניה סלולארית",
+      "category": "שונות",
+      "date": "27/01/18",
+      "price": 1
+    },
+    {
+      "business": "אפליקציית Paybox",
+      "category": "שונות",
+      "date": "30/01/18",
+      "price": 110
+    },
+    {
+      "business": "לוצאנה",
+      "category": "מסעדות/קפה",
+      "date": "01/02/18",
+      "price": 204
+    },
+    {
+      "business": "ג.ר.א.ס -.אומנות ישר",
+      "category": "אבזרי אפנה",
+      "date": "01/02/18",
+      "price": 679
+    },
+    {
+      "business": "קאלמה",
+      "category": "מסעדות/קפה",
+      "date": "02/02/18",
+      "price": 142
+    },
+    {
+      "business": "לא הוצג דומינוס פיצה",
+      "category": "מסעדות/קפה",
+      "date": "03/02/18",
+      "price": 128
+    },
+    {
+      "business": "עד העצ םאקספרס",
+      "category": "מסעדות/קפה",
+      "date": "04/02/18",
+      "price": 56
+    },
+    {
+      "business": "אי א םפי א םהנשיא",
+      "category": "מכולת/סופר",
+      "date": "05/02/18",
+      "price": 89
+    },
+    {
+      "business": "אחוזות החו - ףחניון",
+      "category": "תש' רשויות",
+      "date": "05/02/18",
+      "price": 24
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "06/02/18",
+      "price": 15
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "06/02/18",
+      "price": 6
+    },
+    {
+      "business": "שווארמה בשדרה",
+      "category": "מסעדות/קפה",
+      "date": "07/02/18",
+      "price": 45
+    }
+  ],
+  "tamaraTransactions":[
+    {
+      "business": "איילו ןרכב חובה",
+      "category": "ביטוח",
+      "date": "19/06/17",
+      "price": 161
+    },
+    {
+      "business": "א.מ.ל.אמריק ןלייזר ב",
+      "category": "שרות רפואי",
+      "date": "19/10/17",
+      "price": 915
+    },
+    {
+      "business": "ELAL TICKETING",
+      "category": "נופש ותיור",
+      "date": "25/11/17",
+      "price": 747
+    },
+    {
+      "business": "המסלול האקדמי המכללה",
+      "category": "בתי ספר",
+      "date": "10/12/17",
+      "price": 657
+    },
+    {
+      "business": "חבר ספא",
+      "category": "פנאי/ספורט",
+      "date": "11/12/17",
+      "price": 510
+    },
+    {
+      "business": "חבר אתרים",
+      "category": "פנאי/ספורט",
+      "date": "11/12/17",
+      "price": 388
+    },
+    {
+      "business": "אור חלפי םלרכב ע.ק.",
+      "category": "שירותי רכב",
+      "date": "29/12/17",
+      "price": 262
+    },
+    {
+      "business": "תחנת ענבר",
+      "category": "דלק",
+      "date": "07/01/18",
+      "price": 240
+    },
+    {
+      "business": "שופרסל דיל חדרה",
+      "category": "מכולת/סופר",
+      "date": "09/01/18",
+      "price": 26
+    },
+    {
+      "business": "שירותי קופה-מ.מזומן",
+      "category": "מכולת/סופר",
+      "date": "09/01/18",
+      "price": 505
+    },
+    {
+      "business": "-JAPANIKAראשו ןלציון",
+      "category": "מסעדות/קפה",
+      "date": "10/01/18",
+      "price": 60
+    },
+    {
+      "business": "שירותי קופה-מ.מזומן",
+      "category": "מכולת/סופר",
+      "date": "11/01/18",
+      "price": 505
+    },
+    {
+      "business": "לא הוצג אמריק ןקומפורט",
+      "category": "רהיטים",
+      "date": "14/01/18",
+      "price": 4361
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "14/01/18",
+      "price": 699
+    },
+    {
+      "business": "קבוצת קרנף",
+      "category": "מסעדות/קפה",
+      "date": "15/01/18",
+      "price": 17
+    },
+    {
+      "business": "תחנת ענבר",
+      "category": "דלק",
+      "date": "16/01/18",
+      "price": 236
+    },
+    {
+      "business": "קבוצת קרנף",
+      "category": "מסעדות/קפה",
+      "date": "16/01/18",
+      "price": 19
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "16/01/18",
+      "price": 17
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "16/01/18",
+      "price": 799
+    },
+    {
+      "business": "דר ךאר ץהוראת קבע",
+      "category": "תש' רשויות",
+      "date": "21/01/18",
+      "price": 152
+    },
+    {
+      "business": "איילו ןביטוח אלמנטרי",
+      "category": "ביטוח",
+      "date": "28/01/18",
+      "price": 270
+    },
+    {
+      "business": "א.ל.מ סחר  2000בע\"מ",
+      "category": "מוצרי חשמל",
+      "date": "31/01/18",
+      "price": 5470
+    },
+    {
+      "business": "איילו ןרכב חובה",
+      "category": "ביטוח",
+      "date": "19/06/17",
+      "price": 161
+    },
+    {
+      "business": "זאוס חדרה",
+      "category": "פנאי/ספורט",
+      "date": "22/06/17",
+      "price": 350
+    },
+    {
+      "business": "א.מ.ל.אמריק ןלייזר ב",
+      "category": "שרות רפואי",
+      "date": "19/10/17",
+      "price": 915
+    },
+    {
+      "business": "השניצליה",
+      "category": "מסעדות/קפה",
+      "date": "01/11/17",
+      "price": 52
+    },
+    {
+      "business": "דלתא רוגובין",
+      "category": "הלבשה",
+      "date": "03/11/17",
+      "price": 25
+    },
+    {
+      "business": "סופר פאר םהאר\"י נתני",
+      "category": "פארמה",
+      "date": "03/11/17",
+      "price": 262
+    },
+    {
+      "business": "תחנת ענבר",
+      "category": "דלק",
+      "date": "05/11/17",
+      "price": 228
+    },
+    {
+      "business": "בנדיקט ראשל\"צ",
+      "category": "מסעדות/קפה",
+      "date": "05/11/17",
+      "price": 81
+    },
+    {
+      "business": "מקס נתניה",
+      "category": "כלי בית",
+      "date": "07/11/17",
+      "price": 184
+    },
+    {
+      "business": "סחלבי םבשרון",
+      "category": "משתלות",
+      "date": "07/11/17",
+      "price": 339
+    },
+    {
+      "business": "השניצליה",
+      "category": "מסעדות/קפה",
+      "date": "08/11/17",
+      "price": 52
+    },
+    {
+      "business": "קבוצת קרנף",
+      "category": "מסעדות/קפה",
+      "date": "08/11/17",
+      "price": 7
+    },
+    {
+      "business": "דלק קמעונאות השחר",
+      "category": "דלק",
+      "date": "08/11/17",
+      "price": 213
+    },
+    {
+      "business": "דלק מנטה מועדו ןחבר",
+      "category": "דלק",
+      "date": "09/11/17",
+      "price": -1
+    },
+    {
+      "business": "רשת כוורת בצה\"ל -טלפ",
+      "category": "מסעדות/קפה",
+      "date": "12/11/17",
+      "price": 25
+    },
+    {
+      "business": "סונולהחוף",
+      "category": "דלק",
+      "date": "13/11/17",
+      "price": 259
+    },
+    {
+      "business": "כל בו חצי חינ םהוד ה",
+      "category": "מכולת/סופר",
+      "date": "15/11/17",
+      "price": 584
+    },
+    {
+      "business": "פירות וירקות חצי חינ",
+      "category": "מכולת/סופר",
+      "date": "15/11/17",
+      "price": 13
+    },
+    {
+      "business": "תחנת ענבר",
+      "category": "דלק",
+      "date": "16/11/17",
+      "price": 212
+    },
+    {
+      "business": "שופרסל דיל פולג",
+      "category": "מכולת/סופר",
+      "date": "16/11/17",
+      "price": 20
+    },
+    {
+      "business": "לח םארטיז ןנתניה",
+      "category": "מעדניות",
+      "date": "16/11/17",
+      "price": 25
+    },
+    {
+      "business": "בית היי - ןנתניה",
+      "category": "מעדניות",
+      "date": "16/11/17",
+      "price": 65
+    },
+    {
+      "business": "SHIRATO",
+      "category": "מסעדות/קפה",
+      "date": "17/11/17",
+      "price": 370
+    },
+    {
+      "business": "מלו ןרויאל בי 'ץתל א",
+      "category": "נופש ותיור",
+      "date": "18/11/17",
+      "price": 900
+    },
+    {
+      "business": "דר ךאר ץהוראת קבע",
+      "category": "תש' רשויות",
+      "date": "21/11/17",
+      "price": 256
+    },
+    {
+      "business": "ט ןהדרי םנתניה",
+      "category": "דלק",
+      "date": "23/11/17",
+      "price": 269
+    },
+    {
+      "business": "ELAL TICKETING",
+      "category": "נופש ותיור",
+      "date": "25/11/17",
+      "price": 747
+    },
+    {
+      "business": "איילו ןביטוח אלמנטרי",
+      "category": "ביטוח",
+      "date": "27/11/17",
+      "price": 271
+    },
+    {
+      "business": "איילו ןרכב חובה",
+      "category": "ביטוח",
+      "date": "19/06/17",
+      "price": 161
+    },
+    {
+      "business": "זאוס חדרה",
+      "category": "פנאי/ספורט",
+      "date": "22/06/17",
+      "price": 350
+    },
+    {
+      "business": " DESIGUALגינדי",
+      "category": "אבזרי אפנה",
+      "date": "22/07/17",
+      "price": 382
+    },
+    {
+      "business": "סופר פאר םשפיי48 ם",
+      "category": "פארמה",
+      "date": "18/08/17",
+      "price": 445
+    },
+    {
+      "business": "לא הוצג חבר אתרים",
+      "category": "פנאי/ספורט",
+      "date": "03/09/17",
+      "price": 128
+    },
+    {
+      "business": "דלק קמעונאות השחר",
+      "category": "דלק",
+      "date": "03/09/17",
+      "price": 207
+    },
+    {
+      "business": "לא הוצג דלק מנטה מועדו ןחבר",
+      "category": "דלק",
+      "date": "04/09/17",
+      "price": -2
+    },
+    {
+      "business": "השניצליה",
+      "category": "מסעדות/קפה",
+      "date": "05/09/17",
+      "price": 52
+    },
+    {
+      "business": "קבוצת קרנף",
+      "category": "מסעדות/קפה",
+      "date": "05/09/17",
+      "price": 17
+    },
+    {
+      "business": "אלונית צריפין",
+      "category": "מעדניות",
+      "date": "05/09/17",
+      "price": 9
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "05/09/17",
+      "price": 12
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "05/09/17",
+      "price": 10
+    },
+    {
+      "business": "ארסטו",
+      "category": "מסעדות/קפה",
+      "date": "06/09/17",
+      "price": 670
+    },
+    {
+      "business": "דיזול חדרה",
+      "category": "דלק",
+      "date": "06/09/17",
+      "price": 220
+    },
+    {
+      "business": "רשת כוורת בצה\"ל -טלפ",
+      "category": "מסעדות/קפה",
+      "date": "06/09/17",
+      "price": 7
+    },
+    {
+      "business": "נייקי  -רויאל ביץ",
+      "category": "הנעלה",
+      "date": "08/09/17",
+      "price": 750
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "08/09/17",
+      "price": 345
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "08/09/17",
+      "price": 188
+    },
+    {
+      "business": "IPANEMA",
+      "category": "הלבשה",
+      "date": "09/09/17",
+      "price": 20
+    },
+    {
+      "business": "מפעל הפיס",
+      "category": "טוטו/פיס",
+      "date": "09/09/17",
+      "price": 64
+    },
+    {
+      "business": "גראס אילת",
+      "category": "הנעלה",
+      "date": "09/09/17",
+      "price": 128
+    },
+    {
+      "business": "אפריל פארק הקרח",
+      "category": "פארמה",
+      "date": "09/09/17",
+      "price": 254
+    },
+    {
+      "business": "לוי איל ןגוס ףאילת",
+      "category": "הנעלה",
+      "date": "09/09/17",
+      "price": 100
+    },
+    {
+      "business": "-JAPANIKAראשו ןלציון",
+      "category": "מסעדות/קפה",
+      "date": "12/09/17",
+      "price": 115
+    },
+    {
+      "business": "סופר פאר םהמכללה ראש",
+      "category": "פארמה",
+      "date": "12/09/17",
+      "price": 120
+    },
+    {
+      "business": "לא הוצג חבר אתרים",
+      "category": "פנאי/ספורט",
+      "date": "13/09/17",
+      "price": 189
+    },
+    {
+      "business": "לא הוצג חבר הצגות",
+      "category": "תרבות",
+      "date": "14/09/17",
+      "price": 79
+    },
+    {
+      "business": "אלו ןבית דגן",
+      "category": "דלק",
+      "date": "14/09/17",
+      "price": 265
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "16/09/17",
+      "price": 741
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "16/09/17",
+      "price": 24
+    },
+    {
+      "business": "אלו ןבית דגן",
+      "category": "דלק",
+      "date": "19/09/17",
+      "price": 260
+    },
+    {
+      "business": "ארומה אס ףהרופא",
+      "category": "מסעדות/קפה",
+      "date": "19/09/17",
+      "price": 27
+    },
+    {
+      "business": "דר ךאר ץהוראת קבע",
+      "category": "תש' רשויות",
+      "date": "20/09/17",
+      "price": 96
+    },
+    {
+      "business": "שאפז בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "24/09/17",
+      "price": 25
+    },
+    {
+      "business": "מקדונלדס אלונים",
+      "category": "מסעדות/קפה",
+      "date": "24/09/17",
+      "price": 9
+    },
+    {
+      "business": "מפגש חן",
+      "category": "מסעדות/קפה",
+      "date": "25/09/17",
+      "price": 53
+    },
+    {
+      "business": "איילו ןביטוח אלמנטרי",
+      "category": "ביטוח",
+      "date": "25/09/17",
+      "price": 269
+    },
+    {
+      "business": "השניצליה",
+      "category": "מסעדות/קפה",
+      "date": "26/09/17",
+      "price": 49
+    },
+    {
+      "business": "ארומה אס ףהרופא",
+      "category": "מסעדות/קפה",
+      "date": "26/09/17",
+      "price": 44
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "26/09/17",
+      "price": 6
+    },
+    {
+      "business": "לא הוצג טעינות \"חבר\" טעמים",
+      "category": "קניה אינט'",
+      "date": "28/09/17",
+      "price": 52
+    },
+    {
+      "business": "איילו ןרכב חובה",
+      "category": "ביטוח",
+      "date": "19/06/17",
+      "price": 161
+    },
+    {
+      "business": "א.מ.ל.אמריק ןלייזר ב",
+      "category": "שרות רפואי",
+      "date": "19/10/17",
+      "price": 915
+    },
+    {
+      "business": "ELAL TICKETING",
+      "category": "נופש ותיור",
+      "date": "25/11/17",
+      "price": 747
+    },
+    {
+      "business": "לא הוצג המסלול האקדמי המכללה",
+      "category": "בתי ספר",
+      "date": "10/12/17",
+      "price": 657
+    },
+    {
+      "business": "מסעדת אונמי",
+      "category": "מסעדות/קפה",
+      "date": "01/02/18",
+      "price": 650
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "03/02/18",
+      "price": 699
+    },
+    {
+      "business": "פז  YELLOWתאומים",
+      "category": "דלק",
+      "date": "04/02/18",
+      "price": 280
+    },
+    {
+      "business": "רשת כוורת בצה\"ל -טלפ",
+      "category": "מסעדות/קפה",
+      "date": "05/02/18",
+      "price": 35
+    },
+    {
+      "business": "תחנת ענבר",
+      "category": "דלק",
+      "date": "07/02/18",
+      "price": 235
+    },
+    {
+      "business": "קבוצת קרנף",
+      "category": "מסעדות/קפה",
+      "date": "11/02/18",
+      "price": 19
+    },
+    {
+      "business": "קרבי ץגו שמואל",
+      "category": "ספרי/םדיסק",
+      "date": "13/02/18",
+      "price": 34
+    },
+    {
+      "business": "פז  YELLOWרונית -",
+      "category": "דלק",
+      "date": "13/02/18",
+      "price": 212
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "14/02/18",
+      "price": 138
+    },
+    {
+      "business": "גלידות דלי קרי םתע\"ש",
+      "category": "מסעדות/קפה",
+      "date": "14/02/18",
+      "price": 28
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "16/02/18",
+      "price": 440
+    },
+    {
+      "business": "רשת כוורת בצה\"ל -טלפ",
+      "category": "מסעדות/קפה",
+      "date": "18/02/18",
+      "price": 16
+    },
+    {
+      "business": "דר ךאר ץהוראת קבע",
+      "category": "תש' רשויות",
+      "date": "20/02/18",
+      "price": 212
+    },
+    {
+      "business": "פז  YELLOWקדימה -",
+      "category": "דלק",
+      "date": "21/02/18",
+      "price": 270
+    },
+    {
+      "business": "איילו ןביטוח אלמנטרי",
+      "category": "ביטוח",
+      "date": "26/02/18",
+      "price": 270
+    },
+    {
+      "business": "פז  YELLOWיציב -",
+      "category": "דלק",
+      "date": "27/02/18",
+      "price": 217
+    },
+    {
+      "business": "FREQUENT FLYER",
+      "category": "ביטוח",
+      "date": "19/06/17",
+      "price": 161
+    },
+    {
+      "business": "טעינות  -חבר של קבע",
+      "category": "פנאי/ספורט",
+      "date": "22/06/17",
+      "price": 350
+    },
+    {
+      "business": "אנרג'י םבע\"מ  /זה זו",
+      "category": "מכולת/סופר",
+      "date": "01/10/17",
+      "price": 124
+    },
+    {
+      "business": "דור פארק חדרה",
+      "category": "מסעדות/קפה",
+      "date": "02/10/17",
+      "price": 100
+    },
+    {
+      "business": "א.מ.ל.אמריק ןלייזר ב",
+      "category": "דלק",
+      "date": "03/10/17",
+      "price": 270
+    },
+    {
+      "business": "איילו ןרכב חובה",
+      "category": "מכולת/סופר",
+      "date": "06/10/17",
+      "price": 143
+    },
+    {
+      "business": "זאוס חדרה",
+      "category": "קניה אינט'",
+      "date": "13/10/17",
+      "price": 174
+    },
+    {
+      "business": "שופרסל דיל חדרה",
+      "category": "דלק",
+      "date": "15/10/17",
+      "price": 249
+    },
+    {
+      "business": "פרנצ'סקה בעיר",
+      "category": "שונות",
+      "date": "15/10/17",
+      "price": 6
+    },
+    {
+      "business": "פז  YELLOWרונית -",
+      "category": "נופש ותיור",
+      "date": "15/10/17",
+      "price": 87
+    },
+    {
+      "business": "שופרסל דיל בית אליעז",
+      "category": "נופש ותיור",
+      "date": "16/10/17",
+      "price": -4
+    },
+    {
+      "business": "טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "17/10/17",
+      "price": 637
+    },
+    {
+      "business": "סונולהחוף",
+      "category": "פנאי/ספורט",
+      "date": "18/10/17",
+      "price": 473
+    },
+    {
+      "business": "חניו ןק.אביב",
+      "category": "דלק",
+      "date": "19/10/17",
+      "price": 263
+    },
+    {
+      "business": "FREQUENT FLYER",
+      "category": "שרות רפואי",
+      "date": "19/10/17",
+      "price": 916
+    },
+    {
+      "business": "דוקטור ג'וס אס ףהרופ",
+      "category": "מסעדות/קפה",
+      "date": "19/10/17",
+      "price": 13
+    },
+    {
+      "business": "שופרסל דיל חדרה",
+      "category": "מכולת/סופר",
+      "date": "20/10/17",
+      "price": 253
+    },
+    {
+      "business": "דר ךאר ץהוראת קבע",
+      "category": "תש' רשויות",
+      "date": "20/10/17",
+      "price": 120
+    },
+    {
+      "business": "איילו ןביטוח אלמנטרי",
+      "category": "ביטוח",
+      "date": "26/10/17",
+      "price": 270
+    },
+    {
+      "business": "לא הוצג חבר מ מהסרטים",
+      "category": "תרבות",
+      "date": "27/10/17",
+      "price": 90
+    },
+    {
+      "business": "קפה קפה קניו ןאיילון",
+      "category": "מסעדות/קפה",
+      "date": "27/10/17",
+      "price": 6
+    },
+    {
+      "business": "לא הוצג טעינות \"חבר\" טעמים",
+      "category": "קניה אינט'",
+      "date": "28/10/17",
+      "price": 70
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "28/10/17",
+      "price": 581
+    },
+    {
+      "business": "תחנת ענבר",
+      "category": "דלק",
+      "date": "29/10/17",
+      "price": 252
+    },
+    {
+      "business": "קאב קם",
+      "category": "מסעדות/קפה",
+      "date": "30/10/17",
+      "price": 500
+    },
+    {
+      "business": "סונול קסטינה",
+      "category": "דלק",
+      "date": "31/10/17",
+      "price": 16
+    },
+    {
+      "business": "סונול קסטינה",
+      "category": "דלק",
+      "date": "31/10/17",
+      "price": 191
+    },
+    {
+      "business": "פוקס הו םאשקלון",
+      "category": "כלי בית",
+      "date": "31/10/17",
+      "price": 179
+    },
+    {
+      "business": "אפרודיטה סילבר אשקלו",
+      "category": "הלבשה",
+      "date": "31/10/17",
+      "price": 18
+    },
+    {
+      "business": "איילו ןרכב חובה",
+      "category": "ביטוח",
+      "date": "19/06/17",
+      "price": 161
+    },
+    {
+      "business": "א.מ.ל.אמריק ןלייזר ב",
+      "category": "שרות רפואי",
+      "date": "19/10/17",
+      "price": 915
+    },
+    {
+      "business": "ELAL TICKETING",
+      "category": "נופש ותיור",
+      "date": "25/11/17",
+      "price": 747
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "03/12/17",
+      "price": 4
+    },
+    {
+      "business": "תחנת ענבר",
+      "category": "דלק",
+      "date": "04/12/17",
+      "price": 226
+    },
+    {
+      "business": "קבוצת קרנף",
+      "category": "מסעדות/קפה",
+      "date": "04/12/17",
+      "price": 19
+    },
+    {
+      "business": "טעינות \"חבר\" טעמים",
+      "category": "קניה אינט'",
+      "date": "04/12/17",
+      "price": 133
+    },
+    {
+      "business": "השניצליה",
+      "category": "מסעדות/קפה",
+      "date": "06/12/17",
+      "price": 52
+    },
+    {
+      "business": "קבוצת קרנף",
+      "category": "מסעדות/קפה",
+      "date": "06/12/17",
+      "price": 6
+    },
+    {
+      "business": "אלו ןחוצה ישראל מגל",
+      "category": "דלק",
+      "date": "07/12/17",
+      "price": 267
+    },
+    {
+      "business": "אופיס דיפו נתניה",
+      "category": "ספרי/םדיסק",
+      "date": "08/12/17",
+      "price": 11
+    },
+    {
+      "business": "חבר ספא",
+      "category": "פנאי/ספורט",
+      "date": "11/12/17",
+      "price": 510
+    },
+    {
+      "business": "חבר אתרים",
+      "category": "פנאי/ספורט",
+      "date": "11/12/17",
+      "price": 388
+    },
+    {
+      "business": "תקו-ןחבר אתרים",
+      "category": "שונות",
+      "date": "11/12/17",
+      "price": -291
+    },
+    {
+      "business": "סופר פאר םהמכללה ראש",
+      "category": "פארמה",
+      "date": "13/12/17",
+      "price": 20
+    },
+    {
+      "business": "קפה 443",
+      "category": "מסעדות/קפה",
+      "date": "14/12/17",
+      "price": 26
+    },
+    {
+      "business": "סונול שילת",
+      "category": "דלק",
+      "date": "14/12/17",
+      "price": 214
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "17/12/17",
+      "price": 4
+    },
+    {
+      "business": "בולה באולינג",
+      "category": "פנאי/ספורט",
+      "date": "19/12/17",
+      "price": 25
+    },
+    {
+      "business": "פרנצ'סקה בעיר",
+      "category": "מסעדות/קפה",
+      "date": "19/12/17",
+      "price": 88
+    },
+    {
+      "business": "שופרסל דיל חולון",
+      "category": "מכולת/סופר",
+      "date": "19/12/17",
+      "price": 23
+    },
+    {
+      "business": "השניצליה",
+      "category": "מסעדות/קפה",
+      "date": "20/12/17",
+      "price": 52
+    },
+    {
+      "business": "פביאנו פוד בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "20/12/17",
+      "price": 10
+    },
+    {
+      "business": "פז  YELLOWחדרה -",
+      "category": "דלק",
+      "date": "20/12/17",
+      "price": 241
+    },
+    {
+      "business": "סופר פאר םהמכללה ראש",
+      "category": "פארמה",
+      "date": "20/12/17",
+      "price": 554
+    },
+    {
+      "business": "אלונית צריפין",
+      "category": "מעדניות",
+      "date": "21/12/17",
+      "price": 24
+    },
+    {
+      "business": "דר ךאר ץהוראת קבע",
+      "category": "תש' רשויות",
+      "date": "21/12/17",
+      "price": 232
+    },
+    {
+      "business": "סינמה סיטי אינטרנט נ",
+      "category": "תרבות",
+      "date": "21/12/17",
+      "price": 131
+    },
+    {
+      "business": "טעינות \"חבר\" טעמים",
+      "category": "קניה אינט'",
+      "date": "22/12/17",
+      "price": 59
+    },
+    {
+      "business": "טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "22/12/17",
+      "price": 122
+    },
+    {
+      "business": "מינה מילניום",
+      "category": "מסעדות/קפה",
+      "date": "23/12/17",
+      "price": 260
+    },
+    {
+      "business": "מיט-בול ישראל )(2007",
+      "category": "מסעדות/קפה",
+      "date": "24/12/17",
+      "price": 90
+    },
+    {
+      "business": "דלק מנטה בית דגן",
+      "category": "דלק",
+      "date": "25/12/17",
+      "price": 13
+    },
+    {
+      "business": "דלק מנטה בית דגן",
+      "category": "דלק",
+      "date": "25/12/17",
+      "price": 264
+    },
+    {
+      "business": " AIGביטוח",
+      "category": "ביטוח",
+      "date": "26/12/17",
+      "price": 14
+    },
+    {
+      "business": "דלק מנטה מועדו ןחבר",
+      "category": "דלק",
+      "date": "26/12/17",
+      "price": -1
+    },
+    {
+      "business": "דלק מנטה מועדו ןחבר",
+      "category": "דלק",
+      "date": "26/12/17",
+      "price": -2
+    },
+    {
+      "business": "איילו ןביטוח אלמנטרי",
+      "category": "ביטוח",
+      "date": "26/12/17",
+      "price": 270
+    },
+    {
+      "business": "סופר פאר םהמכללה ראש",
+      "category": "פארמה",
+      "date": "27/12/17",
+      "price": 354
+    },
+    {
+      "business": "אור חלפי םלרכב ע.ק.",
+      "category": "שירותי רכב",
+      "date": "29/12/17",
+      "price": 263
+    }
+  ],
+  "shaniTransactions":[
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "01/02/18",
+      "price": 4
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "04/02/18",
+      "price": 371
+    },
+    {
+      "business": "רשת כוורת בצה\"ל -טלפ",
+      "category": "מסעדות/קפה",
+      "date": "05/02/18",
+      "price": 19
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "10/02/18",
+      "price": 273
+    },
+    {
+      "business": "קפה נטו",
+      "category": "שונות",
+      "date": "15/02/18",
+      "price": 22
+    },
+    {
+      "business": "רשת כוורת בצה\"ל -טלפ",
+      "category": "מסעדות/קפה",
+      "date": "18/02/18",
+      "price": 46
+    },
+    {
+      "business": "סופר פאר םיד אליהו 9",
+      "category": "פארמה",
+      "date": "18/02/18",
+      "price": 12
+    },
+    {
+      "business": "סופר פאר םיד אליהו 9",
+      "category": "פארמה",
+      "date": "18/02/18",
+      "price": 65
+    },
+    {
+      "business": "קפה נטו",
+      "category": "שונות",
+      "date": "25/02/18",
+      "price": 22
+    },
+    {
+      "business": "איילו ןביטוח חיי םוב",
+      "category": "ביטוח",
+      "date": "27/02/18",
+      "price": 169
+    },
+    {
+      "business": "כול -בו גבריאל",
+      "category": "מכולת/סופר",
+      "date": "28/02/18",
+      "price": 38
+    },
+    {
+      "business": "אקדמו ןישראל בע\"מ",
+      "category": "מסעדות/קפה",
+      "date": "01/11/17",
+      "price": 13
+    },
+    {
+      "business": "SORENTO",
+      "category": "מסעדות/קפה",
+      "date": "05/11/17",
+      "price": 60
+    },
+    {
+      "business": "בנדיקט ראשל\"צ",
+      "category": "שונות",
+      "date": "05/11/17",
+      "price": 65
+    },
+    {
+      "business": "אורבניקה",
+      "category": "מסעדות/קפה",
+      "date": "09/11/17",
+      "price": 39
+    },
+    {
+      "business": "ארומה עזריאלי",
+      "category": "מסעדות/קפה",
+      "date": "09/11/17",
+      "price": 13
+    },
+    {
+      "business": "רשת כוורת בצה\"ל -טלפ",
+      "category": "מסעדות/קפה",
+      "date": "12/11/17",
+      "price": 14
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "16/11/17",
+      "price": 10
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "קניה אינט'",
+      "date": "21/11/17",
+      "price": 4
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "מסעדות/קפה",
+      "date": "21/11/17",
+      "price": 280
+    },
+    {
+      "business": "ארומה עזריאלי",
+      "category": "קניה אינט'",
+      "date": "23/11/17",
+      "price": 52
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "23/11/17",
+      "price": 428
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "מסעדות/קפה",
+      "date": "23/11/17",
+      "price": 80
+    },
+    {
+      "business": "כית ןחבר",
+      "category": "כלי בית",
+      "date": "05/09/17",
+      "price": 160
+    },
+    {
+      "business": "אל ףבית קפה",
+      "category": "שונות",
+      "date": "05/09/17",
+      "price": 5
+    },
+    {
+      "business": "מ ןהאדמה חבר",
+      "category": "מסעדות/קפה",
+      "date": "05/09/17",
+      "price": 44
+    },
+    {
+      "business": "ביקונקט טכנולוגיות ב",
+      "category": "מוצרי חשמל",
+      "date": "05/09/17",
+      "price": 129
+    },
+    {
+      "business": "רשת כוורת בצה\"ל -טלפ",
+      "category": "מסעדות/קפה",
+      "date": "06/09/17",
+      "price": 19
+    },
+    {
+      "business": "פרנצסקה",
+      "category": "מסעדות/קפה",
+      "date": "17/09/17",
+      "price": 55
+    },
+    {
+      "business": "רנואר קניו ןהשלום",
+      "category": "הלבשה",
+      "date": "18/09/17",
+      "price": 449
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "18/09/17",
+      "price": 336
+    },
+    {
+      "business": "ארומה אס ףהרופא",
+      "category": "מסעדות/קפה",
+      "date": "19/09/17",
+      "price": 55
+    },
+    {
+      "business": "יאמי יאמי אס ףסנטר",
+      "category": "מסעדות/קפה",
+      "date": "25/09/17",
+      "price": 42
+    },
+    {
+      "business": "סופר פאר םהמכללה ראש",
+      "category": "פארמה",
+      "date": "26/09/17",
+      "price": 14
+    },
+    {
+      "business": "חבר הצגות",
+      "category": "תרבות",
+      "date": "03/01/18",
+      "price": 50
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "04/01/18",
+      "price": 18
+    },
+    {
+      "business": "סופר פאר םהמכללה ראש",
+      "category": "פארמה",
+      "date": "05/01/18",
+      "price": 26
+    },
+    {
+      "business": "ארומה היכל התרבות רא",
+      "category": "מסעדות/קפה",
+      "date": "06/01/18",
+      "price": 15
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "07/01/18",
+      "price": 6
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "11/01/18",
+      "price": 5
+    },
+    {
+      "business": "משיכת מזומנים",
+      "category": "שונות",
+      "date": "20/10/17",
+      "price": 250
+    },
+    {
+      "business": "אורב ןקיטשן",
+      "category": "שונות",
+      "date": "09/10/17",
+      "price": 75
+    },
+    {
+      "business": "קולנוע רב ח ןגבעתיים",
+      "category": "תרבות",
+      "date": "09/10/17",
+      "price": 54
+    },
+    {
+      "business": "לא הוצג חבר עיתונים",
+      "category": "עיתו/ןדפוס",
+      "date": "15/10/17",
+      "price": 279
+    },
+    {
+      "business": "סוהו",
+      "category": "מסעדות/קפה",
+      "date": "17/10/17",
+      "price": 70
+    },
+    {
+      "business": "ויטרינה",
+      "category": "שונות",
+      "date": "18/10/17",
+      "price": 57
+    },
+    {
+      "business": "שפיר הנדסה אזרחית וי",
+      "category": "שונות",
+      "date": "18/10/17",
+      "price": 25
+    },
+    {
+      "business": "טע םוריח",
+      "category": "מסעדות/קפה",
+      "date": "26/10/17",
+      "price": 35
+    },
+    {
+      "business": "קסטרו השלו םא'",
+      "category": "הלבשה",
+      "date": "26/10/17",
+      "price": 200
+    },
+    {
+      "business": "סליו ק .עזריאלי",
+      "category": "הלבשה",
+      "date": "26/10/17",
+      "price": 459
+    },
+    {
+      "business": "לא הוצג טעינות \"חבר\" טעמים",
+      "category": "קניה אינט'",
+      "date": "26/10/17",
+      "price": 315
+    },
+    {
+      "business": "סנדבי ץעזריאלי",
+      "category": "מסעדות/קפה",
+      "date": "29/10/17",
+      "price": 48
+    },
+    {
+      "business": "הוניגמT N T ן",
+      "category": "הלבשה",
+      "date": "30/10/17",
+      "price": 229
+    },
+    {
+      "business": "רשת כוורת בצה\"ל -טלפ",
+      "category": "מסעדות/קפה",
+      "date": "30/10/17",
+      "price": 31
+    },
+    {
+      "business": "משיכת מזומנים",
+      "category": "שונות",
+      "date": "11/12/17",
+      "price": 350
+    },
+    {
+      "business": "לא הוצג חבר אתרים",
+      "category": "פנאי/ספורט",
+      "date": "04/12/17",
+      "price": 230
+    },
+    {
+      "business": "ארומה יס פלאנט",
+      "category": "מסעדות/קפה",
+      "date": "08/12/17",
+      "price": 30
+    },
+    {
+      "business": "כול -בו גבריאל",
+      "category": "מכולת/סופר",
+      "date": "10/12/17",
+      "price": 12
+    },
+    {
+      "business": "מאפה נאמ ןתחנה מרכז",
+      "category": "מעדניות",
+      "date": "10/12/17",
+      "price": 19
+    },
+    {
+      "business": "לא הוצג חבר אתרים",
+      "category": "פנאי/ספורט",
+      "date": "11/12/17",
+      "price": 72
+    },
+    {
+      "business": "לא הוצג טעינות \"חבר\" טעמים",
+      "category": "קניה אינט'",
+      "date": "11/12/17",
+      "price": 35
+    },
+    {
+      "business": "רשת כוורת בצה\"ל",
+      "category": "מסעדות/קפה",
+      "date": "12/12/17",
+      "price": 6
+    },
+    {
+      "business": "לא הוצג טעינות  -חבר של קבע",
+      "category": "קניה אינט'",
+      "date": "13/12/17",
+      "price": 434
+    },
+    {
+      "business": "קולנוע רב ח ןדיזינגו",
+      "category": "תרבות",
+      "date": "18/12/17",
+      "price": 54
+    },
+    {
+      "business": "פרנצסקה",
+      "category": "מסעדות/קפה",
+      "date": "19/12/17",
+      "price": 90
+    },
+    {
+      "business": "קולנוע רב ח ןגבעתיים",
+      "category": "תרבות",
+      "date": "30/12/17",
+      "price": 70
     }
   ]
-
-
 
 }
