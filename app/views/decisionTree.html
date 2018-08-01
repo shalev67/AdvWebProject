@@ -1,0 +1,24 @@
+<meta charset="UTF-8">
+<h1 align="right">{{month}} {{year}}</h1>
+<!-- <div class="category-icon-bar"> -->
+<table>
+  <tr align="center">
+    <td align="center" valign="top">
+      <div class="category-icon-bar">
+        <a href="#" title="הכל" ng-click="switch_tree($event)"><i class="fa fa-home"></i></a> 
+        <a href="#" title="דלק" ng-click="switch_tree($event)"><i class="fa fa-gas-pump"></i></a>
+        <a href="#" title="מכולת/סופר" ng-click="switch_tree($event)"><i class="fa fa-shopping-cart"></i></a> 
+        <a href="#" title="מסעדות/קפה" ng-click="switch_tree($event)"><i class="fa fa-utensils"></i></a> 
+        <!-- <a href="#" title="תקשורת" ng-click="switch_tree($event)"><i class="fa fa-phone-volume"></i></a> -->
+        <a href="#" title="הלבשה" ng-click="switch_tree($event)"><i class="fa fa-tshirt"></i></a>  
+      </div>
+    </td>
+    <td align="center" style="width:100%; height:100%">
+      <div>
+        <div ng-show="empty">אין מידע עבור קטגוריה זו</div>
+        <go-diagram ng-show="!empty" go-model="model" style="width:110%; height:600px"></go-diagram>
+      </div>
+    </td>
+  </tr>
+</table>
+
