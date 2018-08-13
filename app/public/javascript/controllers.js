@@ -467,43 +467,11 @@
                                 reverseButtons: true
                             }).then(function (result) {
                                 if (result.value) {
-
-                                    userService.getUserByID(id).then(function (user, err) {
-                                        if (err) {
-                                            console.log(err);
-                                        }
-                                        else
-                                        {
-
-                                            userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
-                                                if (err) {
-                                                    console.log(err);
-                                                }
-
-                                                userFriend.data.friendship = {email: '', status: ''};
-                                                userService.updateUser(userFriend.data).then(function (data, err) {
-                                                    if (err) {
-                                                        console.log(err);
-                                                    }
-                                                })
-                                            });
-                                            user.data.friendship = {email: '', status: ''};
-                                            userService.updateUser(user.data).then(function (data, err) {
-                                                if (err) {
-                                                    console.log(err);
-                                                }
-                                            })
-
-                                            userService.deleteUser(id).then(function () {
-                                                userService.getAllUsers().then(function (data) {
-                                                    $scope.appUsers = data;
-                                                });
-                                            });
-
-                                        }
+                                    userService.deleteUser(id).then(function () {
+                                        userService.getAllUsers().then(function (data) {
+                                            $scope.appUsers = data;
+                                        });
                                     });
-
-
                                     swal(
                                         'Deleted!',
                                         'The user has been deleted.',
@@ -599,16 +567,11 @@
                     var svg = d3.select("#userTransactionBarChart").append("svg")
                         .attr("width", width + margin.left + margin.right)
                         .attr("height", height + margin.top + margin.bottom)
-                        .attr("id", "svgUTBC")
                         .append("g")
                         .attr("transform",
                             "translate(" + margin.left + "," + margin.top + ")");
 
-
-
-
-
-                    //*********************//
+                     //*********************//
                     //***PIE CHART init****//
                     //*********************//
                     var widthPie = 960,
@@ -900,8 +863,7 @@
             if ($rootScope.haveTransactionData) {
 
                 // Get  the Date
-                // var month = date.getMonth() - 1;
-                var month = 2;
+                var month = date.getMonth() - 1;
                 var year = date.getFullYear();
 
                 if (month === 0) {
@@ -1465,10 +1427,38 @@
 
 
         }
-
-
     }
     angular.module('userModule').controller('expensesCtrl', ['$scope','$rootScope', '$http', 'userService', '$cookieStore',  expensesCtrl])
     //})
+
+    function decisionTreeCtrl ($scope,$rootScope, $http) {
+        $scope.switch_tree = function ($event) {
+            $event.preventDefault();
+            $event.class = "active";
+            // TODO: change to the current month and year
+            var d = new Date();
+            var lastMonth = d.getMonth() - 1;
+            var currYear = d.getFullYear();
+            var treeUrl = "http://localhost:3001/decisionTree" + "?month=" + lastMonth + "&year=" + currYear + "&category=" + $event.currentTarget.title;
+            $http.get(treeUrl).then(function(treeData){
+                if (treeData.data !== "None") {
+                    $scope.empty = false;
+                    var graphModel = new go.GraphLinksModel();
+                    graphModel.nodeDataArray = treeData.data.tree.nodeDataArray;
+                    graphModel.linkDataArray = treeData.data.tree.linkDataArray;
+                    $scope.model = graphModel;
+                }
+                else {
+                    $scope.empty = true;
+                }
+            }).catch(function (error) {
+                alert("Error: No data returned");
+                // $scope.empty = true;
+                // console.log('error on decision tree:');
+                // console.log(error)
+            });
+        }
+    }
+    angular.module('userModule').controller('decisionTreeCtrl', ['$scope','$rootScope', '$http', decisionTreeCtrl])
 
 })();
