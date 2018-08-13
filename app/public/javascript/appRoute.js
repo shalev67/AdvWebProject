@@ -51,6 +51,10 @@
             templateUrl: "views/expenses.html",
             controller: 'expensesCtrl'
         }).
+        when('/decisionTree', {
+            templateUrl: "views/decisionTree.html",
+            controller: 'decisionTreeCtrl'
+        }).
         otherwise({
             redirectTo: '/home'
         });
