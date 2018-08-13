@@ -46,39 +46,26 @@ def get_expected_expense(user_id):
     return jsonify(prediction_by_category)
 
 
-@app.route("/decisionTree")
-def get_decision_tree():
+@app.route("/decisionTree/<user_id>")
+def get_decision_tree(user_id):
     last_month_date = date.today().replace(day=1) - timedelta(days=1)
     month = int(request.args.get('month', default=last_month_date.month))
     year = int(request.args.get('year', default=last_month_date.year))
     hebrew_category = request.args.get('category', default=None)
-    # category = categories_dict[hebrew_category]
-    user_id = ObjectId("5b61bf3134a35720505ea20c")
     if not hebrew_category:
         my_decision_tree = decision_tree.build_decision_tree_table(users_collection, user_id, month, year)
     else:
         my_decision_tree = decision_tree.build_decision_tree_table_for_category(users_collection, user_id, hebrew_category, month, year)
 
-    # if not category:
-    #     json_file_path = json_folder_path + "/all.json"
-    # else:
-    #     json_file_path = json_folder_path + "/" + category + ".json"
-    # if not os.path.isfile(json_file_path):
-    #     write_decision_tree_to_file(user_id, month, year, hebrew_category, json_file_path)
-    # else:
-    #     # Read month and year from file and then choose if to build or not
-    #     server_file_date = datetime.fromtimestamp(os.path.getmtime(json_file_path))
-    #     if debug and category:
-    #         if last_month_date.month != server_file_date or last_month_date.year != server_file_date.year:
-    #             write_decision_tree_to_file(user_id, month, year, hebrew_category, json_file_path)
-    # # Read the tree from the file, if there is no file return empty tree
-    # try:
-    #     with open(json_file_path, 'r', encoding='utf-16') as outfile:
-    #         my_decision_tree = outfile.read()
-    # except:
-    #     return jsonify("")
     return str(my_decision_tree).replace("\"", "").replace("'", "\"")
-    # return my_decision_tree
+
+@app.route("/getNearestNeighbors/<user_id>")
+def get_nearest_neighbors(user_id):
+    last_month_date = date.today().replace(day=1) - timedelta(days=1)
+    month = int(request.args.get('month', default=last_month_date.month))
+    year = int(request.args.get('year', default=last_month_date.year))
+    ids = expenses_knn.get_nearest_neighbors_to_user(users_collection, ObjectId(user_id), int(month), int(year))
+    return str(ids)
 
 @app.after_request
 def after_request(response):
