@@ -1481,7 +1481,7 @@
                 lastMonth = 12;
             }
             var currYear = d.getFullYear();
-            var treeUrl = "http://localhost:3001/decisionTree" + "?month=" + lastMonth + "&year=" + currYear + "&category=" + $event.currentTarget.title;
+            var treeUrl = "http://localhost:3001/decisionTree/" + $scope.currentUserId +  "?month=" + lastMonth + "&year=" + currYear + "&category=" + $event.currentTarget.title;
             $http.get(treeUrl).then(function(treeData){
                 if (treeData.data !== "None") {
                     $scope.empty = false;
