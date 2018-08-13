@@ -155,9 +155,9 @@
         controller:function($scope){
             var hebrew_month_names = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר']
             var d = new Date();
-            var lastMonth = d.getMonth() - 1;
+            var lastMonth = d.getMonth() + 1;
             var currYear = d.getFullYear();
-            var treeUrl = "http://localhost:3001/decisionTree" + "?month=" + lastMonth + "&year=" + currYear;
+            var treeUrl = "http://localhost:3001/decisionTree/" + $scope.currentUserId + "?month=" + lastMonth + "&year=" + currYear;
 
             $scope.$parent.month = hebrew_month_names[lastMonth - 1];
             $scope.$parent.year = currYear; 
