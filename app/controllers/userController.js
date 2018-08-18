@@ -118,11 +118,24 @@ module.exports = function (app) {
             req.params.id);
     });
 
-    // Update user
+    // Update user 
     app.put('/User/UpdateUser', function (req, res, next) {
         userManager.updateUser(function (err, id) {
                 if (err) {
                     console.log('updateUser Err: ' + err);
+                    res.next();
+                } else {
+                    res.json({'id': id})
+                }
+            },
+            req.body)
+    });
+
+    // Update transaction
+    app.put('/User/UpdateTransaction', function (req, res, next) {
+        userManager.updateTransaction(function (err, id) {
+                if (err) {
+                    console.log('updateTransaction Err: ' + err);
                     res.next();
                 } else {
                     res.json({'id': id})

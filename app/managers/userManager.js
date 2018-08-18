@@ -104,7 +104,7 @@ module.exports = {
             callback(null, _id);
         })
     },
-    updateUser: function (callback, user) {
+     updateUser: function (callback, user) {
         User.findOne({'_id': user._id}, function (err, dbUser) {
             dbUser.firstName = user.firstName || dbUser.firstName;
             dbUser.lastName = user.lastName || dbUser.lastName;
@@ -124,6 +124,18 @@ module.exports = {
                 }
             });
         });
+    },
+    updateTransaction: function (callback, user) {
+    User.findOneAndUpdate({'_id': user.user._id, 'transactions._id': user.transactions._id},
+                {$set: {'transactions.$.category': user.transactions.category }}, function(err, res){
+                    if (err) {
+                        console.error(err);
+                    }
+                    else {
+    
+                        callback(null);
+                    }
+                })
     },
     searchUsers: function (callback, searchUser) {
 

@@ -7,6 +7,7 @@
         $rootScope.connected = false;
         $scope.loginError = false;
         $rootScope.haveTransactionData = false;
+        $scope.editTransaction = null;
 
         // Limit the age
         var today = new Date();
@@ -170,6 +171,8 @@
 
                                 ///var userName = $rootScope.currentUser.firstName + ' ' + $rootScope.currentUser.lastName;
                                 socket.emit('userEmail',userEmail);
+
+                            
                             });
                         }
                         else {
@@ -364,6 +367,7 @@
              console.log(data);
           });  
         
+        
 
         $scope.sendFriendshipRequest = function ()
         {
@@ -545,6 +549,24 @@
                         }
                     })
                 };
+
+                // Update transaction - change category to input field
+                $scope.changeToEditMode = function(transactionId){
+                    $scope.editTransaction = transactionId;
+                }
+
+                // Update transaction - save the new category name
+                $scope.saveCategory = function(transaction){
+                    let data = {user:{}};
+                    data.user._id = $scope.currentUserId;
+                    data.transactions = transaction;
+                    userService.updateTransaction(data).then(function (data, err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    })
+                    $scope.editTransaction = null;
+                }
                 
                 //  Bar&Pie charts creation and update
                 if ($rootScope.currentUser.transactions.length > 0) {

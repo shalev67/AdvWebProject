@@ -56,6 +56,10 @@
             return $http.put('/User/UpdateUser' , user);
         };
 
+        this.updateTransaction = function(user){
+            return $http.put('/User/UpdateTransaction' , user);
+        };
+
         this.checkUser = function(userEmail,userPassword){
             return $http.get('/User/CheckUser/' + userEmail + "/" + userPassword);
         };
