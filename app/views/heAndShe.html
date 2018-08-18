@@ -1,4 +1,13 @@
 
+<div ng-show="!connected" >
+    <a href="#!/login">
+        <h5>Please login first</h5>
+    </a>
+</div>
+<div ng-show="connected && !haveTransactionData" >
+    <h5>You dont have any transactions....</h5>
+</div>
+
 <style>
     .page-wrapper{
         position:relative;
@@ -7,20 +16,34 @@
     }
 </style>
 
-<div class="heAndShe">
+<div class="heAndShe" ng-show="haveTransactionData">
 
     <table class="home-tbl" align="center">
         <tr align="center">
             <td align="center">
                 <div ng-show="haveTransactionData" id="userBarChart"></div>
             </td>
-            <td align="center">
-                <img src="./images/full-heart.png"  style="height: 200px">
-                <!--<img src="./images/half-heart-1.png"  style="height: 200px">-->
-                <!--<img src="./images/half-heart-2.png"  style="height: 200px">-->
+            <td align="center" ng-show="haveTransactionData && partnerHaveTransactionData">
+                <img ng-show="!userHeart && !partnerHeart" src="./images/full-heart.png"  style="height: 200px">
+                <img ng-show="userHeart  && !partnerHeart" src="./images/half-heart-2.png"  style="height: 200px">
+                <img ng-show="partnerHeart && !userHeart " src="./images/half-heart-1.png"  style="height: 200px">
             </td>
             <td align="center">
-                <div ng-show="haveTransactionData" id="partnerBarChart"></div>
+                <div ng-show="partnerHaveTransactionData" id="partnerBarChart"></div>
+            </td>
+        </tr>
+        <tr align="center">
+            <td align="center" ng-show="haveTransactionData" >
+                Your total: {{userTotalSum}}
+                <br>
+                Your expected total: {{userExpectedSum}}
+            </td>
+            <td align="center" ng-show="haveTransactionData && partnerHaveTransactionData">
+            </td>
+            <td align="center" ng-show="partnerHaveTransactionData">
+                Partner total: {{partnerTotalSum}}
+                <br>
+                Partner expected total: {{partnerExpectedSum}}
             </td>
         </tr>
     </table>

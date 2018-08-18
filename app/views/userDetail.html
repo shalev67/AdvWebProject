@@ -72,4 +72,25 @@
             <a href="#!/home" class="btn btn-link">Cancel</a>
         </div>
     </form>
+    <div data-ng-init="checkFriendship()">
+        <form ng-show="notFriend" name="form" ng-submit="sendFriendshipRequest()"  role="form" method="PUT">
+            <div class="form-group">
+                <label >Email your friend</label>
+                <input type="email" name="email" id="email" class="form-control" ng-model="userCtrl.userToUpdate.friendship.email" required />
+                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
+            </div>    
+            <div class="form-actions">
+                    <button type="submit" ng-click="userFriendEmail()" ng-disabled="form.$invalid" class="btn btn-primary">send friend request</button>
+            </div>
+        </form>
+        <form ng-show="!notFriend" name="form" ng-submit="cancelFriendship()"  role="form" method="PUT">
+            <div class="form-group">
+                <label >you have friendship with:</label>
+                <div>{{friend}}</div>
+            </div>    
+            <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">cancel frienship</button>
+            </div>
+        </form>
+    </div>
 </div>

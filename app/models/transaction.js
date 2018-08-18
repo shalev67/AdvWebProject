@@ -14,9 +14,9 @@ var transactionSchema = new Schema(
             type: Date,
             required: [true, 'Date is required']
         },
-        buissness: {
+        business: {
             type: String,
-            required: [true, 'buissness is required']
+            required: [true, 'business is required']
         }
     });
 var Transaction = mongoose.model('Transaction', transactionSchema);

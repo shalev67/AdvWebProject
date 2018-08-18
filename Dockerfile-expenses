@@ -1,5 +1,5 @@
 FROM python:3.5
-EXPOSE 666
+EXPOSE 3001
 
 WORKDIR /extractor
 RUN apt update

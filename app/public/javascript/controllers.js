@@ -1,7 +1,7 @@
 (function(){
     'use strict';
     //var myApp = angular.module("myApp");
-    function userCtrl ($scope ,$rootScope,$http,userService,$location, $cookieStore) {
+    function userCtrl ($scope,socket ,$rootScope,$http,userService,$location, $cookieStore) {
         var self = this;
 
         $rootScope.connected = false;
@@ -99,6 +99,66 @@
                             then(function (user, err) {
                                 $rootScope.currentUser = user.data;
 
+                                //check if has friendship request
+                                if(user.data.friendship && user.data.friendship.status !="")
+                                    {
+                                        if(user.data.friendship.status == 'wait to send the request')
+                                        {
+                                        userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                            else{
+                                                swal({
+                                                    title: 'friend request from ' + userFriend.data.firstName + ' ' + userFriend.data.lastName,
+                                                    text: "do you want to share your data with him/her?",
+                                                    type: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: '#3085d6',
+                                                    cancelButtonColor: '#d33',
+                                                    confirmButtonText: 'Yes, confirm it!',
+                                                    cancelButtonText: 'No, cancel!',
+                                                    confirmButtonClass: 'btn btn-success',
+                                                    cancelButtonClass: 'btn btn-danger',
+                                                    buttonsStyling: false,
+                                                    reverseButtons: true
+                                                }).then((result) => {
+                                                    if (result.value) 
+                                                    {
+                                                        user.data.friendship.status = 'are friends';
+                                                        userService.updateUser(user.data).then(function (req,err) {
+                                                            if (err) {
+                                                                console.log(err);
+                                                            }
+                                                            else{
+                                                                console.log(userService.getUserByID(user.data._id))
+                            
+                                                                // save the second user
+                                                                userFriend.data.friendship = {email: user.data.email, status: 'are friends'};
+                                                                userService.updateUser(userFriend.data).then(function (req,err) {
+                                                                    if (err) {
+                                                                        console.log(err);
+                                                                    }
+                                                                    else{
+                                                                        console.log(userService.getUserByID(userFriend.data._id))
+                                                                        swal(
+                                                                            'success!',
+                                                                            'you and ' + userFriend.data.firstName + ' ' + userFriend.data.lastName + ' are friends',
+                                                                            'success'
+                                                                            )
+                                                                    }
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+                                                    else{
+                                                        $scope.cancelFriendship();
+                                                    }
+                                                })
+                                          }});
+                                    }
+                                }
+
                                 var expireDate = new Date();
                                 expireDate.setDate(expireDate.getDate() + 1);
 
@@ -107,6 +167,9 @@
                                     expires: expireDate
                                 });
                                 $location.path('/home');
+
+                                ///var userName = $rootScope.currentUser.firstName + ' ' + $rootScope.currentUser.lastName;
+                                socket.emit('userEmail',userEmail);
                             });
                         }
                         else {
@@ -115,6 +178,242 @@
                 }
             });
         };
+
+        /***************************************************************************************************************/
+        /***************************************************friendship**************************************************/
+        /***************************************************************************************************************/
+
+        // check if you have a friendship for userDetail view
+        $scope.checkFriendship = function () {
+            $scope.notFriend = true;         
+
+            this.userCtrl.userToUpdate._id = $scope.currentUserId;
+            
+            userService.getUserByID(this.userCtrl.userToUpdate._id).then(function (user, err) {
+                if (err) {
+                    console.log(err);
+                }
+                else{
+                    //check if has friendship request
+                    if(user.data.friendship)
+                        {
+                            if(user.data.friendship.status == 'are friends')
+                            {
+                                $scope.notFriend = false;
+
+                                // get name of the friend
+                                userService.getUserByEmail(user.data.friendship.email).
+                                    then(function (userFriend, err) {
+                                        $scope.friend = userFriend.data.firstName + ' ' + userFriend.data.lastName;
+                                    })
+                            }
+                        }
+                    }
+            })
+        }
+
+        // cancel freindship 
+        $scope.cancelFriendship = function()
+        {
+            // cancel freindship on bottun on userDetail view
+            if(this.userCtrl.userToUpdate)
+            {
+                this.userCtrl.userToUpdate._id = $scope.currentUserId;
+                $scope.notFriend = true;
+
+                userService.getUserByID(this.userCtrl.userToUpdate._id).then(function (user, err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else
+                    {
+                        userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        
+                        userFriend.data.friendship = {email: '', status: ''};
+                            userService.updateUser(userFriend.data).then(function (data, err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            })
+                        })
+                        user.data.friendship = {email: '', status: ''};
+                        userService.updateUser(user.data).then(function (data, err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        })
+                
+                    }
+                }) 
+            }
+            // cancel freindship on bottun on swall
+            else if(this.userCtrl.userEmail)
+            {
+                userService.getUserByEmail(this.userCtrl.userEmail).then(function (user, err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else
+                    {
+                        userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        
+                        userFriend.data.friendship = {email: '', status: ''};
+                            userService.updateUser(userFriend.data).then(function (data, err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            })
+                        })
+                        user.data.friendship = {email: '', status: ''};
+                        userService.updateUser(user.data).then(function (data, err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        })
+                
+                    }
+                }) 
+            }
+        }
+        
+        // User socket list
+        $scope.socketId = null;
+        $scope.userList = [];
+
+        socket.on('userList', (userList,socketId) => {
+            if($scope.socketId === null){
+                $scope.socketId = socketId;
+            }
+            $scope.userList = userList;
+        });     
+
+        socket.on('exit', (userList) => {
+            $scope.userList = userList;
+        });
+
+        // real time send friendship request
+        socket.on('getFriendship',function(data) 
+          {
+            swal({
+                title: data.msg + data.userName,
+                text: "do you want to share your data with him/her?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, confirm it!',
+                cancelButtonText: 'No, cancel!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+              }).then((result) => {
+                if (result.value) 
+                {
+
+                    userService.getUserByEmail(data.userFriendEmail).then(function (user, err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else{
+                            user.data.friendship = {email: data.userEmail, status: 'are friends'};
+                            userService.updateUser(user.data).then(function (req,err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                else{
+                                    console.log(userService.getUserByID(user.data._id))
+
+                                    // save the second user
+                                    userService.getUserByEmail(data.userEmail).then(function (user, err) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        else{
+                                            user.data.friendship = {email: data.userFriendEmail, status: 'are friends'};
+                                            userService.updateUser(user.data).then(function (req,err) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                                else{
+                                                    console.log(userService.getUserByID(user.data._id))
+                                                    swal(
+                                                        'success!',
+                                                        'you and ' + data.userName + ' are friends',
+                                                        'success'
+                                                      )
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+                else{
+                    $scope.cancelFriendship();
+                }
+            });
+             console.log(data);
+          });  
+        
+
+        $scope.sendFriendshipRequest = function ()
+        {
+            this.userCtrl.userToUpdate._id = $scope.currentUserId;
+            
+            // check not friendship myself
+            // $scope.userFriendEmail = null;
+        
+            // $scope.userFriendEmail = () => {
+            //     var email = null;
+            //    userService.getUserByID(this.userCtrl.userToUpdate._id).then(function (data, err) {
+            //         if (err) {
+            //             console.log(err);
+            //         }
+            //         else{
+            //             $scope.email = data.data.email;
+            //         }
+            //     })
+            //     this.userCtrl.userToUpdate.friendship.email === $scope.email ? alert("Can't request frient to yourself.") : $scope.userFriendEmail = this.userCtrl.userToUpdate.friendship.email;
+            // };
+    
+            this.userCtrl.userToUpdate.friendship.status = 'wait to accept';
+            userService.updateUser(this.userCtrl.userToUpdate).then(function (data, err) {
+                if (err) {
+                    console.log(err);
+                }
+            })
+
+            //update status the second user
+            userService.getUserByEmail(this.userCtrl.userToUpdate.friendship.email).then(function (user, err) {
+                if (err) {
+                    console.log(err);
+                }
+                else{
+                    user.data.friendship = {email: $rootScope.currentUser.email , status: 'wait to send the request'};
+                      userService.updateUser(user.data).then(function (data, err) {
+                          if (err) {
+                              console.log(err);
+                          }
+                      })
+                }
+            })
+            
+            socket.emit('friendshipRequest', {userName: this.userCtrl.userToUpdate.firstName + ' ' + this.userCtrl.userToUpdate.lastName,
+                                 userEmail: $rootScope.currentUser.email , userFriendEmail: this.userCtrl.userToUpdate.friendship.email});  
+       }
+
+        /***************************************************************************************************************/
+        /***************************************************End friendship**********************************************/
+        /***************************************************************************************************************/
 
         // Logout
         $scope.logout = function () {
@@ -168,11 +467,43 @@
                                 reverseButtons: true
                             }).then(function (result) {
                                 if (result.value) {
-                                    userService.deleteUser(id).then(function () {
-                                        userService.getAllUsers().then(function (data) {
-                                            $scope.appUsers = data;
-                                        });
+
+                                    userService.getUserByID(id).then(function (user, err) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        else
+                                        {
+
+                                            userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+
+                                                userFriend.data.friendship = {email: '', status: ''};
+                                                userService.updateUser(userFriend.data).then(function (data, err) {
+                                                    if (err) {
+                                                        console.log(err);
+                                                    }
+                                                })
+                                            });
+                                            user.data.friendship = {email: '', status: ''};
+                                            userService.updateUser(user.data).then(function (data, err) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                            })
+
+                                            userService.deleteUser(id).then(function () {
+                                                userService.getAllUsers().then(function (data) {
+                                                    $scope.appUsers = data;
+                                                });
+                                            });
+
+                                        }
                                     });
+
+
                                     swal(
                                         'Deleted!',
                                         'The user has been deleted.',
@@ -268,11 +599,16 @@
                     var svg = d3.select("#userTransactionBarChart").append("svg")
                         .attr("width", width + margin.left + margin.right)
                         .attr("height", height + margin.top + margin.bottom)
+                        .attr("id", "svgUTBC")
                         .append("g")
                         .attr("transform",
                             "translate(" + margin.left + "," + margin.top + ")");
 
-                     //*********************//
+
+
+
+
+                    //*********************//
                     //***PIE CHART init****//
                     //*********************//
                     var widthPie = 960,
@@ -375,7 +711,7 @@
                         var g = svgPie.selectAll(".arc")
                         .remove()
                         .exit()
-                        .data(data)	
+                        .data(data) 
                         .data(pie(data))
                         .enter().append("g")
                         .attr("class", "arc");
@@ -389,8 +725,8 @@
                         g.append("text")
                             .attr("transform", function (d) {
                                 var _d = arcPie.centroid(d);
-                                _d[0] *= 2.7;	//multiply by a constant factor
-                                _d[1] *= 2.7;	//multiply by a constant factor
+                                _d[0] *= 2.7;   //multiply by a constant factor
+                                _d[1] *= 2.7;   //multiply by a constant factor
                                 return "translate(" + _d + ")";
                             })
                             .style("text-anchor", "middle")
@@ -429,7 +765,7 @@
                         svg.selectAll(".bar")
                         .remove()
                         .exit()
-                        .data(data)	
+                        .data(data) 
                         .attr("class", "bar")
                         .attr("x", function (d) {
                             return x(d._id.category);
@@ -502,39 +838,44 @@
         }
 
     }
-    angular.module('userModule').controller('userCtrl', ['$scope', '$rootScope','$http', 'userService','$location', '$cookieStore', userCtrl])
+    angular.module('userModule').controller('userCtrl', ['$scope','socket', '$rootScope','$http', 'userService','$location', '$cookieStore', userCtrl])
+
 
     //myApp.controller("uploadCtrl", function ($scope, $http) {
     function uploadCtrl ($scope, $http, $rootScope) {
-        var uploadUrl = "http://localhost:3000";
+        if ($rootScope.connected) {
+            var uploadUrl = "http://localhost:3000";
 
-        $scope.uploadFile = function () {
-            var file = $scope.myFile;
-            var payload = new FormData();
-            payload.append("title", 'data');
-            payload.append('file', file);
-            // var uploadUrl = "../server/service.php", //Url of webservice/api/server
-            //Take the first selected file
-            $http.post(
-                uploadUrl,
-                payload,
-                {
-                    withCredentials: true,
-                    headers: {'Content-Type': undefined}
-                    // ,transformRequest: angular.identity
+            $scope.uploadFile = function () {
+                var file = $scope.myFile;
+                var payload = new FormData();
+                if (file != null) {
+                    payload.append('title', 'data');
+                    payload.append('file', file);
+                    // var uploadUrl = "../server/service.php", //Url of webservice/api/server
+                    //Take the first selected file
+                    $http.post(
+                        uploadUrl,
+                        payload,
+                        {
+                            withCredentials: true,
+                            headers: {'Content-Type': undefined}
+                            // ,transformRequest: angular.identity
+                        }
+                    ).then(function (sucess) {
+                        swal(
+                            'upload file successfully!'
+                        );
+                    })
                 }
-            ).then(function (sucess) {
-
-            }).error(function (error) {
-                console.log('eerrrrrrroooor');
-                console.log(error)
-            })
-
-
+                else {
+                    swal('select a pdf file!');
+                }
+            }
         }
     }
     angular.module('userModule').controller('uploadCtrl', ['$scope', '$http', '$rootScope', uploadCtrl])
-    //})
+   //})
 
     function expensesCtrl ($scope,$rootScope, $http, userService, expensesService, $cookieStore) {
         //myApp.controller("expensesCtrl", function ($scope, $http) {
@@ -542,7 +883,7 @@
         var date = new Date();
         $scope.getExpectedExpenses = function (month = date.getMonth() + 1, year = date.getFullYear()) {
 
-            var expensesUrl = "http://localhost:666/user/" + $scope.currentUserId + "?month=" + 12 + "&year=" + 2015;
+            var expensesUrl = "http://localhost:3001/user/" + $scope.currentUserId + "?month=" + 12 + "&year=" + 2017;
             $http.get(expensesUrl).then(function(response){
                 $scope.expectedExpense = response.data;
             }).catch(function (error) {
@@ -559,8 +900,17 @@
             if ($rootScope.haveTransactionData) {
 
                 // Get  the Date
-                var month = 12;//month = date.getMonth() + 1, year = date.getFullYear()
-                var year = 2015;
+                // var month = date.getMonth() - 1;
+                var month = 2;
+                var year = date.getFullYear();
+
+                if (month === 0) {
+                    month = 12;
+                    year = year - 1;
+                }
+
+                $scope.userTotalSum = 0;
+                $scope.userExpectedSum = 0;
 
                 // Set the dimensions and margins of the graph
                 var margin = {top: 80, right: 80, bottom: 80, left: 80},
@@ -595,7 +945,7 @@
 
                     if (data !== undefined) {
 
-                        var expensesUrl = "http://localhost:666/user/" + $rootScope.currentUser._id + "?month=" + month + "&year=" + year;
+                        var expensesUrl = "http://localhost:3001/user/" + $rootScope.currentUser._id + "?month=" + month + "&year=" + year;
                         $http.get(expensesUrl).then(function(response){
 
                             // $scope.expectedExpense = response.data;
@@ -611,189 +961,196 @@
                                 return b.totalPrice - a.totalPrice;
                             });
 
-                            // Add the expected price
-                            var arrayList = [], obj_c_processed = [];
+                            if(data.length > 0){
+                                // Add the expected price
+                                var arrayList = [], obj_c_processed = [];
 
-                            for (var i in data) {
-                                // var obj = {id: data[i].id, name: data[i].name, goal: data[i].goal};
-                                var obj = {_id: {
-                                        category: data[i]._id.category,
-                                        month: data[i]._id.month,
-                                        year: data[i]._id.year
-                                    },
-                                    totalPrice: data[i].totalPrice};
+                                for (var i in data) {
+                                    // var obj = {id: data[i].id, name: data[i].name, goal: data[i].goal};
+                                    var obj = {_id: {
+                                            category: data[i]._id.category,
+                                            month: data[i]._id.month,
+                                            year: data[i]._id.year
+                                        },
+                                        totalPrice: data[i].totalPrice};
 
-                                for (var j in expectedData) {
-                                    if (data[i]._id.category === expectedData[j]._id.category) {
-                                        obj.expectedPrice = expectedData[j].totalPrice;
-                                        obj_c_processed[expectedData[j]._id] = true;
+                                    for (var j in expectedData) {
+                                        if (data[i]._id.category === expectedData[j]._id.category) {
+                                            obj.expectedPrice = expectedData[j].totalPrice;
+                                            obj_c_processed[expectedData[j]._id] = true;
+
+                                            // Sum the total expected price for the heart
+                                            $scope.userExpectedSum += expectedData[i].totalPrice;
+                                        }
+                                    }
+
+                                    obj.expectedPrice = obj.expectedPrice || 0;
+                                    arrayList.push(obj);
+
+                                    // Sum the total price for the heart
+                                    $scope.userTotalSum += data[i].totalPrice;
+                                }
+
+                                for (var j in expectedData){
+                                    if (typeof obj_c_processed[expectedData[j]._id] === 'undefined') {
+                                        // arrayList.push({id: expectedData[j].id, name: expectedData[j].name, goal: 'no', circle: expectedData[j].circle});
+                                        arrayList.push({_id: {
+                                                category: expectedData[i]._id.category,
+                                                month: expectedData[i]._id.month,
+                                                year: expectedData[i]._id.year
+                                            },
+                                            totalPrice: 0,
+                                            expectedPrice: expectedData[i].totalPrice});
                                     }
                                 }
 
-                                obj.expectedPrice = obj.expectedPrice || 0;
-                                arrayList.push(obj);
-                            }
+                                // Scale the range of the data in the domains
+                                x.domain(data.map(function (d) {
+                                    return d._id.category;
+                                }));
 
-                            for (var j in expectedData){
-                                if (typeof obj_c_processed[expectedData[j]._id] === 'undefined') {
-                                    // arrayList.push({id: expectedData[j].id, name: expectedData[j].name, goal: 'no', circle: expectedData[j].circle});
-                                    arrayList.push({_id: {
-                                            category: expectedData[i]._id.category,
-                                            month: expectedData[i]._id.month,
-                                            year: expectedData[i]._id.year
-                                        },
-                                        totalPrice: 0,
-                                        expectedPrice: expectedData[i].totalPrice});
+                                // Get max totalPrice for the y scale
+                                var userMaxPrice = d3.max(data, function (d) {
+                                    return d.totalPrice;
+                                });
+
+                                var algoMaxPrice = d3.max(expectedData, function (d) {
+                                    return d.totalPrice;
+                                });
+
+                                var maxPrice = userMaxPrice;
+
+                                if (algoMaxPrice > userMaxPrice) {
+                                    maxPrice = algoMaxPrice;
                                 }
+
+                                y0.domain([0, maxPrice]);
+
+                                y1.domain([0, maxPrice]);
+
+                                var xAxis = d3.axisBottom()
+                                    .scale(x);
+
+                                var yAxisLeft = d3.axisLeft()
+                                    .scale(y0);
+
+                                var yAxisRight = d3.axisRight()
+                                    .scale(y1);
+
+                                if (error) throw error;
+
+                                // append the rectangles for the bar chart
+                                var bars = svg.selectAll(".bar")
+                                    .data(arrayList).enter();
+
+                                bars.append("rect")
+                                    .attr("class", "bar1")
+                                    .attr("x", function (d) {
+                                        return x(d._id.category);
+                                    })
+                                    .attr("width", x.bandwidth() / 2)
+                                    .attr("y", function (d) {
+                                        return y0(d.totalPrice);
+                                    })
+                                    .attr("height", function (d) {
+                                        return height - y0(d.totalPrice);
+                                    });
+
+                                bars.append("rect")
+                                    .attr("class", "bar2")
+                                    .attr("x", function (d) {
+                                        return x(d._id.category) + x.bandwidth() / 2;
+                                    })
+                                    .attr("width", x.bandwidth() / 2)
+                                    .attr("y", function (d) {
+                                        return y1(d.expectedPrice);
+                                    })
+                                    .attr("height", function (d) {
+                                        return height - y1(d.expectedPrice);
+                                    });
+
+
+                                svg.append("g")
+                                    .attr("class", "x axis")
+                                    .attr("transform", "translate(0," + height + ")")
+                                    .call(xAxis);
+
+                                svg.append("g")
+                                    .attr("class", "y axis axisLeft")
+                                    .attr("transform", "translate(0,0)")
+                                    .call(yAxisLeft)
+                                    .append("text")
+                                    .attr("y", 6)
+                                    .attr("dy", "-2em")
+                                    .style("text-anchor", "end")
+                                    .style("text-anchor", "end")
+                                    .text("Dollars");
+
+                                // add legend
+                                var dataset = {
+                                    "series": ["You", "Expected"],
+                                    "colors": ["#5297ca", "#949494"]
+                                };
+
+                                var legend = svg.append("g")
+                                    .attr("class", "legend")
+
+                                legend.selectAll('text')
+                                    .data(dataset["colors"])
+                                    .enter()
+                                    .append("rect")
+                                    .attr("x", width - margin.right - 30)
+                                    .attr("y", function (d, i) {
+                                        return i * 20;
+                                    })
+                                    .attr("width", 10)
+                                    .attr("height", 10)
+                                    .style("fill", function (d) {
+                                        return d;
+                                    });
+                                legend.selectAll('text')
+                                    .data(dataset["series"])
+                                    .enter()
+                                    .append("text")
+                                    .attr("x", width - margin.right - 10)
+                                    .attr("y", function (d, i) {
+                                        return i * 20 + 9;
+                                    })
+                                    .text(function (d) {
+                                        return d
+                                    });
+
+                                var tooltip = d3.select("body")
+                                    .append('div')
+                                    .attr('class', 'tooltip');
+
+                                tooltip.append('div')
+                                    .attr('class', 'category');
+                                tooltip.append('div')
+                                    .attr('class', 'totalPrice');
+
+                                svg.selectAll("rect")
+                                    .on('mouseover', function (d) {
+                                        if (!d._id.category) return null;
+
+                                        tooltip.select('.category').html("<b>" + d._id.category + "</b>");
+                                        tooltip.select('.totalPrice').html(d.totalPrice + " :: " + d.expectedPrice);
+
+                                        tooltip.style('display', 'block');
+                                        tooltip.style('opacity', 2);
+
+                                    })
+                                    .on('mousemove', function (d) {
+                                        if (!d._id.category) return null;
+
+                                        tooltip.style('top', (d3.event.layerY + 80) + 'px')
+                                            .style('left', (d3.event.layerX) + 'px');
+                                    })
+                                    .on('mouseout', function () {
+                                        tooltip.style('display', 'none');
+                                        tooltip.style('opacity', 0);
+                                    });
                             }
-
-                            // Scale the range of the data in the domains
-                            x.domain(data.map(function (d) {
-                                return d._id.category;
-                            }));
-
-                            // Get max totalPrice for the y scale
-                            var userMaxPrice = d3.max(data, function (d) {
-                                return d.totalPrice;
-                            });
-
-                            var algoMaxPrice = d3.max(expectedData, function (d) {
-                                return d.totalPrice;
-                            });
-
-                            var maxPrice = userMaxPrice;
-
-                            if (algoMaxPrice > userMaxPrice) {
-                                maxPrice = algoMaxPrice;
-                            }
-
-                            y0.domain([0, maxPrice]);
-
-                            y1.domain([0, maxPrice]);
-
-                            var xAxis = d3.axisBottom()
-                                .scale(x);
-
-                            var yAxisLeft = d3.axisLeft()
-                                .scale(y0);
-
-                            var yAxisRight = d3.axisRight()
-                                .scale(y1);
-
-                            if (error) throw error;
-
-                            // append the rectangles for the bar chart
-                            var bars = svg.selectAll(".bar")
-                                .data(arrayList).enter();
-
-                            bars.append("rect")
-                                .attr("class", "bar1")
-                                .attr("x", function (d) {
-                                    return x(d._id.category);
-                                })
-                                .attr("width", x.bandwidth() / 2)
-                                .attr("y", function (d) {
-                                    return y0(d.totalPrice);
-                                })
-                                .attr("height", function (d) {
-                                    return height - y0(d.totalPrice);
-                                });
-
-                            bars.append("rect")
-                                .attr("class", "bar2")
-                                .attr("x", function (d) {
-                                    return x(d._id.category) + x.bandwidth() / 2;
-                                })
-                                .attr("width", x.bandwidth() / 2)
-                                .attr("y", function (d) {
-                                    return y1(d.expectedPrice);
-                                })
-                                .attr("height", function (d) {
-                                    return height - y1(d.expectedPrice);
-                                });
-
-
-                            svg.append("g")
-                                .attr("class", "x axis")
-                                .attr("transform", "translate(0," + height + ")")
-                                .call(xAxis);
-
-                            svg.append("g")
-                                .attr("class", "y axis axisLeft")
-                                .attr("transform", "translate(0,0)")
-                                .call(yAxisLeft)
-                                .append("text")
-                                .attr("y", 6)
-                                .attr("dy", "-2em")
-                                .style("text-anchor", "end")
-                                .style("text-anchor", "end")
-                                .text("Dollars");
-
-                            // add legend
-                            var dataset = {
-                                "series": ["You", "Expected"],
-                                "colors": ["#5297ca", "#949494"]
-                            };
-
-                            var legend = svg.append("g")
-                                .attr("class", "legend")
-
-                            legend.selectAll('text')
-                                .data(dataset["colors"])
-                                .enter()
-                                .append("rect")
-                                .attr("x", width - margin.right - 30)
-                                .attr("y", function (d, i) {
-                                    return i * 20;
-                                })
-                                .attr("width", 10)
-                                .attr("height", 10)
-                                .style("fill", function (d) {
-                                    return d;
-                                });
-                            legend.selectAll('text')
-                                .data(dataset["series"])
-                                .enter()
-                                .append("text")
-                                .attr("x", width - margin.right - 10)
-                                .attr("y", function (d, i) {
-                                    return i * 20 + 9;
-                                })
-                                .text(function (d) {
-                                    return d
-                                });
-
-                            var tooltip = d3.select("body")
-                                .append('div')
-                                .attr('class', 'tooltip');
-
-                            tooltip.append('div')
-                                .attr('class', 'category');
-                            tooltip.append('div')
-                                .attr('class', 'totalPrice');
-
-                            svg.selectAll("rect")
-                                .on('mouseover', function (d) {
-                                    if (!d._id.category) return null;
-
-                                    tooltip.select('.category').html("<b>" + d._id.category + "</b>");
-                                    tooltip.select('.totalPrice').html(d.totalPrice + " :: " + d.expectedPrice);
-
-                                    tooltip.style('display', 'block');
-                                    tooltip.style('opacity', 2);
-
-                                })
-                                .on('mousemove', function (d) {
-                                    if (!d._id.category) return null;
-
-                                    tooltip.style('top', (d3.event.layerY + 80) + 'px')
-                                        .style('left', (d3.event.layerX) + 'px');
-                                })
-                                .on('mouseout', function () {
-                                    tooltip.style('display', 'none');
-                                    tooltip.style('opacity', 0);
-                                });
-
 
                         }).catch(function (error) {
                             console.log('error on expected expenses:');
@@ -810,7 +1167,8 @@
             }
 
             // Check if partner exist
-            var partnerEmail = 'admin@admin.com'; //TODO: Change to the real partner
+            if($rootScope.currentUser.friendship) {
+            var partnerEmail = $rootScope.currentUser.friendship.email;
             if(partnerEmail) {
                 //Get partner
                 userService.getUserByEmail(partnerEmail).then(function (user, err) {
@@ -820,8 +1178,10 @@
                     } else {
                         if (user.data) {
                             $scope.currentPartner = user.data;
-                            if ($rootScope.currentUser.transactions.length > 0) {
+                            if ($scope.currentPartner.transactions.length > 0) {
                                 $scope.partnerHaveTransactionData = true;
+                                $scope.partnerTotalSum = 0;
+                                $scope.partnerExpectedSum = 0;
 
                                 /*********************
                                  * Partner Bar Chart
@@ -851,7 +1211,7 @@
 
                                     if (data !== undefined) {
 
-                                        var expensesUrl = "http://localhost:666/user/" +  $scope.currentPartner._id + "?month=" + month + "&year=" + year;
+                                        var expensesUrl = "http://localhost:3001/user/" +  $scope.currentPartner._id + "?month=" + month + "&year=" + year;
                                         $http.get(expensesUrl).then(function(response){
 
                                             var expectedData = response.data;
@@ -865,189 +1225,218 @@
                                             data.sort(function (a, b) {
                                                 return a.totalPrice - b.totalPrice;
                                             });
-                                            // Add the expected price
-                                            var arrayList = [], obj_c_processed = [];
 
-                                            for (var i in data) {
-                                                // var obj = {id: data[i].id, name: data[i].name, goal: data[i].goal};
-                                                var obj = {_id: {
-                                                        category: data[i]._id.category,
-                                                        month: data[i]._id.month,
-                                                        year: data[i]._id.year
-                                                    },
-                                                    totalPrice: data[i].totalPrice};
+                                            if(data.length > 0){
+                                                // Add the expected price
+                                                var arrayList = [], obj_c_processed = [];
 
-                                                for (var j in expectedData) {
-                                                    if (data[i]._id.category === expectedData[j]._id.category) {
-                                                        obj.expectedPrice = expectedData[j].totalPrice;
-                                                        obj_c_processed[expectedData[j]._id] = true;
+                                                for (var i in data) {
+                                                    // var obj = {id: data[i].id, name: data[i].name, goal: data[i].goal};
+                                                    var obj = {_id: {
+                                                            category: data[i]._id.category,
+                                                            month: data[i]._id.month,
+                                                            year: data[i]._id.year
+                                                        },
+                                                        totalPrice: data[i].totalPrice};
+
+                                                    for (var j in expectedData) {
+                                                        if (data[i]._id.category === expectedData[j]._id.category) {
+                                                            obj.expectedPrice = expectedData[j].totalPrice;
+                                                            obj_c_processed[expectedData[j]._id] = true;
+
+                                                            // Sum the total expected price for the heart
+                                                            $scope.partnerExpectedSum += expectedData[i].totalPrice;
+                                                        }
+                                                    }
+
+                                                    obj.expectedPrice = obj.expectedPrice || 0;
+                                                    arrayList.push(obj);
+
+                                                    // Sum the total price for the heart
+                                                    $scope.partnerTotalSum += data[i].totalPrice;
+                                                }
+
+                                                for (var j in expectedData){
+                                                    if (typeof obj_c_processed[expectedData[j]._id] === 'undefined') {
+                                                        // arrayList.push({id: expectedData[j].id, name: expectedData[j].name, goal: 'no', circle: expectedData[j].circle});
+                                                        arrayList.push({_id: {
+                                                                category: expectedData[i]._id.category,
+                                                                month: expectedData[i]._id.month,
+                                                                year: expectedData[i]._id.year
+                                                            },
+                                                            totalPrice: 0,
+                                                            expectedPrice: expectedData[i].totalPrice});
                                                     }
                                                 }
 
-                                                obj.expectedPrice = obj.expectedPrice || 0;
-                                                arrayList.push(obj);
-                                            }
 
-                                            for (var j in expectedData){
-                                                if (typeof obj_c_processed[expectedData[j]._id] === 'undefined') {
-                                                    // arrayList.push({id: expectedData[j].id, name: expectedData[j].name, goal: 'no', circle: expectedData[j].circle});
-                                                    arrayList.push({_id: {
-                                                            category: expectedData[i]._id.category,
-                                                            month: expectedData[i]._id.month,
-                                                            year: expectedData[i]._id.year
-                                                        },
-                                                        totalPrice: 0,
-                                                        expectedPrice: expectedData[i].totalPrice});
+                                                if($scope.partnerExpectedSum != 0 && $scope.userExpectedSum != 0){
+                                                    $scope.userPercentages = $scope.userTotalSum/$scope.userExpectedSum;
+                                                    $scope.partnerPercentages = $scope.partnerTotalSum/$scope.partnerExpectedSum;
+
+                                                    $scope.userHeart = false;
+                                                    $scope.partnerHeart = false;
+
+                                                    if($scope.userPercentages > 1.5 ){
+                                                        $scope.userHeart = true;
+                                                    }
+
+                                                    if($scope.partnerPercentages >  1.5){
+                                                        $scope.partnerHeart = true;
+                                                    }
+                                                    // else{
+                                                    //
+                                                    // }
                                                 }
+
+
+                                                // Scale the range of the data in the domains
+                                                x.domain(data.map(function (d) {
+                                                    return d._id.category;
+                                                }));
+
+                                                // Get max totalPrice for the y scale
+                                                var userMaxPrice = d3.max(data, function (d) {
+                                                    return d.totalPrice;
+                                                });
+
+                                                var algoMaxPrice = d3.max(expectedData, function (d) {
+                                                    return d.totalPrice;
+                                                });
+
+                                                var maxPrice = userMaxPrice;
+
+                                                if (algoMaxPrice > userMaxPrice) {
+                                                    maxPrice = algoMaxPrice;
+                                                }
+
+                                                y0.domain([0, maxPrice]);
+
+                                                y1.domain([0, maxPrice]);
+
+                                                var xAxis = d3.axisBottom()
+                                                    .scale(x);
+
+                                                var yAxisLeft = d3.axisLeft()
+                                                    .scale(y0);
+
+                                                var yAxisRight = d3.axisRight()
+                                                    .scale(y1);
+
+                                                if (error) throw error;
+
+                                                // append the rectangles for the bar chart
+                                                var bars = svg.selectAll(".bar")
+                                                    .data(arrayList).enter();
+
+                                                bars.append("rect")
+                                                    .attr("class", "bar3")
+                                                    .attr("x", function (d) {
+                                                        return x(d._id.category);
+                                                    })
+                                                    .attr("width", x.bandwidth() / 2)
+                                                    .attr("y", function (d) {
+                                                        return y0(d.totalPrice);
+                                                    })
+                                                    .attr("height", function (d) {
+                                                        return height - y0(d.totalPrice);
+                                                    });
+
+                                                bars.append("rect")
+                                                    .attr("class", "bar2")
+                                                    .attr("x", function (d) {
+                                                        return x(d._id.category) + x.bandwidth() / 2;
+                                                    })
+                                                    .attr("width", x.bandwidth() / 2)
+                                                    .attr("y", function (d) {
+                                                        return y1(d.expectedPrice);
+                                                    })
+                                                    .attr("height", function (d) {
+                                                        return height - y1(d.expectedPrice);
+                                                    });
+
+
+                                                svg.append("g")
+                                                    .attr("class", "x axis")
+                                                    .attr("transform", "translate(0," + height + ")")
+                                                    .call(xAxis);
+
+
+                                                svg.append("g")
+                                                    .attr("class", "y axis axisRight")
+                                                    .attr("transform", "translate(" + (width) + ",0)")
+                                                    .call(yAxisRight)
+                                                    .append("text")
+                                                    .attr("y", 6)
+                                                    .attr("dy", "-2em")
+                                                    .attr("dx", "2em")
+                                                    .style("text-anchor", "end");
+
+                                                // add legend
+                                                var dataset = {
+                                                    "series": ["Partner", "Expected"],
+                                                    "colors": ["#9f0207", "#949494"]
+                                                };
+
+                                                var legend = svg.append("g")
+                                                    .attr("class", "legend")
+
+                                                legend.selectAll('text')
+                                                    .data(dataset["colors"])
+                                                    .enter()
+                                                    .append("rect")
+                                                    .attr("x", margin.left - 80)
+                                                    .attr("y", function (d, i) {
+                                                        return i * 20;
+                                                    })
+                                                    .attr("width", 10)
+                                                    .attr("height", 10)
+                                                    .style("fill", function (d) {
+                                                        return d;
+                                                    });
+                                                legend.selectAll('text')
+                                                    .data(dataset["series"])
+                                                    .enter()
+                                                    .append("text")
+                                                    .attr("x", margin.left - 60)
+                                                    .attr("y", function (d, i) {
+                                                        return i * 20 + 9;
+                                                    })
+                                                    .text(function (d) {
+                                                        return d
+                                                    });
+
+                                                var tooltip = d3.select("body")
+                                                    .append('div')
+                                                    .attr('class', 'tooltip');
+
+                                                tooltip.append('div')
+                                                    .attr('class', 'category');
+                                                tooltip.append('div')
+                                                    .attr('class', 'totalPrice');
+
+                                                svg.selectAll("rect")
+                                                    .on('mouseover', function (d) {
+                                                        if (!d._id.category) return null;
+
+                                                        tooltip.select('.category').html("<b>" + d._id.category + "</b>");
+                                                        tooltip.select('.totalPrice').html(d.totalPrice + " :: " + d.expectedPrice);
+
+                                                        tooltip.style('display', 'block');
+                                                        tooltip.style('opacity', 2);
+
+                                                    })
+                                                    .on('mousemove', function (d) {
+                                                        if (!d._id.category) return null;
+
+                                                        tooltip.style('top', (d3.event.layerY + 80) + 'px')
+                                                            .style('left', (d3.event.layerX) + 'px');
+                                                    })
+                                                    .on('mouseout', function () {
+                                                        tooltip.style('display', 'none');
+                                                        tooltip.style('opacity', 0);
+                                                    });
                                             }
-
-                                            // Scale the range of the data in the domains
-                                            x.domain(data.map(function (d) {
-                                                return d._id.category;
-                                            }));
-
-                                            // Get max totalPrice for the y scale
-                                            var userMaxPrice = d3.max(data, function (d) {
-                                                return d.totalPrice;
-                                            });
-
-                                            var algoMaxPrice = d3.max(expectedData, function (d) {
-                                                return d.totalPrice;
-                                            });
-
-                                            var maxPrice = userMaxPrice;
-
-                                            if (algoMaxPrice > userMaxPrice) {
-                                                maxPrice = algoMaxPrice;
-                                            }
-
-                                            y0.domain([0, maxPrice]);
-
-                                            y1.domain([0, maxPrice]);
-
-                                            var xAxis = d3.axisBottom()
-                                                .scale(x);
-
-                                            var yAxisLeft = d3.axisLeft()
-                                                .scale(y0);
-
-                                            var yAxisRight = d3.axisRight()
-                                                .scale(y1);
-
-                                            if (error) throw error;
-
-                                            // append the rectangles for the bar chart
-                                            var bars = svg.selectAll(".bar")
-                                                .data(arrayList).enter();
-
-                                            bars.append("rect")
-                                                .attr("class", "bar3")
-                                                .attr("x", function (d) {
-                                                    return x(d._id.category);
-                                                })
-                                                .attr("width", x.bandwidth() / 2)
-                                                .attr("y", function (d) {
-                                                    return y0(d.totalPrice);
-                                                })
-                                                .attr("height", function (d) {
-                                                    return height - y0(d.totalPrice);
-                                                });
-
-                                            bars.append("rect")
-                                                .attr("class", "bar2")
-                                                .attr("x", function (d) {
-                                                    return x(d._id.category) + x.bandwidth() / 2;
-                                                })
-                                                .attr("width", x.bandwidth() / 2)
-                                                .attr("y", function (d) {
-                                                    return y1(d.expectedPrice);
-                                                })
-                                                .attr("height", function (d) {
-                                                    return height - y1(d.expectedPrice);
-                                                });
-
-
-                                            svg.append("g")
-                                                .attr("class", "x axis")
-                                                .attr("transform", "translate(0," + height + ")")
-                                                .call(xAxis);
-
-
-                                            svg.append("g")
-                                                .attr("class", "y axis axisRight")
-                                                .attr("transform", "translate(" + (width) + ",0)")
-                                                .call(yAxisRight)
-                                                .append("text")
-                                                .attr("y", 6)
-                                                .attr("dy", "-2em")
-                                                .attr("dx", "2em")
-                                                .style("text-anchor", "end");
-
-                                            // add legend
-                                            var dataset = {
-                                                "series": ["Partner", "Expected"],
-                                                "colors": ["#9f0207", "#949494"]
-                                            };
-
-                                            var legend = svg.append("g")
-                                                .attr("class", "legend")
-
-                                            legend.selectAll('text')
-                                                .data(dataset["colors"])
-                                                .enter()
-                                                .append("rect")
-                                                .attr("x", margin.left - 80)
-                                                .attr("y", function (d, i) {
-                                                    return i * 20;
-                                                })
-                                                .attr("width", 10)
-                                                .attr("height", 10)
-                                                .style("fill", function (d) {
-                                                    return d;
-                                                });
-                                            legend.selectAll('text')
-                                                .data(dataset["series"])
-                                                .enter()
-                                                .append("text")
-                                                .attr("x", margin.left - 60)
-                                                .attr("y", function (d, i) {
-                                                    return i * 20 + 9;
-                                                })
-                                                .text(function (d) {
-                                                    return d
-                                                });
-
-                                            var tooltip = d3.select("body")
-                                                .append('div')
-                                                .attr('class', 'tooltip');
-
-                                            tooltip.append('div')
-                                                .attr('class', 'category');
-                                            tooltip.append('div')
-                                                .attr('class', 'totalPrice');
-
-                                            svg.selectAll("rect")
-                                                .on('mouseover', function (d) {
-                                                    if (!d._id.category) return null;
-
-                                                    tooltip.select('.category').html("<b>" + d._id.category + "</b>");
-                                                    tooltip.select('.totalPrice').html(d.totalPrice + " :: " + d.expectedPrice);
-
-                                                    tooltip.style('display', 'block');
-                                                    tooltip.style('opacity', 2);
-
-                                                })
-                                                .on('mousemove', function (d) {
-                                                    if (!d._id.category) return null;
-
-                                                    tooltip.style('top', (d3.event.layerY + 80) + 'px')
-                                                        .style('left', (d3.event.layerX) + 'px');
-                                                })
-                                                .on('mouseout', function () {
-                                                    tooltip.style('display', 'none');
-                                                    tooltip.style('opacity', 0);
-                                                });
-
 
                                         }).catch(function (error) {
                                             console.log('error on expected expenses:');
@@ -1073,8 +1462,46 @@
         }
 
 
+
+
+        }
+
+
     }
     angular.module('userModule').controller('expensesCtrl', ['$scope','$rootScope', '$http', 'userService', '$cookieStore',  expensesCtrl])
+
+    function decisionTreeCtrl ($scope,$rootScope, $http) {
+        $scope.switch_tree = function ($event) {
+            $event.preventDefault();
+            $event.class = "active";
+            // TODO: change to the current month and year
+            var d = new Date();
+            var lastMonth = d.getMonth() - 1;
+            if (lastMonth - 1 == 0) {
+                lastMonth = 12;
+            }
+            var currYear = d.getFullYear();
+            var treeUrl = "http://localhost:3001/decisionTree/" + $scope.currentUserId +  "?month=" + lastMonth + "&year=" + currYear + "&category=" + $event.currentTarget.title;
+            $http.get(treeUrl).then(function(treeData){
+                if (treeData.data !== "None") {
+                    $scope.empty = false;
+                    var graphModel = new go.GraphLinksModel();
+                    graphModel.nodeDataArray = treeData.data.tree.nodeDataArray;
+                    graphModel.linkDataArray = treeData.data.tree.linkDataArray;
+                    $scope.model = graphModel;
+                }
+                else {
+                    $scope.empty = true;
+                }
+            }).catch(function (error) {
+                alert("Error: No data returned");
+                // $scope.empty = true;
+                // console.log('error on decision tree:');
+                // console.log(error)
+            });
+        }
+    }
+    angular.module('userModule').controller('decisionTreeCtrl', ['$scope','$rootScope', '$http', decisionTreeCtrl])
     //})
 
 })();
