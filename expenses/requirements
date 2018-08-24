@@ -1,6 +1,6 @@
-pymongo
+pymongo==3.6.1
 bson
 flask
 sklearn
-pandas
+pandas==0.22.0
 scipy
