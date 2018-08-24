@@ -127,7 +127,7 @@ module.exports = {
     },
     updateTransaction: function (callback, user) {
     User.findOneAndUpdate({'_id': user.user._id, 'transactions._id': user.transactions._id},
-                {$set: {'transactions.$.category': user.transactions.category }}, function(err, res){
+                {$set: {'transactions.$': user.transactions }}, function(err, res){
                     if (err) {
                         console.error(err);
                     }

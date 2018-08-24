@@ -59,22 +59,66 @@
                 <th>
                     Category
                 </th>
+                <th>
+
+                </th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="transaction in currentUser.transactions | orderBy : 'date' | filter:search:strict" id="transactions">
-                <td>{{ transaction.date | date:"dd/MM/yy"}}</td>
-                <td>{{ transaction.price }}</td>
-                <td>{{ transaction.business }}</td>
+                <td>{{ transaction.date | date:"dd/MM/yy" }}</td>
+                <td ng-if="!(editTransaction == (transaction._id))">
+                    {{ transaction.price }}
+                </td>
+                <td ng-if="!(editTransaction == (transaction._id))">
+                    {{ transaction.business }}
+                </td>
+                <td ng-if="!(editTransaction == (transaction._id))">
+                    {{ transaction.category }}
+                </td>
+                <td ng-if="(editTransaction == (transaction._id))">
+                    <input ng-model="transaction.price" type="number" required>
+                </td>
+                <td ng-if="(editTransaction == (transaction._id))">
+                    <input ng-model="transaction.business" required>
+                </td>
+                <td ng-if="(editTransaction == (transaction._id))">
+                    <select class="form-control" ng-model="transaction.category" ng-init="transaction.category = transaction.category" required>
+                        <option value="ביטוח">ביטוח</option>
+                        <option value="שירות רפואי">שירות רפואי</option>
+                        <option value="נופש ותיור">נופש ותיור</option>
+                        <option value="בתי ספר">בתי ספר</option>
+                        <option value="פנאי וספורט">פנאי וספורט</option>
+                        <option value="שירותי רכב">שירותי רכב</option>
+                        <option value="דלק">דלק</option>
+                        <option value="מכולת וסופר">מכולת וסופר</option>
+                        <option value="מסעדות וקפה">מסעדות וקפה</option>
+                        <option value="מוצרי חשמל">מוצרי חשמל</option>
+                        <option value="קניות באינטרנט">קניות באינטרנט</option>
+                        <option value="תשלומי רשויות">תשלומי רשויות</option>
+                        <option value="פארמה">פארמה</option>
+                        <option value="כלי בית">כלי בית</option>
+                        <option value="משתלות">משתלות</option>
+                        <option value="הלבשה">הלבשה</option>
+                        <option value="מעדניות">מעדניות</option>
+                        <option value="תרבות">תרבות</option>
+                        <option value="שונות">שונות</option>
+                        <option value="ספרים ודיסקים">ספרים ודיסקים</option>
+                        <option value="אביזרי אופנה">אביזרי אופנה</option>
+                        <option value="טוטו ופיס">טוטו ופיס</option>
+                        <option value="הנעלה">הנעלה</option>
+                        <option value="צעצועים">צעצועים</option>
+                        <option value="עיתון">עיתון</option>
+                        <option value="מחשבים">מחשבים</option>
+                    </select>
+                </td>
                 <td><button ng-if="!(editTransaction == (transaction._id))" type="button" 
                             class="btn btn-outline-primary" ng-click="changeToEditMode(transaction._id)" 
-                            style=" margin-right: 20px;"><i class="fa fa-edit"></i></button>    
-                    <strong ng-if="!(editTransaction == (transaction._id))">{{ transaction.category }}</strong>
+                            style=" margin-right: 20px;"><i class="fa fa-edit"></i></button>
                     <span ng-if="(editTransaction == (transaction._id))">
-                        <button type="button" class="btn btn-outline-primary" ng-click="saveCategory(transaction)" >
+                        <button type="button" class="btn btn-outline-primary" ng-click="saveTransaction(transaction)" >
                             <i class="fa fa-save"></i>
                         </button>
-                        <input style="direction: rtl;" ng-model="transaction.category">
                     </span>
                 </td>
             </tr>
