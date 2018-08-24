@@ -160,14 +160,43 @@ def extract_transaction_from_isracard_pdf(lines, user_id):
         'מעדניות',
         'תרבות',
         'שונות',
-        "תש' רשויות",
         'ספרי/םדיסק',
         'אבזרי אפנה',
         'טוטו/פיס',
         'הנעלה',
         'צעצועים',
-        'עיתו/ןדפוס'
+        'עיתו/ןדפוס',
+        'מחשבים'
     ]
+    categories_fixer = {
+        'ביטוח': 'ביטוח',
+        'שרות רפואי': 'שרות רפואי',
+        'נופש ותיור': 'נופש ותיור',
+        'בתי ספר': 'בתי ספר',
+        'פנאי/ספורט': 'פנאי וספורט',
+        'שירותי רכב': 'שירותי רכב',
+        'דלק': 'דלק',
+        'מכולת/סופר': 'מכולת וסופר',
+        'רהיטים': 'רהיטים',
+        'מסעדות/קפה': 'מסעדות וקפה',
+        'מוצרי חשמל': 'מוצרי חשמל',
+        "קניה אינט'": 'קניות באינטרנט',
+        "תש' רשויות": 'תשלומי רשויות',
+        'פארמה': 'פארמה',
+        'כלי בית': 'כלי בית',
+        'משתלות': 'משתלות',
+        'הלבשה': 'הלבשה',
+        'מעדניות': 'מעדניות',
+        'תרבות': 'תרבות',
+        'שונות': 'שונות',
+        'ספרי/םדיסק': 'ספרים ודיסקים',
+        'אבזרי אפנה': 'אביזרי אופנה',
+        'טוטו/פיס': 'טוטו ופיס',
+        'הנעלה': 'הנעלה',
+        'צעצועים': 'צעצועים',
+        'עיתו/ןדפוס': 'עיתון',
+        'מחשבים': 'מחשבים'
+    }
     lines = list([value for value in lines if value not in remove_list])
     start_index = lines.index('עסקות שחויבו  /זוכו  -בארץ')
     end_index = lines.index('מסגרת הכרטיס ותנאי האשראי')
@@ -220,6 +249,7 @@ def extract_transaction_from_isracard_pdf(lines, user_id):
         transaction['price'] = transaction['price'].replace(',', '')
         transaction['price'] = int(float(transaction['price']))
         transaction['date'] = datetime.datetime.strptime(date, '%d/%m/%Y')
+        transaction['category'] = categories_fixer[transaction['category']]
     add_transaction_to_user(transactions=transactions, user_id=user_id)
 
 
@@ -230,6 +260,7 @@ def extract_transaction_from_pdf(file_path, user_id):
     decode_text = remove_rtl(decode_text)
     lines = decode_text.split('\n')
     extract_transaction_from_isracard_pdf(lines, user_id)
+
 
 if __name__ == '__main__':
     app.run(port=3000, host='0.0.0.0')

@@ -553,10 +553,10 @@
                 // Update transaction - change category to input field
                 $scope.changeToEditMode = function(transactionId){
                     $scope.editTransaction = transactionId;
-                }
+                };
 
-                // Update transaction - save the new category name
-                $scope.saveCategory = function(transaction){
+                // Update transaction
+                $scope.saveTransaction= function(transaction){
                     let data = {user:{}};
                     data.user._id = $scope.currentUserId;
                     data.transactions = transaction;
@@ -564,9 +564,9 @@
                         if (err) {
                             console.log(err);
                         }
-                    })
+                    });
                     $scope.editTransaction = null;
-                }
+                };
                 
                 //  Bar&Pie charts creation and update
                 if ($rootScope.currentUser.transactions.length > 0) {
