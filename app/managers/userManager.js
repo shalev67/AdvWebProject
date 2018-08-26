@@ -137,6 +137,17 @@ module.exports = {
                     }
                 })
     },
+    deleteTransaction: function(callback, user){
+        User.findOneAndUpdate({'_id': user.user._id, 'transactions._id': user.transactions._id},
+            {$pull: {transactions: user.transactions }}, function(err, res){
+                if (err) {
+                    console.error(err);
+                }
+                else {
+                    callback(null);
+                }
+            })
+    },
     searchUsers: function (callback, searchUser) {
 
         var firstName = (searchUser.firstName)? ".*" + searchUser.firstName + ".*" :".*.*";

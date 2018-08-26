@@ -60,6 +60,10 @@
             return $http.put('/User/UpdateTransaction' , user);
         };
 
+        this.deleteTransaction = function (user) {
+            return $http.put('/User/DeleteTransaction', user);
+        };
+
         this.checkUser = function(userEmail,userPassword){
             return $http.get('/User/CheckUser/' + userEmail + "/" + userPassword);
         };
@@ -68,7 +72,7 @@
             return $http.post('/User/SearchUsers' , searchUserDetail);
         };
 
-    })
+    });
 
 
     myApp.service('branchService', function($http){
