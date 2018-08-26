@@ -567,7 +567,18 @@
                     });
                     $scope.editTransaction = null;
                 };
-                
+
+                // Delete Transaction
+                $scope.deleteUserTransaction = function(transaction){
+                    let data = {user:{}};
+                    data.user._id = $scope.currentUserId;
+                    data.transactions = transaction;
+                    userService.deleteTransaction(data).then(function (data, err) {
+
+                    });
+                    $scope.deleteTransaction = null;
+                };
+
                 //  Bar&Pie charts creation and update
                 if ($rootScope.currentUser.transactions.length > 0) {
                     $rootScope.haveTransactionData = true;

@@ -144,6 +144,19 @@ module.exports = function (app) {
             req.body)
     });
 
+    // Delete transaction
+    app.put('/User/DeleteTransaction', function (req, res, next) {
+        userManager.deleteTransaction(function (err, id) {
+                if (err) {
+                    console.log('deleteTransaction Err: ' + err);
+                    res.next();
+                } else {
+                    res.json({'id': id})
+                }
+            },
+            req.body)
+    });
+
     // Search Users
     app.post('/User/SearchUsers', function (req, res, next) {
         userManager.searchUsers(function (err, users) {
