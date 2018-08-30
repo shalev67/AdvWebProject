@@ -294,7 +294,7 @@
                 $scope.socketId = socketId;
             }
             $scope.userList = userList;
-        }); 	
+        });     
 
         socket.on('exit', (userList) => {
             $scope.userList = userList;
@@ -744,7 +744,7 @@
                         var g = svgPie.selectAll(".arc")
                         .remove()
                         .exit()
-                        .data(data)	
+                        .data(data) 
                         .data(pie(data))
                         .enter().append("g")
                         .attr("class", "arc");
@@ -758,8 +758,8 @@
                         g.append("text")
                             .attr("transform", function (d) {
                                 var _d = arcPie.centroid(d);
-                                _d[0] *= 2.7;	//multiply by a constant factor
-                                _d[1] *= 2.7;	//multiply by a constant factor
+                                _d[0] *= 2.7;   //multiply by a constant factor
+                                _d[1] *= 2.7;   //multiply by a constant factor
                                 return "translate(" + _d + ")";
                             })
                             .style("text-anchor", "middle")
@@ -798,7 +798,7 @@
                         svg.selectAll(".bar")
                         .remove()
                         .exit()
-                        .data(data)	
+                        .data(data) 
                         .attr("class", "bar")
                         .attr("x", function (d) {
                             return x(d._id.category);
@@ -1502,6 +1502,38 @@
 
     }
     angular.module('userModule').controller('expensesCtrl', ['$scope','$rootScope', '$http', 'userService', '$cookieStore',  expensesCtrl])
+
+    function decisionTreeCtrl ($scope,$rootScope, $http) {
+        $scope.switch_tree = function ($event) {
+            $event.preventDefault();
+            $event.class = "active";
+            var d = new Date();
+            var lastMonth = d.getMonth();
+            if (lastMonth === 0) {
+              lastMonth = 12;
+            }
+            var currYear = d.getFullYear();
+            var treeUrl = "http://localhost:3001/decisionTree/" + $scope.currentUserId +  "?month=" + lastMonth + "&year=" + currYear + "&category=" + $event.currentTarget.title;
+            $http.get(treeUrl).then(function(treeData){
+                if (treeData.data !== "None") {
+                    $scope.empty = false;
+                    var graphModel = new go.GraphLinksModel();
+                    graphModel.nodeDataArray = treeData.data.tree.nodeDataArray;
+                    graphModel.linkDataArray = treeData.data.tree.linkDataArray;
+                    $scope.model = graphModel;
+                }
+                else {
+                    $scope.empty = true;
+                }
+            }).catch(function (error) {
+                alert("Error: No data returned");
+                // $scope.empty = true;
+                // console.log('error on decision tree:');
+                // console.log(error)
+            });
+        }
+    }
+    angular.module('userModule').controller('decisionTreeCtrl', ['$scope','$rootScope', '$http', decisionTreeCtrl])
     //})
 
 })();
