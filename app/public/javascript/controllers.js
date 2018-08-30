@@ -1474,11 +1474,10 @@
         $scope.switch_tree = function ($event) {
             $event.preventDefault();
             $event.class = "active";
-            // TODO: change to the current month and year
             var d = new Date();
-            var lastMonth = d.getMonth() - 1;
-            if (lastMonth - 1 == 0) {
-                lastMonth = 12;
+            var lastMonth = d.getMonth();
+            if (lastMonth === 0) {
+              lastMonth = 12;
             }
             var currYear = d.getFullYear();
             var treeUrl = "http://localhost:3001/decisionTree/" + $scope.currentUserId +  "?month=" + lastMonth + "&year=" + currYear + "&category=" + $event.currentTarget.title;
