@@ -1,5 +1,4 @@
 from flask import Flask ,jsonify, request
-# TODO: Replace with another datetime lib
 from pandas._libs.lib import datetime
 
 # from expenses import decision_tree, expenses_knn
@@ -21,19 +20,6 @@ path, filename = os.path.split(os.path.realpath(__file__))
 json_folder_path = path
 
 categories_dict = {'הכל': None,'דלק': 'fuel', 'מכולת/סופר': 'supermarket', 'מסעדות/קפה': 'restaurants', 'הלבשה': 'clothing'}
-
-
-def write_decision_tree_to_file(user_id, month, year, hebrew_category, json_file_path):
-    # If there is no category selected build a tree of all categories
-    if not hebrew_category:
-        result = decision_tree.build_decision_tree_table(users_collection, user_id, month, year)
-    else:
-        result = decision_tree.build_decision_tree_table_for_category(users_collection, user_id, hebrew_category, month, year)
-
-    with open(json_file_path, 'w', encoding="utf-16") as outfile:
-        outfile.write(str(result).replace("\"", "").replace("'", "\""))
-
-
 app = Flask(__name__)
 
 
@@ -53,9 +39,9 @@ def get_decision_tree(user_id):
     year = int(request.args.get('year', default=last_month_date.year))
     hebrew_category = request.args.get('category', default=None)
     if not hebrew_category:
-        my_decision_tree = decision_tree.build_decision_tree_table(users_collection, user_id, month, year)
+        my_decision_tree = decision_tree.build_decision_tree_table(users_collection, ObjectId(user_id), month, year)
     else:
-        my_decision_tree = decision_tree.build_decision_tree_table_for_category(users_collection, user_id, hebrew_category, month, year)
+        my_decision_tree = decision_tree.build_decision_tree_table_for_category(users_collection, ObjectId(user_id), hebrew_category, month, year)
 
     return str(my_decision_tree).replace("\"", "").replace("'", "\"")
 
@@ -65,7 +51,10 @@ def get_nearest_neighbors(user_id):
     month = int(request.args.get('month', default=last_month_date.month))
     year = int(request.args.get('year', default=last_month_date.year))
     ids = expenses_knn.get_nearest_neighbors_to_user(users_collection, ObjectId(user_id), int(month), int(year))
-    return str(ids)
+    if ids:
+        return str(ids[0])
+    else:
+        return jsonify("")
 
 @app.after_request
 def after_request(response):
