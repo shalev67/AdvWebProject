@@ -1,3 +1,4 @@
+
 # import expenses.utils as utils
 import utils
 from sklearn import preprocessing
@@ -74,30 +75,30 @@ def get_nearest_neighbors_to_user(users_collection, user_id, month, year, catego
     if category:
         return get_prediction_by_category(train_data, users_outcome_per_category_dic, current_user_data, category, only_indices=True)
 
-    train_data_object_ids = []
-    train_res = []
-    for user_data in train_data:
-        # total_expense = 0
-        # enter the total transactions of the user for the current category, if there is none enter 0
-        transactions_of_user = [curr["transactions"] for curr in users_outcome_per_category_dic if curr['_id']['user_id'] == user_data['_id']]
-        total_expense = sum(transactions_of_user)
-        train_res.append(total_expense)
+    if train_data:
+        train_data_object_ids = []
+        train_res = []
+        for user_data in train_data:
+            # enter the total transactions of the user for the current category, if there is none enter 0
+            transactions_of_user = [curr["transactions"] for curr in users_outcome_per_category_dic if curr['_id']['user_id'] == user_data['_id']]
+            total_expense = sum(transactions_of_user)
+            train_res.append(total_expense)
 
-    # Delete id column (the transform function of the non numeric values doesn't need it)
-    for data in train_data:
-        train_data_id = data.pop('_id')
-        train_data_object_ids.append(train_data_id)
-    current_user_data[0].pop('_id')
+        # Delete id column (the transform function of the non numeric values doesn't need it)
+        for data in train_data:
+            train_data_id = data.pop('_id')
+            train_data_object_ids.append(train_data_id)
+        current_user_data[0].pop('_id')
 
-    train_data, current_user_data = transform_string_categories_to_numeric_values(train_data, current_user_data)
-    k = int(math.sqrt(len(train_data) + len(current_user_data)))
-    knn_regressor = get_nearest_neighbors_regressor(k, train_data, train_res)
+        train_data, current_user_data = transform_string_categories_to_numeric_values(train_data, current_user_data)
+        k = int(math.sqrt(len(train_data) + len(current_user_data)))
+        knn_regressor = get_nearest_neighbors_regressor(k, train_data, train_res)
 
-    distances, indices = knn_regressor.kneighbors(current_user_data)
-    ids = [x for i, x in enumerate(train_data_object_ids) if i in indices[0]]
-    return ids, indices[0]
-    # indices = get_prediction_by_category(train_data, users_outcome_per_category_dic, current_user_data, category, only_distances=True)
-    # return indices
+        distances, indices = knn_regressor.kneighbors(current_user_data)
+        ids = [x for i, x in enumerate(train_data_object_ids) if i in indices[0]]
+        return ids, indices[0]
+    else:
+        return None
 
 
 # region //////////////////////////////////////////////////////////////////////////// Encoding categorical features ////////////////////////////////////////////////////////////////////////////
@@ -177,8 +178,6 @@ def get_prediction_by_category(train_data, users_outcome_per_category_dic, curre
     train_data, current_user_data = transform_string_categories_to_numeric_values(train_data, current_user_data)
     k = int(math.sqrt(len(train_data) + len(current_user_data)))
     knn_regressor = get_nearest_neighbors_regressor(k, train_data, train_res)
-    # neigh = KNeighborsRegressor(n_neighbors=k)
-    # neigh.fit(train_data, train_res)
     if only_indices:
         distances, indices = knn_regressor.kneighbors(current_user_data)
         return indices[0]
