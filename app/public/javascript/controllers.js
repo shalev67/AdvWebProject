@@ -576,6 +576,10 @@
                     userService.deleteTransaction(data).then(function (data, err) {
 
                     });
+                    var index = $rootScope.currentUser.transactions.indexOf(transaction);
+                    if (index !== -1) {
+                        $rootScope.currentUser.transactions.splice(index, 1);
+                    }
                     $scope.deleteTransaction = null;
                 };
 
