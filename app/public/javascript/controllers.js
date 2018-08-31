@@ -394,7 +394,7 @@
                 if (err) {
                     console.log(err);
                 }
-            })
+            });
 
             //update status the second user
             userService.getUserByEmail(this.userCtrl.userToUpdate.friendship.email).then(function (user, err) {
@@ -409,7 +409,7 @@
                           }
                       })
                 }
-            })
+            });
             
             socket.emit('friendshipRequest', {userName: this.userCtrl.userToUpdate.firstName + ' ' + this.userCtrl.userToUpdate.lastName,
                                  userEmail: $rootScope.currentUser.email , userFriendEmail: this.userCtrl.userToUpdate.friendship.email});  
