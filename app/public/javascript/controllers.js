@@ -394,7 +394,7 @@
                 if (err) {
                     console.log(err);
                 }
-            })
+            });
 
             //update status the second user
             userService.getUserByEmail(this.userCtrl.userToUpdate.friendship.email).then(function (user, err) {
@@ -409,7 +409,7 @@
                           }
                       })
                 }
-            })
+            });
             
             socket.emit('friendshipRequest', {userName: this.userCtrl.userToUpdate.firstName + ' ' + this.userCtrl.userToUpdate.lastName,
                                  userEmail: $rootScope.currentUser.email , userFriendEmail: this.userCtrl.userToUpdate.friendship.email});  
@@ -478,25 +478,27 @@
                                         }
                                         else
                                         {
-
-                                            userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
-                                                if (err) {
-                                                    console.log(err);
-                                                }
-
-                                                userFriend.data.friendship = {email: '', status: ''};
-                                                userService.updateUser(userFriend.data).then(function (data, err) {
+                                            if(typeof user.data.friendship !== 'undefined'){
+                                                userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
                                                     if (err) {
                                                         console.log(err);
                                                     }
-                                                })
-                                            });
-                                            user.data.friendship = {email: '', status: ''};
-                                            userService.updateUser(user.data).then(function (data, err) {
-                                                if (err) {
-                                                    console.log(err);
-                                                }
-                                            })
+
+                                                    userFriend.data.friendship = {email: '', status: ''};
+                                                    userService.updateUser(userFriend.data).then(function (data, err) {
+                                                        if (err) {
+                                                            console.log(err);
+                                                        }
+                                                    })
+                                                });
+                                                user.data.friendship = {email: '', status: ''};
+                                                userService.updateUser(user.data).then(function (data, err) {
+                                                    if (err) {
+                                                        console.log(err);
+                                                    }
+                                                });
+                                            }
+
 
                                             userService.deleteUser(id).then(function () {
                                                 userService.getAllUsers().then(function (data) {
@@ -576,6 +578,10 @@
                     userService.deleteTransaction(data).then(function (data, err) {
 
                     });
+                    var index = $rootScope.currentUser.transactions.indexOf(transaction);
+                    if (index !== -1) {
+                        $rootScope.currentUser.transactions.splice(index, 1);
+                    }
                     $scope.deleteTransaction = null;
                 };
 
