@@ -478,25 +478,27 @@
                                         }
                                         else
                                         {
-
-                                            userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
-                                                if (err) {
-                                                    console.log(err);
-                                                }
-
-                                                userFriend.data.friendship = {email: '', status: ''};
-                                                userService.updateUser(userFriend.data).then(function (data, err) {
+                                            if(typeof user.data.friendship !== 'undefined'){
+                                                userService.getUserByEmail(user.data.friendship.email).then(function (userFriend, err) {
                                                     if (err) {
                                                         console.log(err);
                                                     }
-                                                })
-                                            });
-                                            user.data.friendship = {email: '', status: ''};
-                                            userService.updateUser(user.data).then(function (data, err) {
-                                                if (err) {
-                                                    console.log(err);
-                                                }
-                                            })
+
+                                                    userFriend.data.friendship = {email: '', status: ''};
+                                                    userService.updateUser(userFriend.data).then(function (data, err) {
+                                                        if (err) {
+                                                            console.log(err);
+                                                        }
+                                                    })
+                                                });
+                                                user.data.friendship = {email: '', status: ''};
+                                                userService.updateUser(user.data).then(function (data, err) {
+                                                    if (err) {
+                                                        console.log(err);
+                                                    }
+                                                });
+                                            }
+
 
                                             userService.deleteUser(id).then(function () {
                                                 userService.getAllUsers().then(function (data) {
