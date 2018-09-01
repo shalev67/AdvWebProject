@@ -430,6 +430,7 @@
             $rootScope.isAdmin = false;
             $scope.currentUserId = undefined;
             $scope.partnerHaveTransactionData = false;
+            $scope.yearList = [];
         };
 
         if ($rootScope.connected ||
@@ -597,27 +598,27 @@
                      var currYear = d.getFullYear();
 
                      // list of monthes
-                     $scope.monthList = [{monthText : "January", number : 0},
-                     {monthText : "February", number : 1},
-                     {monthText : "March", number : 2},
-                     {monthText : "April", number : 3},
-                     {monthText : "May", number : 4},
-                     {monthText : "June", number : 5},
-                     {monthText : "July", number : 6},
-                     {monthText : "August", number : 7},
-                     {monthText : "September", number : 8},
-                     {monthText : "October", number : 9},
-                     {monthText : "November", number : 10},
-                     {monthText : "December", number : 11}
-                    ];
-                    $scope.selectedMonth = $scope.monthList[lastMonth].number;
-
-                     $scope.yearList = [];
-                     for(var i = 2010; i <= currYear; i++){
-                         $scope.yearList.push({value: i});
-                     }
-
-                    $scope.selectedYear = $scope.yearList[$scope.yearList.length -1].value;
+                    //  $scope.monthList = [{monthText : "January", number : 0},
+                    //  {monthText : "February", number : 1},
+                    //  {monthText : "March", number : 2},
+                    //  {monthText : "April", number : 3},
+                    //  {monthText : "May", number : 4},
+                    //  {monthText : "June", number : 5},
+                    //  {monthText : "July", number : 6},
+                    //  {monthText : "August", number : 7},
+                    //  {monthText : "September", number : 8},
+                    //  {monthText : "October", number : 9},
+                    //  {monthText : "November", number : 10},
+                    //  {monthText : "December", number : 11}
+                    // ];
+                    // $scope.selectedMonth = $scope.monthList[lastMonth].number;
+//
+                     // $scope.yearList = [];
+                     // for(var i = 2010; i <= currYear; i++){
+                     //     $scope.yearList.push({value: i});
+                     // }
+                     //
+                     //
 
                     //*********************//
                     //***BAR CHART init****//
@@ -731,10 +732,100 @@
                         });
                     }
                 
+                    $scope.loadYears = function(){
+                        var url = "/User/GetGroupById/" + $scope.currentUserId;
+                        $http.get(url).then(function(response){
+                            var years = [];
+                            response.data.forEach(
+                                function (element) {
+                                    years.push(element._id.year);
+                                }
+                            );
+                            years = Array.from(new Set(years));
+                            $scope.yearList = [];
+                            years.forEach(
+                                function (year) {
+                                    $scope.yearList.push({value: year})
+                                }
+                            );
+                            // $scope.selectedYear = $scope.yearList[$scope.yearList.length -1].value;
+                        }).catch(function (error) {
+                                console.log('error on expected expenses:');
+                                console.log(error);
+                            }
+                        );
+                    };
 
+                    $scope.loadMonths = function(){
+                        var url = "/User/GetGroupById/" + $scope.currentUserId;
+                        $http.get(url).then(function(response){
+                            var months = [];
+                            response.data.forEach(
+                                function (element) {
+                                    if (element._id.year === $scope.selectedYear){
+                                        switch (element._id.month) {
+                                            case 1:
+                                                months.push({monthText : "January", number : 0});
+                                                break;
+                                            case 2:
+                                                months.push({monthText : "February", number : 1});
+                                                break;
+                                            case 3:
+                                                months.push({monthText : "March", number : 2});
+                                                break;
+                                            case 4:
+                                                months.push({monthText : "April", number : 3});
+                                                break;
+                                            case 5:
+                                                months.push({monthText : "May", number : 4});
+                                                break;
+                                            case 6:
+                                                months.push({monthText : "June", number : 5});
+                                                break;
+                                            case 7:
+                                                months.push({monthText : "July", number : 6});
+                                                break;
+                                            case 8:
+                                                months.push({monthText : "August", number : 7});
+                                                break;
+                                            case 9:
+                                                months.push({monthText : "September", number : 8});
+                                                break;
+                                            case 10:
+                                                months.push({monthText : "October", number : 9});
+                                                break;
+                                            case 11:
+                                                months.push({monthText : "November", number : 10});
+                                                break;
+                                            case 12:
+                                                months.push({monthText : "December", number : 11});
+                                                break;
+                                        }
+                                    }
+                                }
+                            );
+                            months = months.filter((months, index, self) =>
+                                index === self.findIndex((t) => (
+                                    t.monthText === months.monthText && t.number === months.number
+                                ))
+                            );
+                            $scope.monthList = [];
+                            months.forEach(
+                                function (month) {
+                                    $scope.monthList.push(month);
+                                }
+                            );
+                            // $scope.selectedYear = $scope.yearList[$scope.yearList.length -1].value;
+                        }).catch(function (error) {
+                                console.log('error on expected expenses:');
+                                console.log(error);
+                            }
+                        );
+
+                    };
                     $scope.updateGraphs = function (month, year) {
                         BuildStatistics(month, year);
-                    }
+                    };
 
                        // Update pie chart
                     function updatePieChart(data){

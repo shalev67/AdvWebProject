@@ -44,11 +44,11 @@
         <tr>
             <th class="search-tbl-th">
                 <label >Year</label>
-                <select  class="form-control" ng-model="selectedYear" ng-change="updateGraphs(selectedMonth, selectedYear)" ng-options="year.value as year.value for year in yearList"/>
+                <select  class="form-control" data-ng-init="loadYears()"  ng-click="loadYears()" ng-model="selectedYear" ng-change="loadMonths()" ng-options="year.value as year.value for year in yearList"/>
             </th>
-            <th class="search-tbl-th">
+            <th class="search-tbl-th" ng-show="selectedYear">
                 <label >Month</label>
-                <select  class="form-control" ng-model="selectedMonth" ng-change="updateGraphs(selectedMonth, selectedYear)" ng-options="month.number as month.monthText for month in monthList"/>
+                <select  class="form-control" ng-model="selectedMonth" ng-change="updateGraphs(selectedMonth, selectedYear)" ng-options="month.number as month.monthText for month in monthList |orderBy: 'number'"/>
             </th>
         </tr>
         </thead>
