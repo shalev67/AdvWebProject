@@ -1,0 +1,55 @@
+<div ng-show="!connected" >
+    <a href="#!/login">
+        <h5>Please login first</h5>
+    </a>
+</div>
+<div ng-show="connected && !haveTransactionData" >
+    <h5>You dont have any transactions....</h5>
+</div>
+<style>
+    .bar{
+        fill: teal;
+    }
+
+    #svgUTBC{
+        overflow: visible;
+    }
+</style>
+<div ng-show="haveTransactionData">
+    <canvas class="myCanvas" id="myCanvas" width="850" height="50">
+        Your browser does not support the canvas element.
+    </canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx=canvas.getContext("2d");
+        ctx.font = "30px Palatino Linotype";
+
+        // Create gradient
+        var grd = ctx.createLinearGradient(0, 500, 1100, 0);
+        grd.addColorStop(0, "MidnightBlue");
+        //grd.addColorStop(1, "DeepSkyBlue");
+        grd.addColorStop(1, "Aqua");
+
+
+        // Fill with gradient
+        ctx.fillStyle = grd;
+        ctx.textAlign = "center";
+        ctx.fillText("Radar", 65, canvas.height / 2);
+    </script>
+    <hr/>
+
+    <div class="search-tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0" class="search-tbl" >
+            <thead>
+            <tr>
+                <th class="search-tbl-th">
+                    <label >Year</label>
+                    <select  class="form-control" ng-model="selectedYear" ng-change="loadMonths()" ng-options="year.value as year.value for year in yearList"/>
+                </th>
+                <th class="search-tbl-th" ng-show="selectedYear">
+                    <label >Month</label>
+                    <select  class="form-control" ng-model="selectedMonth" ng-change="updateRadar(selectedMonth, selectedYear)" ng-options="month.number as month.monthText for month in monthList |orderBy: 'number'"/>
+                </th>
+            </tr>
+            </thead>
+        </table>
