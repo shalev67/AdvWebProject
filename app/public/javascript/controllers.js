@@ -593,11 +593,25 @@
                     $scope.no_data = false;
 
                      // Date object for current year&last month for watching the last data
-                     var d = new Date();
-                     var lastMonth = d.getMonth() - 1;
-                     var currYear = d.getFullYear();
+                    var d = new Date();
+                    var lastMonth = d.getMonth() - 1;
+                    var currYear = d.getFullYear();
+                    var years = [];
+                    $rootScope.currentUser.transactions.forEach(
+                        function (element) {
+                            years.push(element['date'].slice(0,4));
+                        }
+                    );
+                    years = Array.from(new Set(years));
+                    $scope.yearList = [];
+                    years.forEach(
+                        function (year) {
+                            $scope.yearList.push({value: parseInt(year)})
+                        }
+                    );
 
-                     // list of monthes
+
+                        // list of monthes
                     //  $scope.monthList = [{monthText : "January", number : 0},
                     //  {monthText : "February", number : 1},
                     //  {monthText : "March", number : 2},
