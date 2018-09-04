@@ -52,7 +52,7 @@ def get_nearest_neighbors(user_id):
     year = int(request.args.get('year', default=last_month_date.year))
     ids = expenses_knn.get_nearest_neighbors_to_user(users_collection, ObjectId(user_id), int(month), int(year))
     if ids:
-        return str(ids[0])
+        return str([str(id) for id in ids[0]])
     else:
         return jsonify("")
 

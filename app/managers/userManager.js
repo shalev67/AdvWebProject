@@ -21,7 +21,7 @@ module.exports = {
 
     getGroupTransaction: function (callback, _id) {
         User.findOne({'_id': _id}, function (err, user) {
-            if(user !== undefined){
+            if(user){
                 User.aggregate([{$match: {"email": user.email}},
                         {$unwind: '$transactions'},
                         {$group: {
