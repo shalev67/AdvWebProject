@@ -1025,9 +1025,9 @@
         //myApp.controller("expensesCtrl", function ($scope, $http) {
 
         var date = new Date();
-        $scope.getExpectedExpenses = function (month = date.getMonth() + 1, year = date.getFullYear()) {
+        $scope.getExpectedExpenses = function (month = date.getMonth(), year = date.getFullYear()) {
 
-            var expensesUrl = "http://localhost:3001/user/" + $scope.currentUserId + "?month=" + 12 + "&year=" + 2017;
+            var expensesUrl = "http://localhost:3001/user/" + $scope.currentUserId + "?month=" + month + "&year=" + year;
             $http.get(expensesUrl).then(function(response){
                 $scope.expectedExpense = response.data;
             }).catch(function (error) {
@@ -1044,8 +1044,7 @@
             if ($rootScope.haveTransactionData) {
 
                 // Get  the Date
-                // var month = date.getMonth() - 1;
-                var month = 2;
+                var month = date.getMonth();
                 var year = date.getFullYear();
 
                 if (month === 0) {
