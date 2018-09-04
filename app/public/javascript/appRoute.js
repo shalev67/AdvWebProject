@@ -55,6 +55,12 @@
             templateUrl: "views/decisionTree.html",
             controller: 'decisionTreeCtrl'
         }).
+        when(
+            '/radar',{
+                templateUrl: "views/radar.html",
+                controller: 'userCtrl'
+            }
+        ).
         otherwise({
             redirectTo: '/home'
         });
