@@ -156,10 +156,12 @@
             var hebrew_month_names = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר']
             var d = new Date();
             var lastMonth = d.getMonth();
+            var currYear = d.getFullYear();
             if (lastMonth === 0) {
               lastMonth = 12;
+              currYear = currYear - 1;
             }
-            var currYear = d.getFullYear();
+            
             var treeUrl = "http://localhost:3001/decisionTree/" + $scope.$parent.currentUserId + "?month=" + lastMonth + "&year=" + currYear;
 
             $scope.$parent.month = hebrew_month_names[lastMonth - 1];
