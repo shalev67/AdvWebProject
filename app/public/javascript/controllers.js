@@ -1619,8 +1619,10 @@
             $event.class = "active";
             var d = new Date();
             var lastMonth = d.getMonth();
+            var currYear = d.getFullYear();
             if (lastMonth === 0) {
-              lastMonth = 12;
+                lastMonth = 12;
+                currYear = currYear - 1;
             }
             var currYear = d.getFullYear();
             var treeUrl = "http://localhost:3001/decisionTree/" + $scope.currentUserId +  "?month=" + lastMonth + "&year=" + currYear + "&category=" + $event.currentTarget.title;
