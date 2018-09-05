@@ -9,7 +9,6 @@
 <div ng-show="haveTransactionData"></div>
 
 <div class="radarChart"></div>
-<script src="javascript/radarChart.js"></script>
 <div class="radarChart" style="display: inline-flex; text-align: center; position: center; margin: 0 auto;"></div>
 
 <script>
@@ -50,90 +49,91 @@
         },
         async:false
     });
-
-    $.ajax({
-        url: url_prefix + users_id[0],
-        success: function (response) {
-            console.error(response);
-            users_data = response;
-            var d = new Date();
-            var month = d.getMonth();
-            var year = d.getFullYear();
-            var all = [];
-            var all_categories = [];
-            all = all.concat(user_data);
-            all = all.concat(users_data);
-            user_data = user_data.filter(function (i) {
-                if (i._id.month === month && i._id.year === year) {
-                    return i.totalPrice;
-                }
-            });
-            users_data = users_data.filter(function (i) {
-                if (i._id.month === month && i._id.year === year) {
-                    return i.totalPrice;
-                }
-            });
-            all = all.filter(function (i) {
-                if (i._id.month === month && i._id.year === year) {
-                    return i.totalPrice;
-                }
-            });
-            all.forEach(function (element) {
-                all_categories.push(element._id.category);
-            });
-            all_categories = Array.from(new Set(all_categories));
-
-            var data = [
-                {
-                    name: "You",
-                    axes: []
-                },
-                {
-                    name: "People like you",
-                    axes: []
-                }
-            ];
-            user_data.forEach(function (element) {
-                data[0]['axes'].push({axis : element._id.category, value: element.totalPrice})
-            });
-            users_data.forEach(function (element) {
-                data[1]['axes'].push({axis : element._id.category, value: element.totalPrice})
-            });
-            all_categories.forEach(function (element) {
-                if(!data[0]['axes'].some(e => e.axis === element)){
-                    data[0]['axes'].push({axis : element, value: 0});
-                }
-                if(!data[0]['axes'].some(e => e.axis === element)){
-                    data[1]['axes'].push({axis : element, value: 0});
-                }
-            });
-            console.error(data);
-            var radarChartOptions = {
-                w: 290*2,
-                h: 350*2,
-                margin: margin,
-                levels: 5,
-                roundStrokes: false,
-                color: d3.scaleOrdinal(d3.schemeCategory10).range(["#26AF32", "#762712"]),
-                format: '.0f',
-                legend: { title: 'Spending by category', translateX: 100, translateY: 40 },
-                factor: 1,
-                factorLegend: .85,
-                maxValue: 0,
-                radians: 2 * Math.PI,
-                opacityArea: 0.5,
-                ToRight: 5,
-                TranslateX: 80,
-                TranslateY: 30,
-                ExtraWidthX: 100,
-                ExtraWidthY: 100,
-            };
-
-            // Draw the chart, get a reference the created svg element :
-            let svg_radar1 = RadarChart(".radarChart", data, radarChartOptions);
-        },
-        async:false
+    users_id.forEach(function (element) {
+        $.ajax({
+            url: url_prefix + element,
+            success: function (response) {
+                users_data = users_data.concat(response);
+            },
+            async: false
+        });
     });
+
+    var d = new Date();
+    var month = d.getMonth();
+    var year = d.getFullYear();
+    var all = [];
+    var all_categories = [];
+    var neighbors_number = users_id.length;
+    all = all.concat(user_data);
+    all = all.concat(users_data);
+    user_data = user_data.filter(function (i) {
+        if (i._id.month === month && i._id.year === year) {
+            return i.totalPrice;
+        }
+    });
+    users_data = users_data.filter(function (i) {
+        if (i._id.month === month && i._id.year === year) {
+            return i.totalPrice;
+        }
+    });
+    all = all.filter(function (i) {
+        if (i._id.month === month && i._id.year === year) {
+            return i.totalPrice;
+        }
+    });
+    all.forEach(function (element) {
+        all_categories.push(element._id.category);
+    });
+    all_categories = Array.from(new Set(all_categories));
+
+    var data = [
+        {
+            name: "You",
+            axes: []
+        },
+        {
+            name: "People like you",
+            axes: []
+        }
+    ];
+    user_data.forEach(function (element) {
+        data[0]['axes'].push({axis : element._id.category, value: element.totalPrice})
+    });
+    users_data.forEach(function (element) {
+        data[1]['axes'].push({axis : element._id.category, value: element.totalPrice / neighbors_number})
+    });
+    all_categories.forEach(function (element) {
+        if(!data[0]['axes'].some(e => e.axis === element)){
+            data[0]['axes'].push({axis : element, value: 0});
+        }
+        if(!data[0]['axes'].some(e => e.axis === element)){
+            data[1]['axes'].push({axis : element, value: 0});
+        }
+    });
+    var radarChartOptions = {
+        w: 290*2,
+        h: 350*2,
+        margin: margin,
+        levels: 5,
+        roundStrokes: false,
+        color: d3.scaleOrdinal(d3.schemeCategory10).range(["#26AF32", "#762712"]),
+        format: '.0f',
+        legend: { title: 'Spending by category', translateX: 100, translateY: 40 },
+        factor: 1,
+        factorLegend: .85,
+        maxValue: 0,
+        radians: 2 * Math.PI,
+        opacityArea: 0.5,
+        ToRight: 5,
+        TranslateX: 80,
+        TranslateY: 30,
+        ExtraWidthX: 100,
+        ExtraWidthY: 100,
+    };
+
+    // Draw the chart, get a reference the created svg element :
+    var svg_radar1 = RadarChart(".radarChart", data, radarChartOptions);
 
 
 </script>
